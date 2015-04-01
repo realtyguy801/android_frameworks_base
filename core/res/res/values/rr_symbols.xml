@@ -192,4 +192,7 @@
   <!-- Notifications Battery Really Full -->
   <java-symbol type="integer" name="config_notificationsBatteryReallyFullARGB" />
 
+  <!-- Automatic brightness enhancements -->
+  <java-symbol type="integer" name="config_autoBrightnessBrighteningLightFastDebounce"/>
+
 </resources>
