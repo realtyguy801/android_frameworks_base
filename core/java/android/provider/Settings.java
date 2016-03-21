@@ -3918,6 +3918,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String QS_LAYOUT_COLUMNS = "qs_layout_columns";
 
+       /**
+        * USB Data automatic unlock
+		* @hide
+        */
+       public static final String USB_DATA_AUTO_UNLOCK = "usb_data_auto_unlock";
+
         /**
          * Number of rows used for the Quick Settings (portrait)
          *
