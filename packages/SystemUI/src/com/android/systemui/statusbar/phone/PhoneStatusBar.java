@@ -2375,6 +2375,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     @Override
     public void screenPinningStateChanged(boolean enabled) {
+        super.screenPinningStateChanged(enabled);
         mNavigationController.screenPinningStateChanged(enabled);
     }
 
