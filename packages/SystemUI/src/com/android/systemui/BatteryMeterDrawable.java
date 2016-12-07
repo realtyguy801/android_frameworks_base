@@ -78,6 +78,7 @@ public class BatteryMeterDrawable extends Drawable implements
     public static final int BATTERY_STYLE_HIDDEN    = 3;
     public static final int BATTERY_STYLE_LANDSCAPE = 4;
     public static final int BATTERY_STYLE_TEXT      = 5;
+    public static final int BATTERY_STYLE_BIGCIRCLE    = 6;
 
     private final int[] mColors;
     private final int mIntrinsicWidth;
@@ -564,6 +565,8 @@ public class BatteryMeterDrawable extends Drawable implements
                 return R.drawable.ic_battery_circle;
             case BATTERY_STYLE_SOLID:
                 return R.drawable.ic_battery_solid;
+            case BATTERY_STYLE_BIGCIRCLE:
+                return R.drawable.ic_battery_bigcircle;
             case BATTERY_STYLE_PORTRAIT:
                 return R.drawable.ic_battery_portrait;
             default:
@@ -576,6 +579,7 @@ public class BatteryMeterDrawable extends Drawable implements
             case BATTERY_STYLE_LANDSCAPE:
                 return R.style.BatteryMeterViewDrawable_Landscape;
             case BATTERY_STYLE_CIRCLE:
+            case BATTERY_STYLE_BIGCIRCLE:
                 return R.style.BatteryMeterViewDrawable_Circle;
 			case BATTERY_STYLE_SOLID:
                 return R.style.BatteryMeterViewDrawable_Solid;
@@ -588,7 +592,7 @@ public class BatteryMeterDrawable extends Drawable implements
 
 
     private int getBoltColor() {
-        if (mStyle == BATTERY_STYLE_CIRCLE) {
+        if (mStyle == BATTERY_STYLE_CIRCLE || mStyle == BATTERY_STYLE_BIGCIRCLE) {
             updateChargeColor();
             int chargeColor = mChargeColor;
             return chargeColor;
@@ -614,6 +618,9 @@ public class BatteryMeterDrawable extends Drawable implements
                 break;
             case BATTERY_STYLE_LANDSCAPE:
                 textSize = widthDiv2 * 1.3f;
+                break;
+            case BATTERY_STYLE_BIGCIRCLE:
+                textSize = widthDiv2 * 1.2f;
                 break;
             default:
                 textSize = widthDiv2;
