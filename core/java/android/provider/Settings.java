@@ -8478,6 +8478,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String ADVANCED_REBOOT = "advanced_reboot";
 
         /**
+         * Whether the reboot submenu at the power menu should trigger actions with a
+         * single click or with a confirmation.
+         * @hide
+         */
+        public static final String ADVANCED_REBOOT_ONECLICK = "advanced_reboot_oneclick";
+
+        /**
          * Boolean value whether to link ringtone and notification volume
          * @hide
          */
