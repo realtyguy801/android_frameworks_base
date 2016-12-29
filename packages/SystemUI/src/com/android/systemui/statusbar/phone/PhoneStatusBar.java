@@ -1688,6 +1688,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                     mHeader = qsContainer.getHeader();
                     initSignalCluster(mHeader);
                     mHeader.setActivityStarter(PhoneStatusBar.this);
+                    mStackScroller.updateNotificationView();
                 }
             });
         }
