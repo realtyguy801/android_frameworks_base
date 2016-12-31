@@ -62,8 +62,8 @@ public class BatteryTile extends QSTile<QSTile.State> implements BatteryControll
     private int mBatteryStyle;
     private int mBatteryStyleTile;
 
-    public static final int BATTERY_STYLE_HIDDEN    = 4;
-    public static final int BATTERY_STYLE_TEXT      = 6;
+    public static final int BATTERY_STYLE_HIDDEN    = 3;
+    public static final int BATTERY_STYLE_TEXT      = 5;
 
     public BatteryTile(Host host) {
         super(host);
@@ -118,6 +118,21 @@ public class BatteryTile extends QSTile<QSTile.State> implements BatteryControll
         }
     }
 
+    public boolean isSaverEasyToggleEnabled() {
+        return Settings.Secure.getInt(mContext.getContentResolver(),
+            Settings.Secure.QS_BATTERY_EASY_TOGGLE, 0) == 1;
+    }
+
+    @Override
+    protected void handleLongClick() {
+        boolean easyToggle = isSaverEasyToggleEnabled();
+        if (easyToggle) {
+            showDetail(true);
+        } else {
+            mHost.startActivityDismissingKeyguard(new Intent(Intent.ACTION_POWER_USAGE_SUMMARY));
+        }
+    }
+
     @Override
     public Intent getLongClickIntent() {
         return new Intent(Intent.ACTION_POWER_USAGE_SUMMARY);
@@ -125,7 +140,12 @@ public class BatteryTile extends QSTile<QSTile.State> implements BatteryControll
 
     @Override
     protected void handleClick() {
+    boolean batteryeasy = isSaverEasyToggleEnabled();
+        if (!batteryeasy) {
         showDetail(true);
+        } else {
+        mBatteryController.setPowerSaveMode(!mPowerSave);
+        }
     }
 
     @Override

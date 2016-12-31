@@ -17,7 +17,7 @@
  -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Screenrecord Notification Ticker -->
-  <string name="screenrecord_notif_ticker">Bildschirmvideo wird aufgenommen</string>
+  <string name="screenrecord_notif_ticker">Bildschirm wird aufgenommen</string>
   <!-- Screenrecord notification title -->
   <string name="screenrecord_notif_title">Bildschirmaufzeichnung</string>
   <!-- Screenrecord notification action: Stop -->
@@ -29,7 +29,7 @@
   <string name="screenrecord_notif_error">Bildschirmvideo konnte nicht aufgenommen werden</string>
   <string name="status_bar_weather_format"><xliff:g id="temp">%1$s</xliff:g> <xliff:g id="condition">%2$s</xliff:g></string>
   <!-- Screenshot Delete Toast -->
-  <string name="delete_screenshot_toast">Bildschirmfoto gelöscht</string>
+  <string name="delete_screenshot_toast">Screenshot gelöscht</string>
   <string name="gestures_message">Geste hier zeichnen</string>
   <string name="rr_sys_tuner">System UI-Tuner</string>
   <!-- Strings for lockscreen shortcut hints -->
@@ -139,5 +139,23 @@
   <string name="screenshot_abort_title">Kein Screenshot aufgenommen</string>
   <string name="screenshot_abort_text">Vorgang abgebrochen</string>
   <!-- Screenshot Crop & Share -->
+  <string name="action_delete_success">Gelöscht</string>
+  <string name="action_delete_fault">Löschen war nicht erfolgreich</string>
+  <string name="action_save_success">Gespeichert</string>
+  <string name="action_save_fault">Speichern war nicht erfolgreich</string>
+  <string name="pref_action_color_title">Farbe der Aktionstasten</string>
+  <string name="pref_action_color_summary">Wählen Sie Ihre Lieblingsfarbe für die Aktions-Tasten</string>
+  <string name="pref_category_main">Haupteinstellungen</string>
+  <string name="pref_category_user">Benutzereinstellungen</string>
+  <string name="pref_crop_behavior_title">Crop-Verhalten</string>
+  <string name="pref_crop_behavior_summary">Das zugeschnittene Bild verwenden, auch wenn das ursprüngliche nicht beschnitten wurde</string>
+  <string name="action_ok">OK</string>
+  <string name="action_delete_success">Gelöscht</string>
+  <string name="action_delete_fault">Löschen war nicht erfolgreich</string>
+  <string name="action_save_success">Gespeichert</string>
+  <string name="action_save_fault">Speichern war nicht erfolgreich</string>
+  <string name="action_edit">Bearbeiten</string>
   <string name="recents_custom_android_n">ALLE LÖSCHEN</string>
+  <string name="recents_free_ram">Freier RAM-Speicher: %1$d MB</string>
+  <!-- Path data for Solid battery -->
 </resources>
