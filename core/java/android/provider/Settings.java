@@ -5680,6 +5680,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String APP_SIDEBAR_SHOW_TRIGGER = "app_sidebar_show_trigger";
 
+         /**
+         * App sidebar hide timeout
+         *
+         * @hide
+         */
+        public static final String APP_SIDEBAR_HIDE_TIMEOUT = "app_sidebar_hide_timeout";
+
         /**
          * Vibrate on pulsing while pickup
          * @hide
