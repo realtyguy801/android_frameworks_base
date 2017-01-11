@@ -247,7 +247,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
     private void updateDateTimeCenter() {
         mDateTimeGroupCenter = isDateTimeGroupCenter();
-	if (mDateTimeGroupCenter && !(hasSettingsIcon && hasSettingsExpanded) && hasEdit && hasMultiUserSwitch && hasExpandIndicator)) {
+        if (mDateTimeGroupCenter && !(hasSettingsIcon && hasEdit && hasMultiUserSwitch && hasExpandIndicator)) {
             mDateTimeAlarmGroup.setVisibility(View.GONE);
             mDateTimeAlarmCenterGroup.setVisibility(View.VISIBLE);
         } else {
