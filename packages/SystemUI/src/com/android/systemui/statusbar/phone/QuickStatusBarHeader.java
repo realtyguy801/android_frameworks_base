@@ -17,6 +17,7 @@
 
 package com.android.systemui.statusbar.phone;
 
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ContentUris;
@@ -129,6 +130,11 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     private int mQsPanelOffsetNormal;
     private int mQsPanelOffsetHeader;
 
+    // Task manager
+    private boolean mShowTaskManager;
+    protected TaskManagerButton mTaskManagerButton;
+    public boolean mEnabled;
+
     public QuickStatusBarHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -172,7 +178,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         mAlarmStatusCollapsed.setOnClickListener(this);
         mAlarmStatus = (TextView) findViewById(R.id.alarm_status);
         mAlarmStatus.setOnClickListener(this);
-
+        mTaskManagerButton = (TaskManagerButton) findViewById(R.id.task_manager_button);
+        mTaskManagerButton.setOnClickListener(this);
         mMultiUserSwitch = (MultiUserSwitch) findViewById(R.id.multi_user_switch);
         mMultiUserAvatar = (ImageView) mMultiUserSwitch.findViewById(R.id.multi_user_avatar);
 
@@ -180,18 +187,11 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         // settings), so disable it for this view
         ((RippleDrawable) mSettingsButton.getBackground()).setForceSoftware(true);
         ((RippleDrawable) mExpandIndicator.getBackground()).setForceSoftware(true);
+        ((RippleDrawable) mTaskManagerButton.getBackground()).setForceSoftware(true);
 
         mBackgroundImage = (ImageView) findViewById(R.id.background_image);
 
         updateResources();
-
-        post(new Runnable() {
-            public void run() {
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mBackgroundImage.getLayoutParams();
-                params.height = getExpandedHeight();
-                mBackgroundImage.setLayoutParams(params);
-            }
-        });
     }
     
     @Override
@@ -222,12 +222,21 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
         mQsPanelOffsetNormal = getResources().getDimensionPixelSize(R.dimen.qs_panel_top_offset_normal);
         mQsPanelOffsetHeader = getResources().getDimensionPixelSize(R.dimen.qs_panel_top_offset_header);
+
+        post(new Runnable() {
+            public void run() {
+                setHeaderImageHeight();
+                // the dimens could have been changed
+                setQsPanelOffset();
+            }
+        });
     }
 
     protected void updateSettingsAnimator() {
         mSettingsAlpha = new TouchAnimator.Builder()
                 .addFloat(mEdit, "alpha", 0, 1)
                 .addFloat(mMultiUserSwitch, "alpha", 0, 1)
+                .addFloat(mTaskManagerButton, "alpha", 0, 1)
                 .build();
 
         final boolean isRtl = isLayoutRtl();
@@ -335,12 +344,14 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         });
     }
 
-    protected void updateVisibilities() {
+    @Override
+    public void updateVisibilities() {
         updateAlarmVisibilities();
         updateDateTimePosition();
         mEmergencyOnly.setVisibility(mExpanded && mShowEmergencyCallsOnly
                 ? View.VISIBLE : View.INVISIBLE);
         mSettingsContainer.findViewById(R.id.tuner_icon).setVisibility(View.INVISIBLE);
+        mTaskManagerButton.setVisibility(mExpanded && enabletaskmanager() ? View.VISIBLE : View.GONE);
         final boolean isDemo = UserManager.isDeviceInDemoMode(mContext);
         hasMultiUserSwitch = !isMultiUserSwitchDisabled();
         mMultiUserSwitch.setVisibility(mExpanded && hasMultiUserSwitch && !isDemo
@@ -352,6 +363,19 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
         mSettingsButton.setVisibility(hasSettingsIcon ? View.VISIBLE : View.GONE);
         hasExpandIndicator = !isExpandIndicatorDisabled();
         mExpandIndicator.setVisibility(hasExpandIndicator ? View.VISIBLE : View.GONE);
+    }
+
+   @Override
+   public void killvisibilities() {
+        if (mMultiUserSwitch != null) {
+        mMultiUserSwitch.setVisibility(View.GONE);
+        }
+        if (mEdit != null) {
+        mEdit.setVisibility(View.GONE);
+        }
+        if (mExpandIndicator != null) {
+        mExpandIndicator.setVisibility(View.GONE);
+        }
     }
 
     private void updateDateTimePosition() {
@@ -427,6 +451,8 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             startClockActivity(null);
         } else if (v == mDate) {
             startDateActivity();
+        } else if (v == mTaskManagerButton) {
+           mQsPanel.setenabled();
         }
     }
 
@@ -463,11 +489,23 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
                 true /* dismissShade */);
     }
 
+    public void setTaskManagerEnabled(boolean enabled) {
+        mEnabled = enabled;
+    }
+
     private void startRRActivity() {
         Intent duIntent = new Intent(Intent.ACTION_MAIN);
         duIntent.setClassName("com.android.settings",
             "com.android.settings.Settings$MainSettingsLayoutActivity");
         mActivityStarter.startActivity(duIntent, true /* dismissShade */);
+    }
+
+    @Override
+    public void starttmactivity() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setClassName("com.android.settings",
+            "com.android.settings.Settings$RunningServicesActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
     @Override
@@ -519,12 +557,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
             // to have more space for the header image
             post(new Runnable() {
                 public void run() {
-                    final boolean customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
-                            Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
-                            UserHandle.USER_CURRENT) != 0;
-                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mQsPanel.getLayoutParams();
-                    params.setMargins(0, customHeader ? mQsPanelOffsetHeader : mQsPanelOffsetNormal, 0, 0);
-                    mQsPanel.setLayoutParams(params);
+                    setQsPanelOffset();
                 }
             });
         }
@@ -622,5 +655,25 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     public boolean isDateTimeGroupCenter() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.QS_DATE_TIME_CENTER, 1) == 1;
+    }
+
+   public boolean enabletaskmanager() {
+       return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.ENABLE_TASK_MANAGER, 0) == 1;
+   }
+
+    private void setQsPanelOffset() {
+        final boolean customHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
+                UserHandle.USER_CURRENT) != 0;
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mQsPanel.getLayoutParams();
+        params.setMargins(0, customHeader ? mQsPanelOffsetHeader : mQsPanelOffsetNormal, 0, 0);
+        mQsPanel.setLayoutParams(params);
+    }
+
+    private void setHeaderImageHeight() {
+        LinearLayout.LayoutParams p = (LinearLayout.LayoutParams) mBackgroundImage.getLayoutParams();
+        p.height = getExpandedHeight();
+        mBackgroundImage.setLayoutParams(p);
     }
 }

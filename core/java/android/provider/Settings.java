@@ -4087,6 +4087,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
 
+          /**
+          * Whether to show the battery info on the lockscreen while charging
+          * @hide
+          */
+         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
+
         /**
          * Network traffic indicator, goes from least to greatest significant bitwise
          * 0 = Display up-stream traffic if set
@@ -4727,6 +4733,30 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String LOCK_SCREEN_WEATHER_NUMBER_OF_NOTIFICATIONS = "lock_screen_weather_number_of_notifications";
 
         /**
+         * Enable built in CAF task manager
+         * @hide
+         */
+        public static final String ENABLE_TASK_MANAGER = "enable_task_manager";
+
+        /**
+         * Select style of kill button for tasks
+         * @hide
+         */
+        public static final String TASK_MANAGER_KILL_BUTTON = "task_manager_kill_button";
+
+        /**
+         * Enable built left services button in task manager
+         * @hide
+         */
+        public static final String TASK_MANAGER_LEFT_BUTTON = "task_manager_left_button";
+
+        /**
+         * Enable built right clear notifications button in task manager
+         * @hide
+         */
+        public static final String TASK_MANAGER_RIGHT_BUTTON = "task_manager_right_button";
+
+        /**
          * Number of notifications visible on the lockscreen including the overflow container
          * @hide
          */
@@ -5240,10 +5270,10 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String PA_PIE_SCREENSHOT = "pa_pie_screenshot";
 
           /**
-          * Whether to show the battery info on the lockscreen while charging
+          * Whether to show the negociated charger current in the lockscreen
           * @hide
           */
-         public static final String LOCKSCREEN_BATTERY_INFO = "lockscreen_battery_info";
+         public static final String LOCKSCREEN_CHARGING_CURRENT = "lockscreen_charging_current";
 
         /**
          * Pie toggles torch
@@ -5345,9 +5375,9 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String RR_SETTINGS_TABS_EFFECT = "rr_settings_tabs_effect";
 
-         /**
-         * Change the color of the lockscreen bottom camera shortcut
+        /**
          *
+         * Change the color of the lockscreen bottom camera shortcut
          * @hide
          */
         public static final String LOCKSCREEN_CAMERA_ICON_COLOR = "lockscreen_camera_icon_color";
@@ -5524,7 +5554,7 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String STATUS_BAR_DAYLIGHT_HEADER_PACK = "status_bar_daylight_header_pack";
 
         /**
-         * Current active provider - available currently "static" "daylight"
+         * Current active provider
          * @hide
          */
         public static final String STATUS_BAR_CUSTOM_HEADER_PROVIDER = "status_bar_custom_header_provider";

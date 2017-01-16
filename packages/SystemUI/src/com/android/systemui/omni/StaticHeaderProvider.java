@@ -118,7 +118,10 @@ public class StaticHeaderProvider implements
         if (mRes == null) {
             return null;
         }
-
+        if (!PackageUtils.isAvailableApp(mPackageName, mContext)) {
+            Log.w(TAG, "Header pack image " + mImage + " no longer available");
+            return null;
+        }
         try {
             return mRes.getDrawable(mRes.getIdentifier(mImage, "drawable", mPackageName), null);
         } catch(Resources.NotFoundException e) {

@@ -122,6 +122,7 @@ import android.view.MotionEvent;
 import android.view.ThreadedRenderer;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManagerGlobal;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -133,6 +134,7 @@ import android.view.WindowManagerGlobal;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -459,6 +461,16 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     // settings
     private QSPanel mQSPanel;
+
+    // task manager
+    private TaskManager mTaskManager;
+    private LinearLayout mTaskManagerPanel;
+    private TaskManagerButton mTaskManagerButton;
+    // task manager enabled
+    private boolean mShowTaskManager;
+    // task manager click state
+    private boolean mShowTaskList = false;
+
     // top bar
     BaseStatusBarHeader mHeader;
     protected KeyguardStatusBarView mKeyguardStatusBar;
@@ -766,11 +778,14 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                  Settings.System.BLUR_MIXED_COLOR_PREFERENCE_KEY), 
                  false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW),
+                 Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.STATUS_BAR_CUSTOM_HEADER),
+                 Settings.System.STATUS_BAR_CUSTOM_HEADER),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                 Settings.System.ENABLE_TASK_MANAGER),
+                 false, this, UserHandle.USER_ALL);
             update();
         }
         
@@ -933,8 +948,22 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mCLogo = (ImageView) mStatusBarView.findViewById(R.id.custom_center);
             mCLogoright = (ImageView) mStatusBarView.findViewById(R.id.custom_right);
             mCLogoleft = (ImageView) mStatusBarView.findViewById(R.id.custom_left);
-
-	        showmCustomlogo(mCustomlogo,mCustomlogoColor,mCustomLogoPos);
+	    showmCustomlogo(mCustomlogo,mCustomlogoColor,mCustomLogoPos);
+            boolean showTaskManager = Settings.System.getIntForUser(resolver,
+                    Settings.System.ENABLE_TASK_MANAGER, 0, UserHandle.USER_CURRENT) == 1;
+            if (mShowTaskManager != showTaskManager) {
+                if (!mShowTaskManager) {
+                    // explicitly reset click state when disabled
+                    mShowTaskList = false;
+                }
+                mShowTaskManager = showTaskManager;
+                if (mHeader != null) {
+                    mHeader.setTaskManagerEnabled(showTaskManager);
+                }
+                if (mNotificationPanel != null) {
+                    mNotificationPanel.setTaskManagerEnabled(showTaskManager);
+                }
+            }
 
 
             mDt2lCameraVibrateConfig = Settings.System.getIntForUser(resolver,
@@ -1665,6 +1694,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         updateWeatherTextState(mWeatherController.getWeatherInfo().temp,
 mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
+        mStatusBarHeaderMachine = new StatusBarHeaderMachine(mContext);
+
         // Set up the quick settings tile panel
         AutoReinflateContainer container = (AutoReinflateContainer) mStatusBarWindow.findViewById(
                 R.id.qs_auto_reinflate_container);
@@ -1685,6 +1716,13 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                     mQSPanel = qsContainer.getQsPanel();
                     mKeyguardStatusBar.setQSPanel(mQSPanel);
                     mHeader = qsContainer.getHeader();
+
+                    // on dpi changes the header is recreated so we need
+                    // to add the new one again as addObserver
+                    // the old one will be removed in the same step
+                    mStatusBarHeaderMachine.addObserver((QuickStatusBarHeader) mHeader);
+                    mStatusBarHeaderMachine.updateEnablement();
+
                     initSignalCluster(mHeader);
                     mHeader.setActivityStarter(PhoneStatusBar.this);
                     mStackScroller.updateNotificationView();
@@ -1692,6 +1730,12 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 }
             });
         }
+
+        showtaskmanager();
+        mHeader.setTaskManagerEnabled(mShowTaskList);
+        mNotificationPanel.setTaskManagerEnabled(mShowTaskManager);
+        mShowTaskList = false;
+
 
         // User info. Trigger first load.
         mKeyguardStatusBar.setUserInfoController(mUserInfoController);
@@ -1770,11 +1814,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
 
-        mStatusBarHeaderMachine = new StatusBarHeaderMachine(mContext);
-        mStatusBarHeaderMachine.addObserver((QuickStatusBarHeader) mHeader);
-        mStatusBarHeaderMachine.updateEnablement();
-
-         try {
+        try {
             BroadcastReceiver receiver = new BroadcastReceiver() {
 
                 @Override
@@ -1809,6 +1849,13 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         }
         
         return mStatusBarView;
+    }
+
+    public void showtaskmanager() {
+        mTaskManagerPanel =
+                (LinearLayout) mStatusBarWindow.findViewById(R.id.task_manager_panel);
+        mTaskManager = new TaskManager(mContext, mTaskManagerPanel);
+        mTaskManagerButton = (TaskManagerButton) mHeader.findViewById(R.id.task_manager_button);
     }
 
     @Override
@@ -1885,6 +1932,13 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         SignalClusterView signalClusterView = reinflateSignalCluster(mStatusBarView);
         mIconController.setSignalCluster(signalClusterView);
         reinflateSignalCluster(mKeyguardStatusBar);
+    }
+
+    public void setenabled() {
+        if (mNotificationPanel != null) {
+           mShowTaskList = !mShowTaskList;
+           mNotificationPanel.setTaskManagerVisibility(mShowTaskList);
+           }
     }
 
     private SignalClusterView reinflateSignalCluster(View view) {
@@ -2254,8 +2308,11 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         if (mNavigationController.getBar() == null) return;
 
         prepareNavigationBarView();
-
+        try {
         mWindowManager.addView(mNavigationController.getBar().getBaseView(), getNavigationBarLayoutParams());
+        } catch (Exception e) {
+          if (DEBUG) Log.e(TAG, "Unable to add window android.view.ViewRootImpl$W@5456577 -- another window of type 2019 already exists");
+        }
     }
 
     protected void repositionNavigationBar() {
@@ -3618,6 +3675,9 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mWaitingForKeyguardExit = false;
         recomputeDisableFlags(!force /* animate */);
         setInteracting(StatusBarManager.WINDOW_STATUS_BAR, true);
+        if (mShowTaskManager) {
+            mTaskManager.refreshTaskManagerView();
+        }
     }
 
     public void animateCollapsePanels() {
@@ -4932,6 +4992,16 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
         mContext.getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(Settings.Secure.USER_SETUP_COMPLETE), true,
                 mUserSetupObserver, mCurrentUserId);
+    }
+
+
+    public void resetQsPanelVisibility() {
+        mShowTaskList = mShowTaskList;
+        if (mShowTaskList) {
+            mQSPanel.setVisibility(View.VISIBLE);
+            mTaskManagerPanel.setVisibility(View.GONE);
+            mShowTaskList = false;
+        }
     }
 
     /**
