@@ -115,10 +115,6 @@ public final class Zygote {
             for(String s : PIXEL_SERVICES)
                 if(niceName.contains(s)) {
                     Build.MODEL = "Pixel XL";
-                    Build.PRODUCT       = "Pixel XL";
-                    Build.DEVICE        = "Pixel XL";
-                    Build.MANUFACTURER  = "Google"  ;
-                    Build.BRAND         = "Google"  ;
                     break;
                 }
         }
