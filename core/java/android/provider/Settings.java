@@ -5571,12 +5571,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String SMARTBAR_DOUBLETAP_SLEEP = "smartbar_doubletap_sleep";
 
-         /**
-         * One Handed mode toggle
-         * @hide
-         */
-        public static final String ONE_HANDED_MODE_UI = "one_handed_mode_ui";
-
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
@@ -7108,6 +7102,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String PULSE_LAVALAMP_SOLID_SPEED = "lava_lamp_solid_speed";
+
+         /**
+         * One Handed mode toggle
+         * @hide
+         */
+        public static final String ONE_HANDED_MODE_UI = "one_handed_mode_ui";
  
         /**
          * A flag containing settings used for biometric weak
