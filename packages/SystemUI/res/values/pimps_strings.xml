@@ -18,4 +18,9 @@
 
     <!-- Path data for big circle battery -->
     <string name="battery_bigcircle_path" translatable="false">M 12,0.9999999 C 18.075132,0.9999999 23,5.9248678 23,12 23,18.075132 18.075132,23 12,23 5.9248675,23 0.99999975,18.075132 0.99999975,12 0.99999975,5.9248678 5.9248675,0.9999999 12,0.9999999 Z</string>
+
+    <string name="quick_settings_doze_notifications_label">Doze notifications</string>
+    <string name="quick_settings_doze_notifications_user">Doze notifications</string>
+    <string name="quick_settings_doze_notifications_off">No doze notifications</string>
+
 </resources>
