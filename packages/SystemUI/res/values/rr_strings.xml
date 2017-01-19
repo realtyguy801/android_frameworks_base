@@ -211,6 +211,19 @@
     <string name="accessibility_quick_settings_hwkeys_off">HW keys off</string>
     <string name="quick_settings_hwkeys_label">HW keys</string>
 
+    <!-- Live display tile -->
+    <string name="live_display_title" translatable="false">LiveDisplay</string>
+    <string name="quick_settings_live_display_off">LiveDisplay off.</string>
+    <string name="quick_settings_live_display_auto">LiveDisplay: auto mode.</string>
+    <string name="quick_settings_live_display_day">LiveDisplay: day mode.</string>
+    <string name="quick_settings_live_display_night">LiveDisplay: night mode.</string>
+    <string name="quick_settings_live_display_outdoor">LiveDisplay: outdoor mode.</string>
+    <string name="quick_settings_live_display_changed_off">LiveDisplay turned off.</string>
+    <string name="quick_settings_live_display_changed_auto">LiveDisplay changed to auto mode.</string>
+    <string name="quick_settings_live_display_changed_day">LiveDisplay changed to day mode.</string>
+    <string name="quick_settings_live_display_changed_night">LiveDisplay changed to night mode.</string>
+    <string name="quick_settings_live_display_changed_outdoor">LiveDisplay changed to outdoor mode.</string>
+
     <!-- PA Pie controls -->
     <string name="pie_date_format" translatable="false">ccc, dd MMM yyyy</string>
     <string name="pie_hour_format_12" translatable="false">hh:mm</string>
@@ -296,5 +309,10 @@
     <!-- Indication on the keyguard that is shown when the device is charging with a dash charger. Should match keyguard_plugged_in_dash_charging [CHAR LIMIT=40]-->
     <string name="keyguard_indication_dash_charging_time">Dash Charging (<xliff:g id="charging_time_left" example="4 hours and 2 minutes">%s</xliff:g> until full)</string>
     <string name="keyguard_plugged_in_dash_charging">Dash Charging</string>
+
+    <!-- vpn icon switch -->
+    <string name="status_bar_vpn">VPN</string>
+    <!-- data saver icon switch -->
+    <string name="status_bar_datasaver">Data saver</string>
 
 </resources>
