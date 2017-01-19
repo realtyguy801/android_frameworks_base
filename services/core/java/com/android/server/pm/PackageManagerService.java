@@ -4563,11 +4563,11 @@ public class PackageManagerService extends IPackageManager.Stub {
                         || actionName.startsWith("com.android.server.sip.SipWakeupTimer")
                         || actionName.startsWith("com.android.internal.telephony.data-reconnect")
                         || actionName.startsWith("android.net.netmon.launchCaptivePortalApp")
+                        || actionName.startsWith("qualcomm.intent.action.ACTION_AUDIO_STATE_CHANGED")
+                        || actionName.startsWith("com.qualcomm.intent.action.ACTION_UNSOL_RESPONSE_OEM_HOOK_RAW")
                         || actionName.startsWith("eu.chainfire.supersu.NativeAccess")
                         || actionName.startsWith("intent_navbar_edit")
-                        || actionName.startsWith("org.omnirom.omniswitch")
-                        || actionName.startsWith("qualcomm.intent.action.ACTION_AUDIO_STATE_CHANGED")
-                        || actionName.startsWith("com.qualcomm.intent.action.ACTION_UNSOL_RESPONSE_OEM_HOOK_RAW")) {
+                        || actionName.startsWith("org.omnirom.omniswitch")) {
                     return true;
                 }
             }
