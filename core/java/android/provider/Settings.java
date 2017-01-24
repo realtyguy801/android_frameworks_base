@@ -6843,14 +6843,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String ONE_HANDED_MODE_UI = "one_handed_mode_ui";
 
-         /**
-        * Fling pulse lavalamp start and end colors
-         *
-         * @hide
-         */
-        public static final String FLING_PULSE_LAVALAMP_COLOR_FROM = "fling_lavalamp_color_from";
-        public static final String FLING_PULSE_LAVALAMP_COLOR_TO = "fling_lavalamp_color_to";
-
         /**
          * Comma-separated list of location providers that activities may access. Do not rely on
          * this value being present in settings.db or on ContentObserver notifications on the
