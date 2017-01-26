@@ -111,10 +111,7 @@
                 android:id="@+id/networkTraffic"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingStart="2dip"
-                android:paddingEnd="4dip"
                 android:singleLine="false"
-                android:fontFamily="sans-serif-condensed"
                 android:gravity="right|center_vertical"/>
 
              <ImageView
