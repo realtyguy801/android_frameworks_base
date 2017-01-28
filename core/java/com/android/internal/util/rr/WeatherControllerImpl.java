@@ -55,6 +55,8 @@ public class WeatherControllerImpl implements WeatherController {
 
     private static final int WEATHER_ICON_MONOCHROME = 0;
     private static final int WEATHER_ICON_COLORED = 1;
+    private static final int WEATHER_ICON_MARSHMALLOW = 2;
+    private static final int WEATHER_ICON_WEEZLE = 3;
 
     private final ArrayList<Callback> mCallbacks = new ArrayList<Callback>();
     private final Receiver mReceiver = new Receiver();
@@ -93,6 +95,10 @@ public class WeatherControllerImpl implements WeatherController {
             iconName = "weather_";
         } else if (iconNameValue == WEATHER_ICON_COLORED) {
             iconName = "weather_color_";
+        } else if (iconNameValue == WEATHER_ICON_MARSHMALLOW) {
+            iconName = "weather_marshmallow_";
+        } else if (iconNameValue == WEATHER_ICON_WEEZLE) {
+            iconName = "weather_weezle_";
         } else {
             iconName = "weather_vclouds_";
         }
