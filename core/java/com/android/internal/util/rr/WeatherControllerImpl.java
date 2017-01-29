@@ -57,6 +57,10 @@ public class WeatherControllerImpl implements WeatherController {
     private static final int WEATHER_ICON_COLORED = 1;
     private static final int WEATHER_ICON_MARSHMALLOW = 2;
     private static final int WEATHER_ICON_WEEZLE = 3;
+    private static final int WEATHER_ICON_GS6= 4;
+    private static final int WEATHER_ICON_GNW = 5;
+    private static final int WEATHER_ICON_MIUI = 6;
+    private static final int WEATHER_ICON_STHUL = 7;
 
     private final ArrayList<Callback> mCallbacks = new ArrayList<Callback>();
     private final Receiver mReceiver = new Receiver();
@@ -99,6 +103,14 @@ public class WeatherControllerImpl implements WeatherController {
             iconName = "weather_marshmallow_";
         } else if (iconNameValue == WEATHER_ICON_WEEZLE) {
             iconName = "weather_weezle_";
+        } else if (iconNameValue == WEATHER_ICON_GS6) {
+            iconName = "weather_gs6_";
+        } else if (iconNameValue == WEATHER_ICON_GNW) {
+            iconName = "weather_gnw_";
+        } else if (iconNameValue == WEATHER_ICON_MIUI) {
+            iconName = "weather_miui_";
+        } else if (iconNameValue == WEATHER_ICON_STHUL) {
+            iconName = "weather_sthul_";
         } else {
             iconName = "weather_vclouds_";
         }
