@@ -5488,6 +5488,13 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
 
+         /**
+         * show text headers together with the stream volume images
+         * default is true
+         * @hide
+         */
+        public static final String VOLUME_DIALOG_HEADERS = "volume_dialog_headers";
+
         /**
          * Override and forcefully disable the fullscreen keyboard
          * @hide
