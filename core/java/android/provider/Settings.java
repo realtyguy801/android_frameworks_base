@@ -4205,20 +4205,8 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String IMMERSIVE_RECENTS = "immersive_recents";
 
-        /**
-         * Disable dashboard suggestions in settings
-         * @hide
-         */
-        public static final String DISABLE_SUGGESTIONS = "disable_suggestions";
 
-        /**
-         * Remove tile summaries in settings
-         * @hide
-         */
-        public static final String REMOVE_TILE_SUMMARY = "remove_tile_summary";
-
-
-		/**
+       /**
          * Whether to use gesture anywhere feature.
          * @hide
          */
@@ -4521,12 +4509,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          *  @hide
          */
         public static final String SHOW_LOCKSCREEN_ALARM = "show_lockscreen_alarm";
-
-        /**
-         * Disable dashboard conditions in settings
-         * @hide
-         */
-        public static final String DISABLE_DASHBOARD_CONDITIONS = "disable_dashboard_conditions";
 
 
         /** 
@@ -5603,6 +5585,36 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String SHOW_ALARM_FULLSCREEN = "show_alarm_fullscreen";
+
+        /**
+         * Disable dashboard suggestions in settings
+         * @hide
+         */
+        public static final String DISABLE_SUGGESTIONS = "disable_dashboard_suggestions";
+
+        /**
+         * Remove tile summaries in settings
+         * @hide
+         */
+        public static final String REMOVE_TILE_SUMMARY = "remove_tile_summary";
+
+        /**
+         * Disable dashboard conditions in settings
+         * @hide
+         */
+        public static final String DISABLE_DASHBOARD_CONDITIONS = "disable_dashboard_conditions";
+
+        /**
+         * Dashboard portrait columns in settings
+         * @hide
+         */
+        public static final String DASHBOARD_PORTRAIT_COLUMNS = "dashboard_portrait_columns";
+
+        /**
+         * Dashboard landscape columns in settings
+         * @hide
+         */
+        public static final String DASHBOARD_LANDSCAPE_COLUMNS = "dashboard_landscape_columns";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings

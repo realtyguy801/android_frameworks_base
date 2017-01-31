@@ -30,6 +30,7 @@ import static android.os.Process.PACKAGE_INFO_GID;
 import static android.os.Process.SYSTEM_UID;
 
 import static com.android.server.pm.PackageManagerService.DEBUG_DOMAIN_VERIFICATION;
+
 import android.annotation.NonNull;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -1614,7 +1615,7 @@ final class Settings {
                                 false,  // suspended
                                 null, null, null,
                                 false, // blockUninstall
-                                INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_UNDEFINED, 0, null,
+                                INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_UNDEFINED, 0,null,
                                 null,
                                 null
                                 );
