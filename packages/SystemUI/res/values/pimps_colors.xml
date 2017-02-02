@@ -32,4 +32,7 @@
     <!-- app sidebar item text shadow color -->
     <color name="sidebar_item_text_shadow_color">#ff000000</color>
 
+    <!-- Keyguard affordance circle background -->
+    <color name="keyguard_affordance_circle_background">@android:color/white</color>
+
 </resources>
