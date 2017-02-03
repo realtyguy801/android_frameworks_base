@@ -107,7 +107,6 @@
   <java-symbol type="style" name="PowerMenuTnAnimation" />
   <java-symbol type="style" name="PowerMenuflyAnimation" />
   <java-symbol type="style" name="PowerMenuCardAnimation" />
-  <java-symbol type="style" name="PowerMenuFadeAnimation" />
 
 
   <!-- Doze invert -->

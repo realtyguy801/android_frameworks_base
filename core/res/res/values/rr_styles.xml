@@ -49,8 +49,4 @@
         <item name="windowEnterAnimation">@anim/honami_toast_enter</item>
         <item name="windowExitAnimation">@anim/honami_toast_exit</item>
     </style>
-    <style name="PowerMenuFadeAnimation">
-        <item name="windowEnterAnimation">@anim/custom_fade_in</item>
-        <item name="windowExitAnimation">@anim/custom_fade_out</item>
-    </style>
 </resources>
