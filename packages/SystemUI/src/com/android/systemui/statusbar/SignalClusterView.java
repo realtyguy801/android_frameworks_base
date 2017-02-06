@@ -153,7 +153,7 @@ public class SignalClusterView
                  boolean blockMobile = blockList.contains(SLOT_MOBILE);
                  boolean blockWifi = blockList.contains(SLOT_WIFI);
                  boolean blockEthernet = blockList.contains(SLOT_ETHERNET);
-				 boolean blockVpn = blockList.contains(SLOT_VPN);
+                 boolean blockVpn = blockList.contains(SLOT_VPN);
 
                  if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
                          || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi) {
@@ -161,10 +161,11 @@ public class SignalClusterView
                      mBlockMobile = blockMobile;
                      mBlockEthernet = blockEthernet;
                      mBlockWifi = blockWifi;
-					 mBlockVpn = blockVpn;
+                     mBlockVpn = blockVpn;
                      // Re-register to get new callbacks.
                      mNC.removeSignalCallback(this);
                      mNC.addSignalCallback(this);
+                     apply();
                  }
                 break;
             case DATA_ACTIVITY_ARROWS:
