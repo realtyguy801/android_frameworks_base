@@ -1748,11 +1748,13 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
                 }
             });
         }
-
         showtaskmanager();
         mHeader.setTaskManagerEnabled(mShowTaskList);
         mNotificationPanel.setTaskManagerEnabled(mShowTaskManager);
         mShowTaskList = false;
+
+        mMinitBatteryController = new MinitBatteryController(mContext, mStatusBarView, mKeyguardStatusBar);
+        mPackageMonitor.addListener(mMinitBatteryController);
 
         mMinitBatteryController = new MinitBatteryController(mContext, mStatusBarView, mKeyguardStatusBar);
         mPackageMonitor.addListener(mMinitBatteryController);
