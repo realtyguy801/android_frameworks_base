@@ -46,4 +46,5 @@
     <style name="BatteryMeterViewDrawable.Aoscp">
 	    <item name="blendMode">overlay</item>
     </style>
+    <style name="BatteryMeterViewDrawable.Aicp"/>
 </resources>
