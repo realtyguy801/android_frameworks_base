@@ -46,7 +46,7 @@ public class AppSideBarTile extends QSTile<QSTile.BooleanState> {
     private AppSideBarObserver mObserver;
 
 	private static final Intent APP_CICLEBAR = new Intent().setComponent(new ComponentName(
-            "com.android.settings", "com.android.settings.Settings$AppSideBarActivity"));
+            "com.android.settings", "com.android.settings.Settings$AppSidebarActivity"));
 
 
     public AppSideBarTile(Host host) {
