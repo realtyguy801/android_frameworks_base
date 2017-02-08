@@ -42,6 +42,7 @@ import com.android.systemui.qs.external.TileLifecycleManager;
 import com.android.systemui.qs.external.TileServices;
 import com.android.systemui.qs.tiles.AdbOverNetworkTile;
 import com.android.systemui.qs.tiles.AirplaneModeTile;
+import com.android.systemui.qs.tiles.AndroidAutoTile;
 import com.android.systemui.qs.tiles.BatteryTile;
 import com.android.systemui.qs.tiles.AppPickerTile;
 import com.android.systemui.qs.tiles.BluetoothTile;
@@ -495,6 +496,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("pulse")) return new PulseTile(this);
         else if (tileSpec.equals("app_circle_bar")) return new AppCircleBarTile(this);
         else if (tileSpec.equals("app_side_bar")) return new AppSideBarTile(this);
+        else if (tileSpec.equals("androidauto")) return new AndroidAutoTile(this);
         else if (tileSpec.equals("gesture_anywhere")) return new GestureAnyWhereTile(this);
         else if (tileSpec.equals("pie")) return new PieTile(this);
         else if (tileSpec.equals("ambient")) return new AmbientLiftToWakeTile(this);
