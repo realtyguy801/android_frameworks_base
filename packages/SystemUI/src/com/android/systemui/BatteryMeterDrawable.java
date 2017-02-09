@@ -78,9 +78,10 @@ public class BatteryMeterDrawable extends Drawable implements
     public static final int BATTERY_STYLE_SOLID     = 1;
     public static final int BATTERY_STYLE_CIRCLE    = 2;
     public static final int BATTERY_STYLE_BIGCIRCLE = 3;
-    public static final int BATTERY_STYLE_HIDDEN    = 4;
-    public static final int BATTERY_STYLE_LANDSCAPE = 5;
-    public static final int BATTERY_STYLE_TEXT      = 6;
+    public static final int BATTERY_STYLE_AOSCP     = 4;
+    public static final int BATTERY_STYLE_HIDDEN    = 5;
+    public static final int BATTERY_STYLE_LANDSCAPE = 6;
+    public static final int BATTERY_STYLE_TEXT      = 7;
 
     private final int[] mColors;
     private final int mIntrinsicWidth;
@@ -286,7 +287,19 @@ public class BatteryMeterDrawable extends Drawable implements
         mLevel = level;
         mPluggedIn = pluggedIn;
 
-        if (mStyle == BATTERY_STYLE_CIRCLE || mStyle == BATTERY_STYLE_BIGCIRCLE) {
+        if (mStyle == BATTERY_STYLE_CIRCLE) {
+            animateCircleBattery(level, pluggedIn, charging);
+        }
+
+        if (mStyle == BATTERY_STYLE_BIGCIRCLE) {
+            animateCircleBattery(level, pluggedIn, charging);
+        }
+		
+        if (mStyle == BATTERY_STYLE_SOLID) {
+            animateCircleBattery(level, pluggedIn, charging);
+        }
+
+        if (mStyle == BATTERY_STYLE_AOSCP) {
             animateCircleBattery(level, pluggedIn, charging);
         }
 
@@ -566,6 +579,8 @@ public class BatteryMeterDrawable extends Drawable implements
                 return R.drawable.ic_battery_solid;
             case BATTERY_STYLE_BIGCIRCLE:
                 return R.drawable.ic_battery_bigcircle;
+	    case BATTERY_STYLE_AOSCP:
+                return R.drawable.ic_battery_aoscp;
             case BATTERY_STYLE_PORTRAIT:
                 return R.drawable.ic_battery_portrait;
             default:
@@ -581,7 +596,9 @@ public class BatteryMeterDrawable extends Drawable implements
                 return R.style.BatteryMeterViewDrawable_Circle;
             case BATTERY_STYLE_BIGCIRCLE:
                 return R.style.BatteryMeterViewDrawable_Circle;
-			case BATTERY_STYLE_SOLID:
+            case BATTERY_STYLE_AOSCP:
+                return R.style.BatteryMeterViewDrawable_Aoscp;
+            case BATTERY_STYLE_SOLID:
                 return R.style.BatteryMeterViewDrawable_Solid;
             case BATTERY_STYLE_PORTRAIT:
                 return R.style.BatteryMeterViewDrawable_Portrait;
@@ -621,6 +638,9 @@ public class BatteryMeterDrawable extends Drawable implements
                 break;
             case BATTERY_STYLE_BIGCIRCLE:
                 textSize = widthDiv2 * 1.3f;
+                break;
+            case BATTERY_STYLE_AOSCP:
+                textSize = widthDiv2 * 1.0f;
                 break;
             case BATTERY_STYLE_SOLID:
                 textSize = widthDiv2 * 1.0f;
