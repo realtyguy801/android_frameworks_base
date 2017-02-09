@@ -4642,11 +4642,23 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * Weather condition icon on the lock screen
          * 0: monochrome
          * 1: colored
-         * 2: vclouds
+         * 2: marshmallow
+         * 3: weezle
+         * 4: gs6
+         * 5: google now
+         * 6: miui
+         * 7: sthul
+         * 8: tapas
+         * 9: vclouds
          * default: 0
          * @hide
          */
         public static final String LOCK_SCREEN_WEATHER_CONDITION_ICON = "lock_screen_weather_condition_icon";
+
+         /**
+         * @hide
+         */
+        public static final String AMBIENT_DISPLAY_SHOW_WEATHER = "ambient_display_show_weather";
 
         /**
          * Whether to hide the weather panel when the notifications will reach the number of notifications

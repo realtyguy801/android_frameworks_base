@@ -61,7 +61,7 @@ public class WeatherControllerImpl implements WeatherController {
     private static final int WEATHER_ICON_GNW = 5;
     private static final int WEATHER_ICON_MIUI = 6;
     private static final int WEATHER_ICON_STHUL = 7;
-    private static final int WEATHER_ICON_TAPAS = 7;
+    private static final int WEATHER_ICON_TAPAS = 8;
 
     private final ArrayList<Callback> mCallbacks = new ArrayList<Callback>();
     private final Receiver mReceiver = new Receiver();
