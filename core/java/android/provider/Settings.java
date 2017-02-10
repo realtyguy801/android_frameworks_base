@@ -2695,13 +2695,6 @@ public final class Settings {
 
         private static final Validator BLUETOOTH_DISCOVERABILITY_VALIDATOR =
                 new InclusiveIntegerRangeValidator(0, 2);
-                
-        /**
-         * If all file types can be accepted over Bluetooth OBEX.
-         * @hide
-         */
-        public static final String BLUETOOTH_ACCEPT_ALL_FILES =
-"bluetooth_accept_all_files"; 
 
         /**
          * Bluetooth discoverability timeout.  If this value is nonzero, then
@@ -5815,7 +5808,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
             BLUETOOTH_DISCOVERABILITY,
             BLUETOOTH_DISCOVERABILITY_TIMEOUT,
             FONT_SCALE,
-            BLUETOOTH_ACCEPT_ALL_FILES,           
             DIM_SCREEN,
             SCREEN_OFF_TIMEOUT,
             SCREEN_BRIGHTNESS,
