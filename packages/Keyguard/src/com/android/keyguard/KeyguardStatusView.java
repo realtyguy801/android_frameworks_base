@@ -730,6 +730,8 @@ public class KeyguardStatusView extends GridLayout implements
                 Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, -2);
         boolean showLocation = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_SHOW_WEATHER_LOCATION, 1) == 1;
+        boolean showCon = Settings.System.getInt(resolver,
+                Settings.System.LOCK_SCREEN_SHOW_WEATHER_CONDITION, 1) == 1;
         int iconNameValue = Settings.System.getInt(resolver,
                 Settings.System.LOCK_SCREEN_WEATHER_CONDITION_ICON, 0);
 
@@ -771,11 +773,11 @@ public class KeyguardStatusView extends GridLayout implements
             noWeatherInfo.setVisibility(View.GONE);
             weatherPanel.setVisibility(View.GONE);
             mWeatherConditionText.setVisibility(View.GONE);
-			mWeatherCity.setVisibility(View.GONE);
+            mWeatherCity.setVisibility(View.GONE);
         } else if (!mIsDozing) {
             noWeatherInfo.setVisibility(View.GONE);
             weatherPanel.setVisibility(View.VISIBLE);
-            mWeatherConditionText.setVisibility(View.VISIBLE);
+            mWeatherConditionText.setVisibility(showCon ? View.VISIBLE :View.VISIBLE);
             mWeatherCity.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
         }
 	    mWeatherCurrentTemp.setTextColor(mTempColor);

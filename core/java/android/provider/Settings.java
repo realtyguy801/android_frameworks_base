@@ -4642,6 +4642,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String LOCK_SCREEN_SHOW_WEATHER_LOCATION = "lock_screen_show_weather_location";
 
         /**
+         * Whether to show the weather condition lock screen
+         * @hide
+         */
+        public static final String LOCK_SCREEN_SHOW_WEATHER_CONDITION = "lock_screen_show_weather_condition";
+
+        /**
          * Whether to show the weather update timestamp on the lock screen
          * @hide
          */
