@@ -777,7 +777,7 @@ public class KeyguardStatusView extends GridLayout implements
         } else if (!mIsDozing) {
             noWeatherInfo.setVisibility(View.GONE);
             weatherPanel.setVisibility(View.VISIBLE);
-            mWeatherConditionText.setVisibility(showCon ? View.VISIBLE :View.VISIBLE);
+            mWeatherConditionText.setVisibility(showCon ? View.VISIBLE :View.INVISIBLE);
             mWeatherCity.setVisibility(showLocation ? View.VISIBLE : View.INVISIBLE);
         }
 	    mWeatherCurrentTemp.setTextColor(mTempColor);
