@@ -165,7 +165,7 @@ public class BatteryMeterDrawable extends Drawable implements
         mHandler = handler;
         mStyle = style;
         final Resources res = context.getResources();
-        if (mBatteryColor) {
+        if ((Settings.System.getInt(mContext.getContentResolver(), Settings.System.COLORFUL_BATTERY, 0) == 1)) {
         TypedArray levels = res.obtainTypedArray(R.array.batterymeter_colorful_levels);
         TypedArray colors = res.obtainTypedArray(R.array.batterymeter_colorful_values);
 
@@ -190,6 +190,7 @@ public class BatteryMeterDrawable extends Drawable implements
         levels.recycle();
         colors.recycle();
         }
+        updateBatteryColor();
         updateShowPercent();
         mWarningString = context.getString(R.string.battery_meter_very_low_overlay_symbol);
         mCriticalLevel = mContext.getResources().getInteger(
