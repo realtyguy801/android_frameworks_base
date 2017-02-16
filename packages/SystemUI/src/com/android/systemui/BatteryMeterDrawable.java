@@ -101,6 +101,8 @@ public class BatteryMeterDrawable extends Drawable implements
     private String mWarningString;
     private final int mCriticalLevel;
     private int mChargeColor;
+    private boolean mBatteryColor;
+    private boolean mLargeText;
     private final Path mBoltPath = new Path();
     private final Path mPlusPath = new Path();
 
@@ -163,6 +165,19 @@ public class BatteryMeterDrawable extends Drawable implements
         mHandler = handler;
         mStyle = style;
         final Resources res = context.getResources();
+        if (mBatteryColor) {
+        TypedArray levels = res.obtainTypedArray(R.array.batterymeter_colorful_levels);
+        TypedArray colors = res.obtainTypedArray(R.array.batterymeter_colorful_values);
+
+        final int N = levels.length();
+        mColors = new int[2*N];
+        for (int i=0; i<N; i++) {
+            mColors[2*i] = levels.getInt(i, 0);
+            mColors[2*i+1] = colors.getColor(i, 0);
+        }
+        levels.recycle();
+        colors.recycle();
+        } else {
         TypedArray levels = res.obtainTypedArray(R.array.batterymeter_color_levels);
         TypedArray colors = res.obtainTypedArray(R.array.batterymeter_color_values);
 
@@ -174,6 +189,7 @@ public class BatteryMeterDrawable extends Drawable implements
         }
         levels.recycle();
         colors.recycle();
+        }
         updateShowPercent();
         mWarningString = context.getString(R.string.battery_meter_very_low_overlay_symbol);
         mCriticalLevel = mContext.getResources().getInteger(
@@ -251,10 +267,15 @@ public class BatteryMeterDrawable extends Drawable implements
                 CMSettings.System.getUriFor(CMSettings.System.STATUS_BAR_BATTERY_STYLE),
                 false, mSettingObserver);
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(BATTERY_LARGE_TEXT),
+                Settings.System.getUriFor(Settings.System.BATTERY_LARGE_TEXT),
+                false, mSettingObserver);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.COLORFUL_BATTERY),
                 false, mSettingObserver);
         updateShowPercent();
         updateChargeColor();
+        updateLargeText();
+        updateBatteryColor();
         mBatteryController.addStateChangedCallback(this);
     }
 
@@ -361,6 +382,16 @@ public class BatteryMeterDrawable extends Drawable implements
         mChargeColor = Settings.Secure.getInt(mContext.getContentResolver(),
                 Settings.Secure.STATUS_BAR_CHARGE_COLOR,
                         mContext.getResources().getColor(R.color.batterymeter_charge_color));
+    }
+
+    private void updateLargeText() {
+        mLargeText = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.BATTERY_LARGE_TEXT, 0) == 1;
+    }
+
+    private void updateBatteryColor() {
+        mBatteryColor = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.COLORFUL_BATTERY, 0) == 1;
     }
 
     private int updateDarkDensityChargeColor() {
@@ -502,6 +533,8 @@ public class BatteryMeterDrawable extends Drawable implements
             super.onChange(selfChange, uri);
             updateShowPercent();
             updateChargeColor();
+            updateBatteryColor();
+            updateLargeText();
             postInvalidate();
         }
     }
@@ -628,7 +661,7 @@ public class BatteryMeterDrawable extends Drawable implements
         final float widthDiv2 = mWidth / 2f;
         // text size is width / 2 - 2dp for wiggle room
 
-        if ((Settings.System.getInt(mContext.getContentResolver(), Settings.System.BATTERY_LARGE_TEXT, 0) == 1)) {
+        if (mLargeText) {
         final float textSize;
         switch(mStyle) {
             case BATTERY_STYLE_CIRCLE:

@@ -44,6 +44,32 @@
         <item>@color/battery_meter_95</item>
         <item>@color/battery_meter_100</item>
     </array>
+
+    <!-- BatteryMeterView parameters -->
+    <array name="batterymeter_colorful_levels">
+        <item>15</item>
+        <item>25</item>
+	<item>35</item>
+	<item>45</item>	
+	<item>55</item>
+	<item>65</item>
+	<item>75</item>
+	<item>85</item>
+	<item>95</item>
+	<item>100</item>
+    </array>
+    <array name="batterymeter_colorful_values">
+        <item>@color/battery_color_meter_15</item>
+        <item>@color/battery_color_meter_25</item>
+        <item>@color/battery_color_meter_35</item>
+        <item>@color/battery_color_meter_45</item>
+        <item>@color/battery_color_meter_55</item>
+        <item>@color/battery_color_meter_65</item>
+        <item>@color/battery_color_meter_75</item>
+        <item>@color/battery_color_meter_85</item>
+        <item>@color/battery_color_meter_95</item>
+        <item>@color/battery_color_meter_100</item>
+    </array>
     <array name="batterymeter_bolt_points">
         <item>73</item> <item>0</item>
         <item>392</item><item>0</item>

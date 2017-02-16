@@ -4329,6 +4329,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String BATTERY_LARGE_TEXT = "battery_large_text";
 
         /**
+         * Whether tdisplay large text for statusbar battery percentage
+         * @hide
+         */
+        public static final String COLORFUL_BATTERY = "colorful_battery";
+
+        /**
          * Whether to show the battery bar
          * @hide
          */

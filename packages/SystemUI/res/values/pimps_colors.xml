@@ -37,16 +37,27 @@
 
     <!-- Battery meter colors -->
     <color name="battery_meter_15">@*android:color/battery_saver_mode_color</color>
-    <color name="battery_meter_15">#FFFFFFFF</color>
-    <color name="battery_meter_15">#FFFF8888</color>
-    <color name="battery_meter_35">#FFBB9988</color>
-    <color name="battery_meter_45">#FF77AA88</color>
-    <color name="battery_meter_55">#FF33BB88</color>
-    <color name="battery_meter_65">#FF33CC88</color>
-    <color name="battery_meter_75">#FF33DD88</color>
-    <color name="battery_meter_85">##FF33EEAA</color>
-    <color name="battery_meter_95">#FF44EEBB</color>
-    <color name="battery_meter_100">#FF55EEBB</color>
+    <color name="battery_meter_25">#FFFFFFFF</color>
+    <color name="battery_meter_35">#FFFFFFFF</color>
+    <color name="battery_meter_45">#FFFFFFFF</color>
+    <color name="battery_meter_55">#FFFFFFFF</color>
+    <color name="battery_meter_65">#FFFFFFFF</color>
+    <color name="battery_meter_75">#FFFFFFFF</color>
+    <color name="battery_meter_85">#FFFFFFFF</color>
+    <color name="battery_meter_95">#FFFFFFFF</color>
+    <color name="battery_meter_100">#FFFFFFFF</color>
+
+    <!-- Battery meter colors -->
+    <color name="battery_color_meter_15">@*android:color/battery_saver_mode_color</color>
+    <color name="battery_color_meter_25">#FFFF8888</color>
+    <color name="battery_color_meter_35">#FFBB9988</color>
+    <color name="battery_color_meter_45">#FF77AA88</color>
+    <color name="battery_color_meter_55">#FF33BB88</color>
+    <color name="battery_color_meter_65">#FF33CC88</color>
+    <color name="battery_color_meter_75">#FF33DD88</color>
+    <color name="battery_color_meter_85">#FF33EEAA</color>
+    <color name="battery_color_meter_95">#FF44EEBB</color>
+    <color name="battery_color_meter_100">#FF55EEBB</color>
     
 
 </resources>
