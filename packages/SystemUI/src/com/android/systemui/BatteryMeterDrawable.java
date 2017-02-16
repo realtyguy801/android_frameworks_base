@@ -389,13 +389,9 @@ public class BatteryMeterDrawable extends Drawable implements
                 if (percent <= thresh) {
 
                     // Respect tinting for "normal" level
-                    if (i == mColors.length-2) {
-                        return mIconTint;
-                    } else {
                         return color;
                     }
                 }
-            }
             return color;
         }
     }
