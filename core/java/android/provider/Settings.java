@@ -4361,31 +4361,11 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */       
         public static final String STATUSBAR_BATTERY_BAR_CHARGING_COLOR = "statusbar_battery_bar_charging_color";
 
-
-
         /**
          * @hide
          */
-        public static final String STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR_WARNING =
-                "statusbar_battery_bar_battery_low_color_warning";
-
-        /**
-         * @hide
-         */
-        public static final String STATUSBAR_BATTERY_BAR_HIGH_COLOR =
-                "statusbar_battery_bar_high_color";
-
-        /**
-         * @hide
-         */
-        public static final String STATUSBAR_BATTERY_BAR_LOW_COLOR =
-                "statusbar_battery_bar_low_color";
-
-        /**
-         * @hide
-         */
-        public static final String STATUSBAR_BATTERY_BAR_USE_GRADIENT_COLOR =
-                "statusbar_battery_bar_use_gradient_color";
+        public static final String STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR =
+                "statusbar_battery_bar_battery_low_color";
 
         /**
          * @hide
@@ -4396,6 +4376,21 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
        public static final String STATUSBAR_BATTERY_BAR_ANIMATE = "statusbar_battery_bar_animate";
+
+         /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR = "battery_bar_enable_charging_color";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_BLEND_COLORS = "battery_bar_blend_color";
+
+        /**
+         * @hide
+         */
+        public static final String STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE = "battery_bar_blend_color_reverse";
 
         /**
          * Position of date
