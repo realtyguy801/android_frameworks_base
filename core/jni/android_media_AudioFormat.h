@@ -134,6 +134,8 @@ static inline int audioFormatFromNative(audio_format_t nativeFormat)
         return ENCODING_AAC_HE_V2;
     case AUDIO_FORMAT_IEC61937:
         return ENCODING_IEC61937;
+    case AUDIO_FORMAT_DOLBY_TRUEHD:
+        return ENCODING_DOLBY_TRUEHD;
     case AUDIO_FORMAT_AMR_NB:
         return ENCODING_AMR_NB;
     case AUDIO_FORMAT_AMR_WB:
@@ -146,8 +148,6 @@ static inline int audioFormatFromNative(audio_format_t nativeFormat)
         return ENCODING_EVRC_WB;
     case AUDIO_FORMAT_EVRCNW:
         return ENCODING_EVRC_NW;
-    case AUDIO_FORMAT_DOLBY_TRUEHD:
-        return ENCODING_DOLBY_TRUEHD;
     case AUDIO_FORMAT_AC4:
         return ENCODING_AC4;
     case AUDIO_FORMAT_DEFAULT:

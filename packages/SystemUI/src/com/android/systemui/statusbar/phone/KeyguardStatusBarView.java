@@ -274,7 +274,8 @@ public class KeyguardStatusBarView extends RelativeLayout
             } else {
                 mCarrierLabel.setVisibility(View.GONE);
             }
-        }
+         }
+
        getFontStyle(mCarrierLabelFontStyle);
     }
 
