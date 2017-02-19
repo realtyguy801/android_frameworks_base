@@ -17,9 +17,6 @@
 -->
 <resources>
 
-  <!-- Notification icon/text dynamic tint -->
-  <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
-
  <!-- High Brightness Mode -->
   <java-symbol type="bool" name="config_supportHighBrightness" />
 

@@ -2737,12 +2737,6 @@ public final class Settings {
         public static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL =
                 "lockscreen_quick_unlock_control";
 
-         /**
-         * Unlock keystore with fingerprint after reboot
-         * @hide
-         */
-        public static final String FP_UNLOCK_KEYSTORE = "fp_unlock_keystore";
-
         /**
          * @hide
          */
@@ -5884,6 +5878,18 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String QS_QUICKBAR_SCROLL_ENABLED = "qs_quickbar_scroll_enabled";
+
+        /**
+         * Unlock keystore with fingerprint after reboot
+         * @hide
+         */
+        public static final String FP_UNLOCK_KEYSTORE = "fp_unlock_keystore";
+
+        /**
+         * Show/Hide Emergency Button on Lockscreen
+         * @hide
+         */
+        public static final String SHOW_EMERGENCY_BUTTON = "show_emergency_button";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
