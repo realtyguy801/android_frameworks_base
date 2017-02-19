@@ -269,7 +269,7 @@ public class Ringtone {
         return title;
     }
 
-    private void setCustomAudioAttributes() {
+    public void setCustomAudioAttributes() {
         int focusmode = getWiredRingtoneFocusMode();
         switch (focusmode) {
             case 0: //play ringtone only from headset if music playing, otherwise from speakerphone
@@ -295,6 +295,12 @@ public class Ringtone {
         }
     }
 
+    private int getWiredRingtoneFocusMode() {
+        int mode = Settings.Global.getInt(mContext.getContentResolver(),
+                Settings.Global.WIRED_RINGTONE_FOCUS_MODE, 1);
+        return mode;
+    }
+
     /**
      * Set {@link Uri} to be used for ringtone playback. Attempts to open
      * locally, otherwise will delegate playback to remote
@@ -314,7 +320,6 @@ public class Ringtone {
 
         // try opening uri locally before delegating to remote player
         mLocalPlayer = new MediaPlayer();
-
         try {
             mLocalPlayer.setDataSource(mContext, mUri);
             mLocalPlayer.setAudioAttributes(mAudioAttributes);
@@ -337,12 +342,6 @@ public class Ringtone {
                 Log.d(TAG, "Problem opening; delegating to remote player");
             }
         }
-    }
-
-    private int getWiredRingtoneFocusMode() {
-        int mode = Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.WIRED_RINGTONE_FOCUS_MODE, 1);
-        return mode;
     }
 
     /** {@hide} */
@@ -460,9 +459,7 @@ public class Ringtone {
                                     afd.getStartOffset(),
                                     afd.getDeclaredLength());
                         }
-
                         mLocalPlayer.setAudioAttributes(mAudioAttributes);
-
                         synchronized (mPlaybackSettingsLock) {
                             applyPlaybackProperties_sync();
                         }
