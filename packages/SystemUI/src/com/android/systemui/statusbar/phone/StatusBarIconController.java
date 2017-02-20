@@ -51,6 +51,7 @@ import com.android.systemui.FontSizeUtils;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.SystemUIFactory;
+import com.android.systemui.statusbar.policy.BatteryBarController;
 import com.android.systemui.statusbar.NotificationData;
 import com.android.systemui.statusbar.SignalClusterView;
 import com.android.systemui.statusbar.StatusBarIconView;
@@ -85,6 +86,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
 
     private BatteryMeterView mBatteryMeterView;
     private BatteryMeterView mBatteryMeterViewKeyguard;
+    private BatteryBarController mBatteryBarController;
     private ClockController mClockController;
     private View mCenterClockLayout;
 
@@ -161,6 +163,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
         mBatteryMeterView = (BatteryMeterView) statusBar.findViewById(R.id.battery);
         mBatteryMeterViewKeyguard = (BatteryMeterView) keyguardStatusBar.findViewById(R.id.battery);
         scaleBatteryMeterViews(context);
+        mBatteryBarController = (BatteryBarController) statusBar.findViewById(R.id.battery_bar);
 
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
@@ -369,6 +372,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate);
         animateHide(mCenterClockLayout, animate);
+        animateHide(mBatteryBarController, animate);
         if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_RR_LOGO, 0) == 1  &&
            (Settings.System.getIntForUser(mContext.getContentResolver(),
@@ -405,6 +409,7 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
         animateShow(mCenterClockLayout, animate);
+        animateShow(mBatteryBarController, animate);
         if ((Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_SHOW_CARRIER,  0,
                 UserHandle.USER_CURRENT) == 2) ||
@@ -441,11 +446,13 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mCenterClockLayout, animate);
+        animateHide(mBatteryBarController, animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCenterClockLayout, animate);
+        animateShow(mBatteryBarController, animate);
     }
 
     public void setClockVisibility(boolean visible) {

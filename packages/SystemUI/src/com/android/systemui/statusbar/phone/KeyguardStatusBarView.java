@@ -38,6 +38,7 @@ import com.android.systemui.BatteryMeterView;
 import com.android.systemui.Interpolators;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSPanel;
+import com.android.systemui.statusbar.policy.BatteryBarController;
 import com.android.systemui.statusbar.policy.BatteryController;
 import com.android.systemui.statusbar.policy.KeyguardUserSwitcher;
 import com.android.systemui.statusbar.policy.UserInfoController;
@@ -109,6 +110,7 @@ public class KeyguardStatusBarView extends RelativeLayout
     private int mSystemIconsSwitcherHiddenExpandedMargin;
     private int mSystemIconsBaseMargin;
     private View mSystemIconsContainer;
+    private BatteryBarController mBatteryBarController;
 
     private boolean mShowBatteryText;
     private boolean mForceBatteryText;
@@ -154,6 +156,7 @@ public class KeyguardStatusBarView extends RelativeLayout
         mBatteryLevel = (TextView) findViewById(R.id.battery_level);
         mCarrierLabel = (TextView) findViewById(R.id.keyguard_carrier_text);
         mKeyguardClock = (TextView) findViewById(R.id.keyguard_clock);
+        mBatteryBarController = (BatteryBarController) findViewById(R.id.battery_bar);
         loadDimens();
         updateUserSwitcher();
         updateVisibilities();
@@ -265,6 +268,8 @@ public class KeyguardStatusBarView extends RelativeLayout
         }
         mBatteryLevel.setVisibility(
                 (mBatteryCharging && mForceChargeBatteryText) || mShowBatteryText || mForceBatteryText ? View.VISIBLE : View.GONE);
+
+        mBatteryBarController.setVisibility(View.VISIBLE);
 
         if (mCarrierLabel != null) {
             if (mShowCarrierLabel == 1) {
