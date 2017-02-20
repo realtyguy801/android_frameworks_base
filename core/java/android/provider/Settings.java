@@ -4342,6 +4342,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String STATUSBAR_BATTERY_BAR = "statusbar_battery_bar";
 
         /**
+         * Whether to show the battery bar
+         * @hide
+         */
+        public static final String SHOW_BATTERYBAR_AMBIENT = "show_batterybar_ambient";
+
+        /**
          * Status Bar Colors Switch
          * @hide
          */
