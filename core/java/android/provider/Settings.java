@@ -5240,6 +5240,18 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String STATUS_BAR_TICKER_FONT_SIZE = "status_bar_ticker_font_size";
 
         /**
+         * Color of the status bar notification count icon
+         * @hide
+         */
+        public static final String STATUS_BAR_NOTIF_COUNT_ICON_COLOR = "status_bar_notif_count_icon_color";
+
+        /**
+         * Color of the status bar notification count text
+         * @hide
+         */
+        public static final String STATUS_BAR_NOTIF_COUNT_TEXT_COLOR = "status_bar_notif_count_text_color";
+
+        /**
          * Config for advanced pa pie 2.0
          *
          * @hide
