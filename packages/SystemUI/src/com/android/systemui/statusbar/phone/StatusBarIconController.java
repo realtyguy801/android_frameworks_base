@@ -452,13 +452,19 @@ public class StatusBarIconController extends StatusBarIconList implements Tunabl
     public void hideNotificationIconArea(boolean animate) {
         animateHide(mNotificationIconAreaInner, animate);
         animateHide(mCenterClockLayout, animate);
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_BATTERYBAR_AMBIENT, 0) == 1) {
         animateHide(mBatteryBarController, animate);
+        }
     }
 
     public void showNotificationIconArea(boolean animate) {
         animateShow(mNotificationIconAreaInner, animate);
         animateShow(mCenterClockLayout, animate);
+        if (Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_BATTERYBAR_AMBIENT, 0) == 1) {
         animateShow(mBatteryBarController, animate);
+        }
     }
 
     public void setClockVisibility(boolean visible) {
