@@ -7449,6 +7449,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String PULSE_LAVALAMP_SOLID_SPEED = "lava_lamp_solid_speed";
+
+         /**
+         * Whether the device should tint notification title.
+         * @hide
+         */
+        public static final String NOTIFICATION_TITLE_TINT = "notification_title_tint";
  
         /**
          * A flag containing settings used for biometric weak
