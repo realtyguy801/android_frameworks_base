@@ -3647,6 +3647,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String KEY_VOICEMAIL_BREATH = "voicemail_breath";
 
+         /**
+         * Use Dnd when call active
+         * @hide
+         */
+        public static final String DND_WHEN_CALL = "dnd_when_call";
+
         /**
          * @deprecated Use {@link android.provider.Settings.Global#KEY_SMS_BREATH} instead
          */
