@@ -9696,12 +9696,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         public static final String POWER_SOUNDS_ENABLED = "power_sounds_enabled";
 
-         /**
-         * Audio focus mode for ringtones when a wired headset is connected
-         * @hide
-         */
-        public static final String WIRED_RINGTONE_FOCUS_MODE = "wired_ringtone_focus_mode";
-
         /**
          * URI for the "wireless charging started" sound.
          * @hide
@@ -11771,6 +11765,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String DATABASE_DOWNGRADE_REASON = "database_downgrade_reason";
+
+        /**
+         * Audio focus mode for ringtones when a wired headset is connected
+         * @hide
+         */
+        public static final String WIRED_RINGTONE_FOCUS_MODE = "wired_ringtone_focus_mode";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
