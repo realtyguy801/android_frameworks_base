@@ -355,7 +355,7 @@ public class RecentsView extends FrameLayout {
         mEmptyView.setText(msgResId);
 
         // Customize empty recents view drawable
-        Drawable drawable = getResources().getDrawable(R.drawable.no_recents, null);
+        Drawable drawable = getResources().getDrawable(R.drawable.no_recents_rr, null);
         ImageView imageView = (ImageView) mEmptyView.findViewById(R.id.no_recents_holder);
         if (imageView != null){
             imageView.setImageDrawable(drawable);

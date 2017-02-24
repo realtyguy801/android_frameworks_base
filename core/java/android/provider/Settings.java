@@ -5892,14 +5892,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String RECENT_CARD_TEXT_COLOR = "recent_card_text_color";
 
         /**
-         * Slim recents AICPfied empty recents drawable
-         *
-         * @hide
-         */
-        public static final String SLIM_RECENT_AICP_EMPTY_DRAWABLE = "slim_recents_aicp_empty_drawable";
-
-
-        /**
          * Unlock keystore with fingerprint after reboot
          * @hide
          */

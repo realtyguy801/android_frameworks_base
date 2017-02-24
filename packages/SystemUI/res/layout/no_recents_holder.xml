@@ -7,4 +7,4 @@
         android:scaleType="fitCenter"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:src="@drawable/no_recents"/>
+        android:src="@drawable/no_recents_rr"/>
