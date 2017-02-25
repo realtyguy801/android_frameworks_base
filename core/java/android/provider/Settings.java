@@ -5889,7 +5889,7 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          *
          * @hide
          */
-        public static final String RECENT_CARD_TEXT_COLOR = "recent_card_text_color";
+        //public static final String RECENT_CARD_TEXT_COLOR = "recent_card_text_color";
 
         /**
          * Unlock keystore with fingerprint after reboot
