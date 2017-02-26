@@ -5882,7 +5882,7 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          *
          * @hide
          */
-        public static final String RECENT_CARD_BG_COLOR = "recent_card_bg_color";
+        //public static final String RECENT_CARD_BG_COLOR = "recent_card_bg_color";
 
         /**
          * Recent card text color
