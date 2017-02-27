@@ -78,6 +78,10 @@
             android:title="@string/status_bar_vpn" />
 
         <com.android.systemui.tuner.StatusBarSwitch
+            android:key="volte"
+            android:title="@string/status_bar_volte" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
             android:key="wifi"
             android:title="@string/quick_settings_wifi_label" />
 
@@ -137,9 +141,5 @@
     <Preference
         android:summary="@string/tuner_persistent_warning"
         android:selectable="false" />
-
-    <com.android.systemui.tuner.StatusBarSwitch
-        android:key="volte"
-        android:title="@string/status_bar_volte" />
 
 </PreferenceScreen>
