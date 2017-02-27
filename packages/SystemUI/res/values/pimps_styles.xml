@@ -48,4 +48,8 @@
     </style>
     <style name="BatteryMeterViewDrawable.Aicp"/>
 
+    <style name="SlimRecentsCardOptionsButton">
+        <item name="android:padding">2dp</item>
+    </style>
+
 </resources>
