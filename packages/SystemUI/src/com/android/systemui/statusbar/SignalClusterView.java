@@ -147,7 +147,6 @@ public class SignalClusterView
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-<<<<<<< HEAD
         switch (key) {
             case StatusBarIconController.ICON_BLACKLIST:
                  ArraySet<String> blockList = StatusBarIconController.getIconBlacklist(newValue);
