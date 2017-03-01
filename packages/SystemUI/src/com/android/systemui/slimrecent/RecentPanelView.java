@@ -406,6 +406,7 @@ public class RecentPanelView {
                 Log.e(TAG, "Error launching activity " + intent, e);
             }
         }
+        mController.onLaunchApplication();
         exit();
     }
 
@@ -644,9 +645,11 @@ public class RecentPanelView {
      */
     private void tasksLoaded() {
         if (mOnTasksLoadedListener != null) {
-            setTasksLoaded(true);
             mIsLoading = false;
-            mOnTasksLoadedListener.onTasksLoaded();
+            if (!isCancelledByUser()) {
+                setTasksLoaded(true);
+                mOnTasksLoadedListener.onTasksLoaded();
+            }
         }
     }
 
