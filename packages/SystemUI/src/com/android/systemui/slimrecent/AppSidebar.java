@@ -396,7 +396,7 @@ public class AppSidebar extends FrameLayout {
             }
 
             int backgroundColor = Settings.System.getIntForUser(resolver,
-                    Settings.System.RECENT_APP_SIDEBAR_BG_COLOR, 0x00ffffff,
+                    Settings.System.RECENT_APP_SIDEBAR_BG_COLOR, 0x763367d6,
                     UserHandle.USER_CURRENT);
 
             if (mBackgroundColor != backgroundColor) {
