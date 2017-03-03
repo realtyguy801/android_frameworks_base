@@ -5891,6 +5891,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         //public static final String RECENT_CARD_TEXT_COLOR = "recent_card_text_color";
 
+	    /**
+         * show the membar in slim recents
+         *  @hide
+         */
+        public static final String SLIM_RECENTS_MEM_DISPLAY = "slim_recents_mem_display";
+
         /**
          * Unlock keystore with fingerprint after reboot
          * @hide
@@ -5959,6 +5965,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String OMNIJAWS_WEATHER_ICON_PACK = "omnijaws_weather_icon_pack";
+
+        /**
+         * Disable FC Notifications
+         * @hide
+         */
+        public static final String DISABLE_FC_NOTIFICATIONS = "disable_fc_notifications";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
