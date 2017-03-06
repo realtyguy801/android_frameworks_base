@@ -62,6 +62,7 @@ public class WeatherControllerImpl implements WeatherController {
     private static final int WEATHER_ICON_MIUI = 6;
     private static final int WEATHER_ICON_STHUL = 7;
     private static final int WEATHER_ICON_TAPAS = 8;
+    private static final int WEATHER_ICON_MAGICAL = 9;
 
     private final ArrayList<Callback> mCallbacks = new ArrayList<Callback>();
     private final Receiver mReceiver = new Receiver();
@@ -114,6 +115,8 @@ public class WeatherControllerImpl implements WeatherController {
             iconName = "weather_sthul_";
         } else if (iconNameValue == WEATHER_ICON_TAPAS) {
             iconName = "weather_tapas_";
+        } else if (iconNameValue == WEATHER_ICON_MAGICAL) {
+            iconName = "weather_magical_";
         } else {
             iconName = "weather_vclouds_";
         }
