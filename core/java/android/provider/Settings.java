@@ -4946,14 +4946,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String PROXIMITY_AUTO_SPEAKER_INCALL_ONLY = "proximity_auto_speaker_incall_only";
 
         /**
-         * Whether flip action during incomming call should mute or dismiss
-         * the call (mute = 0, dismiss = 1, nothing = 2 (default))
-         *
-         * @hide
-         */
-        public static final String CALL_FLIP_ACTION_KEY = "call_flip_action_key";
-
-        /**
          * Whether to display music track title within the music qs tile
          * @hide
          */
