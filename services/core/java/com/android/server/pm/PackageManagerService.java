@@ -4605,8 +4605,7 @@ public class PackageManagerService extends IPackageManager.Stub {
                         || actionName.startsWith("com.qualcomm.intent.action.ACTION_UNSOL_RESPONSE_OEM_HOOK_RAW")
                         || actionName.startsWith("eu.chainfire.supersu.NativeAccess")
                         || actionName.startsWith("intent_navbar_edit")
-                        || actionName.startsWith("org.omnirom.omniswitch")
-                        || actionName.startsWith("masquerade.substratum.STATUS_CHANGED")) {
+                        || actionName.startsWith("org.omnirom.omniswitch")) {
                     return true;
                 }
             }
