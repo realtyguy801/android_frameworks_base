@@ -19,6 +19,8 @@ package com.android.systemui.statusbar;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.View.OnLayoutChangeListener;
@@ -27,6 +29,7 @@ import android.widget.TextView;
 
 import com.android.internal.util.rr.DeviceUtils;
 
+import com.android.internal.telephony.TelephonyIntents;
 import com.android.systemui.statusbar.policy.NetworkTraffic;
 import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.IconState;
@@ -113,12 +116,17 @@ public class EmptyShadeView extends StackScrollerDecorView implements
 
     private void updateViews() {
         final Resources res = mContext.getResources();
+        TelephonyManager telephonyManager = (TelephonyManager) getContext().getSystemService(
+                Context.TELEPHONY_SERVICE);
         if (mIsNoSims) {
             mCarrierDescription = res.getString(
                         R.string.quick_settings_wifi_no_network);
         }
         if (mCarrierDescription == null || mCarrierDescription.isEmpty()) {
-            mCarrierDescription = res.getString(R.string.quick_settings_wifi_no_network);
+            mCarrierDescription = telephonyManager.getNetworkOperatorName();
+        }
+        if (TextUtils.isEmpty(mCarrierDescription)) {
+            mCarrierDescription = telephonyManager.getSimOperatorName();
         }
 
         if (mWifiEnabled) {
