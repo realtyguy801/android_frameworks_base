@@ -118,10 +118,6 @@ public class EmptyShadeView extends StackScrollerDecorView implements
         final Resources res = mContext.getResources();
         TelephonyManager telephonyManager = (TelephonyManager) getContext().getSystemService(
                 Context.TELEPHONY_SERVICE);
-        if (mIsNoSims) {
-            mCarrierDescription = res.getString(
-                        R.string.quick_settings_wifi_no_network);
-        }
         if (mCarrierDescription == null || mCarrierDescription.isEmpty()) {
             mCarrierDescription = telephonyManager.getNetworkOperatorName();
         }
