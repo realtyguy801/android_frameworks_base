@@ -519,12 +519,9 @@
 
     <protected-broadcast android:name="cyanogenmod.intent.action.LID_STATE_CHANGED" />
 
-<<<<<<< HEAD
-=======
     <protected-broadcast android:name="org.omnirom.omniswitch.ACTION_TOGGLE_OVERLAY" />
     <protected-broadcast android:name="org.omnirom.omniswitch.ACTION_RESTORE_HOME_STACK" />
 
->>>>>>> rr/nougat
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->

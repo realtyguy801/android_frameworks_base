@@ -666,12 +666,6 @@ public interface WindowManager extends ViewManager {
          */
         public static final int TYPE_KEYGUARD_PANEL = FIRST_SYSTEM_WINDOW+998;
  
-        /**
-         * Window type: panel that slides out from the status bar
-         * In multiuser systems shows on all users' windows.
-         */
-        public static final int TYPE_SLIM_RECENTS      = FIRST_SYSTEM_WINDOW+37;
-
 
         /**
          * End of types of system windows.
