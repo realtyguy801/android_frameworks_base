@@ -654,6 +654,13 @@ public interface WindowManager extends ViewManager {
 
         /**
          * Window type: Windows that are layered within the keyguard
+         * Window type: panel that slides out from the status bar
+         * In multiuser systems shows on all users' windows.
+         */
+        public static final int TYPE_SLIM_RECENTS      = FIRST_SYSTEM_WINDOW+37;
+
+        /**
+         * Window type: Windows that are layered within the keyguard
          * This type is LAST_SYSTEM_WINDOW-1 to avoid future conflicts with AOSP
          * @hide
          */
@@ -664,6 +671,7 @@ public interface WindowManager extends ViewManager {
          * In multiuser systems shows on all users' windows.
          */
         public static final int TYPE_SLIM_RECENTS      = FIRST_SYSTEM_WINDOW+37;
+
 
         /**
          * End of types of system windows.

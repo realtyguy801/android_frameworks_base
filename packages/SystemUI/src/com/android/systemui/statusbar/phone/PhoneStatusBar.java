@@ -183,6 +183,10 @@ import com.android.systemui.recents.events.activity.AppTransitionFinishedEvent;
 import com.android.systemui.recents.events.activity.UndockingTaskEvent;
 import com.android.systemui.recents.RecentsActivity;
 import com.android.systemui.settings.BrightnessController;
+<<<<<<< HEAD
+=======
+import com.android.systemui.slimrecent.RecentController;
+>>>>>>> rr/nougat
 import com.android.systemui.stackdivider.Divider;
 import com.android.systemui.stackdivider.WindowManagerProxy;
 import com.android.systemui.statusbar.ActivatableNotificationView;
@@ -597,6 +601,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     private NavigationController mNavigationController;
     private DUPackageMonitor mPackageMonitor;
 
+<<<<<<< HEAD
+=======
+    private RecentController mSlimRecents;
+
+>>>>>>> rr/nougat
     private View.OnTouchListener mUserAutoHideListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -1655,7 +1664,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     Settings.System.STATUS_BAR_SHOW_TICKER, 0, UserHandle.USER_CURRENT) == 1;
         initTickerView();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> rr/nougat
         // set the initial view visibility
         setAreThereNotifications();
 
@@ -2278,6 +2290,7 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
 
     @Override
     protected void toggleSplitScreenMode(int metricsDockAction, int metricsUndockAction) {
+<<<<<<< HEAD
         if (mSlimRecents != null) {
             int dockSide = WindowManagerProxy.getInstance().getDockSide();
             if (dockSide == WindowManager.DOCKED_INVALID) {
@@ -2301,6 +2314,31 @@ mWeatherTempSize, mWeatherTempFontStyle, mWeatherTempColor);
             }
         }
     }
+=======
+         if (mSlimRecents != null) {
+             int dockSide = WindowManagerProxy.getInstance().getDockSide();
+             if (dockSide == WindowManager.DOCKED_INVALID) {
+                 mSlimRecents.startMultiWin();
+             } else {
+                 EventBus.getDefault().send(new UndockingTaskEvent());
+                 if (metricsUndockAction != -1) {
+                     MetricsLogger.action(mContext, metricsUndockAction);
+                 }
+             }
+         } else if (mRecents != null) {
+             int dockSide = WindowManagerProxy.getInstance().getDockSide();
+             if (dockSide == WindowManager.DOCKED_INVALID) {
+                 mRecents.dockTopTask(NavigationBarGestureHelper.DRAG_MODE_NONE,
+                         ActivityManager.DOCKED_STACK_CREATE_MODE_TOP_OR_LEFT, null, metricsDockAction);
+             } else {
+                 EventBus.getDefault().send(new UndockingTaskEvent());
+                 if (metricsUndockAction != -1) {
+                     MetricsLogger.action(mContext, metricsUndockAction);
+                 }
+             }
+         }
+     }
+>>>>>>> rr/nougat
 
     private final View.OnLongClickListener mLongPressHomeListener
             = new View.OnLongClickListener() {

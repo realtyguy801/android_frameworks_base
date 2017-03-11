@@ -113,6 +113,7 @@ import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.rr.RRUtils;
 import com.android.internal.util.omni.OmniSwitchConstants;
+import com.android.internal.util.rr.RRUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardHostView.OnDismissAction;
 import com.android.keyguard.KeyguardUpdateMonitor;
@@ -403,6 +404,10 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         if (slimRecents) {
             mSlimRecents = new RecentController(mContext, mLayoutDirection);
+<<<<<<< HEAD
+=======
+            //mSlimRecents.setCallback(this);
+>>>>>>> rr/nougat
             mRecents = null;
             rebuildRecentsScreen();
         } else {
@@ -1596,8 +1601,12 @@ public abstract class BaseStatusBar extends SystemUI implements
         if (mScreenPinningEnabled != enabled) {
             mScreenPinningEnabled = enabled;
         }
+<<<<<<< HEAD
         if (DEBUG)
             Log.d(TAG, "StatusBar API screenPinningStateChanged = " + enabled);
+=======
+        Log.d(TAG, "StatusBar API screenPinningStateChanged = " + enabled);
+>>>>>>> rr/nougat
     }
 
     protected H createHandler() {
@@ -1615,7 +1624,11 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected abstract View getStatusBarView();
 
+<<<<<<< HEAD
     /*this is not needed with DUI navbar because it's not set anymore in PhoneStatusBar and it preloads recents 
+=======
+    /*this is not needed with DUI navbar because it's not set anymore in PhoneStatusBar and it preloads recents
+>>>>>>> rr/nougat
     if the button has Recent action (SmartButtonView) with the ActionHandler. But i'm keeping it if anyone using stock navbar*/
     protected View.OnTouchListener mRecentsPreloadOnTouchListener = new View.OnTouchListener() {
         // additional optimization when we have software system buttons - start loading the recent
@@ -1658,10 +1671,15 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected void showRecents(boolean triggeredFromAltTab, boolean fromHome) {
         if (isOmniSwitchEnabled()) {
+<<<<<<< HEAD
             if (!mScreenPinningEnabled) {
                 Intent showIntent = new Intent(RRUtils.ACTION_SHOW_OVERLAY);
                 mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
             }
+=======
+            Intent showIntent = new Intent(RRUtils.ACTION_SHOW_OVERLAY);
+            mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+>>>>>>> rr/nougat
         } else {
             if (mRecents != null) {
                 sendCloseSystemWindows(SYSTEM_DIALOG_REASON_RECENT_APPS);
@@ -1672,8 +1690,14 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected void hideRecents(boolean triggeredFromAltTab, boolean triggeredFromHomeKey) {
         if (isOmniSwitchEnabled()) {
+<<<<<<< HEAD
             if (!mScreenPinningEnabled) {
                 Intent showIntent = new Intent(RRUtils.ACTION_HIDE_OVERLAY);
+=======
+            Intent showIntent = new Intent(RRUtils.ACTION_HIDE_OVERLAY);
+            mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+            if (!mScreenPinningEnabled) {
+>>>>>>> rr/nougat
                 mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
             }
         } else if (mSlimRecents != null) {
@@ -1685,11 +1709,19 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected void toggleRecents() {
         if (isOmniSwitchEnabled()) {
+<<<<<<< HEAD
             if (!mScreenPinningEnabled) {
                 Intent showIntent = new Intent(RRUtils.ACTION_TOGGLE_OVERLAY);
                 mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
             }
 
+=======
+            Intent showIntent = new Intent(RRUtils.ACTION_TOGGLE_OVERLAY);
+            mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+            if (!mScreenPinningEnabled) {
+                mContext.sendBroadcastAsUser(showIntent, UserHandle.CURRENT);
+            }
+>>>>>>> rr/nougat
         } else if (mSlimRecents != null) {
             sendCloseSystemWindows(SYSTEM_DIALOG_REASON_RECENT_APPS);
             mSlimRecents.toggleRecents(mDisplay, mLayoutDirection, getStatusBarView());
