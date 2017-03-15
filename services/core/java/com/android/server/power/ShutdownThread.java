@@ -342,28 +342,27 @@ public final class ShutdownThread extends Thread {
     }
 
     private static void handleDialog(Context context, int selected, boolean advancedReboot) {
-        if (advancedReboot) {
-
-            if (selected != ListView.INVALID_POSITION) {
-                String actions[] = context.getResources().getStringArray(
-                        com.android.internal.R.array.shutdown_reboot_actions);
-		if (actions[selected].equals(SYSTEMUI_REBOOT)) {
-                                        mReason = actions[selected];
-                                        doSystemUIReboot();
-                                        return;
-                                    }
-               else if (selected >= 0 && selected < actions.length) {
-                    mReason = actions[selected];
-                    if (actions[selected].equals(SOFT_REBOOT)) {
-                        doSoftReboot();
+        if (advancedReboot && mReboot && !mRebootSafeMode) {
+            boolean softReboot = false;
+                if (selected != ListView.INVALID_POSITION) {
+                    String actions[] = context.getResources().getStringArray(
+                            com.android.internal.R.array.shutdown_reboot_actions);
+                    if (actions[selected].equals(SYSTEMUI_REBOOT)) {
+                        mReason = actions[selected];
+                        doSystemUIReboot();
                         return;
+                    } else if (selected >= 0 && selected < actions.length) {
+                        mReason = actions[selected];
+                        if (actions[selected].equals(SOFT_REBOOT)) {
+                            doSoftReboot();
+                            return;
+                        }
                     }
                 }
-            }
 
-            mReboot = true;
-        }
-        beginShutdownSequence(context);
+                mReboot = true;
+          }
+          beginShutdownSequence(context);
     }
 
     private static void doSoftReboot() {
