@@ -342,7 +342,7 @@ public final class ShutdownThread extends Thread {
     }
 
     private static void handleDialog(Context context, int selected, boolean advancedReboot) {
-        if (advancedReboot && mReboot && !mRebootSafeMode) {
+        if (advancedReboot || mReboot || !mRebootSafeMode) {
             boolean softReboot = false;
                 if (selected != ListView.INVALID_POSITION) {
                     String actions[] = context.getResources().getStringArray(
