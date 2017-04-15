@@ -663,6 +663,7 @@ public final class PowerManagerService extends SystemService
             mScreenBrightnessSettingMinimum = pm.getMinimumScreenBrightnessSetting();
             mScreenBrightnessSettingMaximum = pm.getMaximumScreenBrightnessSetting();
             mScreenBrightnessSettingDefault = pm.getDefaultScreenBrightnessSetting();
+            mScreenBrightnessForVrSettingDefault = pm.getDefaultScreenBrightnessForVrSetting();
             mButtonBrightnessSettingDefault = pm.getDefaultButtonBrightness();
             mKeyboardBrightnessSettingDefault = pm.getDefaultKeyboardBrightness();
             mScreenBrightnessForVrSettingDefault = pm.getDefaultScreenBrightnessForVrSetting();
@@ -762,9 +763,7 @@ public final class PowerManagerService extends SystemService
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.HIGH_BRIGHTNESS_MODE),
                     false, mSettingsObserver, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Secure.BRIGHTNESS_USE_TWILIGHT),
-                    false, mSettingsObserver, UserHandle.USER_ALL);
+
             IVrManager vrManager =
                     (IVrManager) getBinderService(VrManagerService.VR_MANAGER_BINDER_SERVICE);
             if (vrManager != null) {
@@ -926,6 +925,7 @@ public final class PowerManagerService extends SystemService
                 nativeSetFeature(POWER_FEATURE_DOUBLE_TAP_TO_WAKE, mDoubleTapWakeEnabled ? 1 : 0);
             }
         }
+
 
        if (mSupportsHighBrightnessModeConfig) {
             boolean highBrightnessModeEnabled = Settings.Secure.getIntForUser(resolver,

@@ -667,6 +667,7 @@ public class SignalClusterView
         public boolean mRoaming;
         private ImageView mMobileActivity;
 
+
         public PhoneState(int subId, Context context) {
             ViewGroup root = (ViewGroup) LayoutInflater.from(context)
                     .inflate(R.layout.mobile_signal_group, null);
@@ -681,6 +682,7 @@ public class SignalClusterView
             mMobileType     = (ImageView) root.findViewById(R.id.mobile_type);
             mMobileRoaming  = (ImageView) root.findViewById(R.id.mobile_roaming);
             mMobileActivity = (ImageView) root.findViewById(R.id.mobile_inout);
+
         }
 
         public boolean apply(boolean isSecondaryIcon) {
@@ -725,6 +727,7 @@ public class SignalClusterView
 
             mMobileType.setVisibility(mMobileTypeId != 0 ? View.VISIBLE : View.GONE);
             mMobileRoaming.setVisibility(mRoaming ? View.VISIBLE : View.GONE);
+
 
             if (mDataWifiActivityArrows) {
                 mMobileActivity.setVisibility(mMobileActivityId != 0 ? View.VISIBLE : View.GONE);

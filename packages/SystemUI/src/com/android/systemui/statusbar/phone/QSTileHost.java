@@ -52,6 +52,7 @@ import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.ExpandedDesktopTile;
 import com.android.systemui.qs.tiles.PieTile;
+import com.android.systemui.qs.tiles.PerfProfileTile;
 import com.android.systemui.qs.tiles.ScreenrecordTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.LteTile;
@@ -99,6 +100,8 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 import android.telephony.TelephonyManager;
 
+import cyanogenmod.power.PerformanceManager;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -137,6 +140,9 @@ public class QSTileHost implements QSTile.Host, Tunable {
     private final TileServices mServices;
     private final boolean mHighBrightnessSupported;
 
+    private final int mNumPerfProfiles;
+    private final PerformanceManager mPerformanceManager;
+
     private final List<Callback> mCallbacks = new ArrayList<>();
     private final AutoTileManager mAutoTiles;
     private final ManagedProfileController mProfileController;
@@ -173,6 +179,8 @@ public class QSTileHost implements QSTile.Host, Tunable {
         mNextAlarmController = nextAlarmController;
         mProfileController = new ManagedProfileController(this);
         mHighBrightnessSupported = mContext.getResources().getBoolean(com.android.internal.R.bool.config_supportHighBrightness);
+        mPerformanceManager = PerformanceManager.getInstance(mContext);
+        mNumPerfProfiles = mPerformanceManager.getNumberOfProfiles();
 
         final HandlerThread ht = new HandlerThread(QSTileHost.class.getSimpleName(),
                 Process.THREAD_PRIORITY_BACKGROUND);
@@ -495,6 +503,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
         else if (tileSpec.equals("voiceassist")) return new GoogleVoiceAssistTile(this);
         else if (tileSpec.equals("weather")) return new WeatherTile(this);
         else if (tileSpec.equals("suspend_actions")) return new SuspendActionsTile(this);
+        else if (tileSpec.equals("performance") && mNumPerfProfiles > 0) return new PerfProfileTile(this);
         // Intent tiles.
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else if (tileSpec.startsWith(CustomTile.PREFIX)) return CustomTile.create(this,tileSpec);

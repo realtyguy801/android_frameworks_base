@@ -60,6 +60,7 @@ import android.media.session.MediaController;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import com.android.systemui.recents.RecentsActivity;
+import android.media.MediaMetadata;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -254,7 +255,9 @@ public abstract class BaseStatusBar extends SystemUI implements
 
     protected boolean mUseHeadsUp = false;
     protected boolean mHeadsUpTicker = false;
+    protected boolean mHeadsUpUserEnabled = false;
     protected boolean mDisableNotificationAlerts = false;
+    private boolean mIsAlwaysHeadsupDialer;
 
     protected DevicePolicyManager mDevicePolicyManager;
     protected IDreamManager mDreamManager;
@@ -377,6 +380,9 @@ public abstract class BaseStatusBar extends SystemUI implements
             final int mode = Settings.Global.getInt(mContext.getContentResolver(),
                     Settings.Global.ZEN_MODE, Settings.Global.ZEN_MODE_OFF);
             setZenMode(mode);
+
+            mIsAlwaysHeadsupDialer = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.ALWAYS_HEADSUP_DIALER, 0, UserHandle.USER_CURRENT) == 1;
 
             updateLockscreenNotificationSetting();
         }
@@ -801,11 +807,14 @@ public abstract class BaseStatusBar extends SystemUI implements
                     mSettingsObserver,
                     UserHandle.USER_ALL);
         }
-
         mContext.getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(Settings.Secure.LOCK_SCREEN_ALLOW_PRIVATE_NOTIFICATIONS),
                 true,
                 mLockscreenSettingsObserver,
+                UserHandle.USER_ALL);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.ALWAYS_HEADSUP_DIALER), false,
+                mSettingsObserver,
                 UserHandle.USER_ALL);
 
         mBarService = IStatusBarService.Stub.asInterface(
@@ -2703,6 +2712,21 @@ public abstract class BaseStatusBar extends SystemUI implements
         mStackScroller.changeViewPosition(mEmptyShadeView, mStackScroller.getChildCount() - 2);
         mStackScroller.changeViewPosition(mKeyguardIconOverflowContainer,
                 mStackScroller.getChildCount() - 3);
+
+        if (onKeyguard) {
+            hideWeatherPanelIfNecessary(visibleNotifications, getMaxKeyguardNotifications(true));
+        }
+    }
+
+    private void hideWeatherPanelIfNecessary(int visibleNotifications, int maxKeyguardNotifications) {
+        final ContentResolver resolver = mContext.getContentResolver();
+        int notifications = visibleNotifications;
+        if (mKeyguardIconOverflowContainer.getIconsView().getChildCount() > 0) {
+            notifications += 1;
+        }
+        Settings.System.putInt(resolver,
+                Settings.System.LOCK_SCREEN_VISIBLE_NOTIFICATIONS, notifications);
+        maxKeyguardNotifications = getMaxKeyguardNotifications(true);
     }
 
     public boolean shouldShowOnKeyguard(StatusBarNotification sbn) {
@@ -2755,7 +2779,7 @@ public abstract class BaseStatusBar extends SystemUI implements
     protected abstract void haltTicker();
     protected abstract void setAreThereNotifications();
     protected abstract void updateNotifications();
-    protected abstract void tick(StatusBarNotification n, boolean firstTime);
+    protected abstract void tick(StatusBarNotification n, boolean firstTime, boolean isMusic, MediaMetadata mediaMetaData);
     public abstract boolean shouldDisableNavbarGestures();
 
     public abstract void addNotification(StatusBarNotification notification,
@@ -2860,8 +2884,8 @@ public abstract class BaseStatusBar extends SystemUI implements
         // Restart the ticker if it's still running
         if (updateTicker && isForCurrentUser) {
             haltTicker();
-            tick(notification, false);
-        }
+            tick(notification, false, false, null);
+          }
 
         setAreThereNotifications();
     }
@@ -2933,12 +2957,19 @@ public abstract class BaseStatusBar extends SystemUI implements
     }
 
     protected boolean shouldPeek(Entry entry, StatusBarNotification sbn) {
-        if (!mUseHeadsUp || isDeviceInVrMode()) {
-            return false;
+        final ActivityManager am = (ActivityManager)
+            mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.RunningTaskInfo foregroundApp = null;
+        List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+        if (tasks != null && !tasks.isEmpty()) {
+            foregroundApp = tasks.get(0);
         }
+        boolean isDialerForegroundApp = foregroundApp != null &&
+                foregroundApp.baseActivity.getPackageName().toLowerCase().contains("dialer");
+        boolean isNotificationFromDialer = sbn.getPackageName().toLowerCase().contains("dialer");
 
-        if (mNotificationData.shouldFilterOut(sbn)) {
-            if (DEBUG) Log.d(TAG, "No peeking: filtered notification: " + sbn.getKey());
+        boolean alwaysHeadsUpForThis = !isDialerForegroundApp && isNotificationFromDialer && mIsAlwaysHeadsupDialer;
+        if (!mUseHeadsUp || isDeviceInVrMode() || (!mHeadsUpUserEnabled && !alwaysHeadsUpForThis)) {
             return false;
         }
 

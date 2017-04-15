@@ -6076,6 +6076,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
 
         /**
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
+        /**
          * @hide
          */
         public static final String START_SCREEN_STATE_SERVICE = "start_screen_state_service";
@@ -6110,6 +6116,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String DND_WHEN_CALL = "dnd_when_call";
+
+        /**
+         * Whether to show the heads up for dialer when heads up are disabled
+         * @hide
+         */
+        public static final String ALWAYS_HEADSUP_DIALER = "always_headsup_dialer";
 
        /**
         * Custom icon pack name to use for Slim Recents
@@ -7373,7 +7385,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String ONE_HANDED_MODE_UI = "one_handed_mode_ui";
-
 
         /**
          * Comma-separated list of location providers that activities may access. Do not rely on
@@ -8913,12 +8924,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
 
         /**
-         * Low brightness level for the advanced night mode tile
-         * @hide
-         */
-        public static final String QS_NIGHT_BRIGHTNESS_VALUE = "qs_night_brightness_value";
-
-        /**
          * Allows to store the custom user auto brightness value
          * @hide
          */
@@ -9479,6 +9484,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String FORCE_AUTHORIZE_SUBSTRATUM_PACKAGES = "force_authorize_substratum_packages";
+
+        /**
+         * Low brightness level for the advanced night mode tile
+         * @hide
+         */
+        public static final String QS_NIGHT_BRIGHTNESS_VALUE = "qs_night_brightness_value";
 
         /**
          * This are the settings to be backed up.
