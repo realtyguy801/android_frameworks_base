@@ -338,13 +338,15 @@ public class KeyguardStatusView extends GridLayout implements
                 if (mWeatherEnabled) {
                     mWeatherClient.queryWeather();
                     mWeatherData = mWeatherClient.getWeatherInfo();
-                    Bitmap coloredWeatherIcon = ImageHelper.getColoredBitmap(
-                    mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode), mIconColor);
                     mWeatherCity.setText(mWeatherData.city);
-                    if (mIconColor == 0xFFFFFFFF) {
+                    if (mIconColor == -2) {
+					    if (mWeatherConditionImage != null)
                         mWeatherConditionImage.setImageDrawable(
                         mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode));
                     } else {
+					    Bitmap coloredWeatherIcon = ImageHelper.getColoredBitmap(
+                        mWeatherClient.getWeatherConditionImage(mWeatherData.conditionCode), mIconColor);
+					    if (mWeatherConditionImage != null)
                         mWeatherConditionImage.setImageBitmap(coloredWeatherIcon);
                     }
                     mWeatherCurrentTemp.setText(mWeatherData.temp + mWeatherData.tempUnits);
