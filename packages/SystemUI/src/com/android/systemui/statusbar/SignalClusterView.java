@@ -25,6 +25,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -65,6 +66,7 @@ public class SignalClusterView
     private static final String SLOT_WIFI = "wifi";
     private static final String SLOT_ETHERNET = "ethernet";
     private static final String SLOT_VOLTE = "volte";
+    private static final String SLOT_VPN = "vpn";
 
     NetworkControllerImpl mNC;
     SecurityController mSC;
@@ -114,11 +116,7 @@ public class SignalClusterView
     private boolean mBlockWifi;
     private boolean mBlockEthernet;
     private boolean mBlockVolte;
-
-    private boolean mDataWifiActivityArrows;
-
-    private static final String DATA_ACTIVITY_ARROWS =
-            "system:" + Settings.System.DATA_ACTIVITY_ARROWS;
+    private boolean mBlockVpn;
 
     public SignalClusterView(Context context) {
         this(context, null);
@@ -157,6 +155,7 @@ public class SignalClusterView
                  boolean blockWifi = blockList.contains(SLOT_WIFI);
                  boolean blockEthernet = blockList.contains(SLOT_ETHERNET);
                  boolean blockVolte = blockList.contains(SLOT_VOLTE);
+                 boolean blockVpn = blockList.contains(SLOT_VPN);
 
                  if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
                          || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi || blockVolte != mBlockVolte) {
@@ -165,15 +164,12 @@ public class SignalClusterView
                      mBlockEthernet = blockEthernet;
                      mBlockWifi = blockWifi;
                      mBlockVolte = blockVolte;
+                     mBlockVpn = blockVpn;
                      // Re-register to get new callbacks.
                      mNC.removeSignalCallback(this);
                      mNC.addSignalCallback(this);
                      apply();
                  }
-                break;
-            case DATA_ACTIVITY_ARROWS:
-                     mDataWifiActivityArrows =
-                        newValue == null || Integer.parseInt(newValue) != 0;
                 break;
             default:
                 break;
@@ -217,6 +213,12 @@ public class SignalClusterView
         maybeScaleVpnAndNoSimsIcons();
     }
 
+    public boolean IsDataAcitivyArrowsActive() {
+       return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DATA_ACTIVITY_ARROWS, 0,
+                UserHandle.USER_CURRENT) == 1;
+     }
+
     /**
      * Extracts the icon off of the VPN and no sims views and maybe scale them by
      * {@link #mIconScaleFactor}. Note that the other icons are not scaled here because they are
@@ -247,8 +249,7 @@ public class SignalClusterView
         mMobileSignalGroup.setPaddingRelative(0, 0, endPadding, 0);
 
         TunerService.get(mContext).addTunable(this,
-                StatusBarIconController.ICON_BLACKLIST,
-                DATA_ACTIVITY_ARROWS);
+                StatusBarIconController.ICON_BLACKLIST);
 
         apply();
         applyIconTint();
@@ -491,8 +492,8 @@ public class SignalClusterView
     private void apply() {
         if (mWifiGroup == null) return;
 
-        mVpn.setVisibility(mVpnVisible ? View.VISIBLE : View.GONE);
-        if (mVpnVisible) {
+        mVpn.setVisibility(mVpnVisible && !mBlockVpn ? View.VISIBLE : View.GONE);
+        if (mVpnVisible && !mBlockVpn) {
             if (mLastVpnIconId != mVpnIconId) {
                 setIconForView(mVpn, mVpnIconId);
                 mLastVpnIconId = mVpnIconId;
@@ -542,7 +543,7 @@ public class SignalClusterView
                     (mWifiVisible ? "VISIBLE" : "GONE"),
                     mWifiStrengthId));
 
-        if (mDataWifiActivityArrows) {
+        if (IsDataAcitivyArrowsActive()) {
             mWifiActivity.setVisibility(mWifiActivityId != 0 ? View.VISIBLE : View.GONE);
         } else {
             mWifiActivity.setVisibility(View.GONE);
@@ -667,7 +668,6 @@ public class SignalClusterView
         public boolean mRoaming;
         private ImageView mMobileActivity;
 
-
         public PhoneState(int subId, Context context) {
             ViewGroup root = (ViewGroup) LayoutInflater.from(context)
                     .inflate(R.layout.mobile_signal_group, null);
@@ -682,7 +682,6 @@ public class SignalClusterView
             mMobileType     = (ImageView) root.findViewById(R.id.mobile_type);
             mMobileRoaming  = (ImageView) root.findViewById(R.id.mobile_roaming);
             mMobileActivity = (ImageView) root.findViewById(R.id.mobile_inout);
-
         }
 
         public boolean apply(boolean isSecondaryIcon) {
@@ -718,9 +717,6 @@ public class SignalClusterView
             mMobileDark.setPaddingRelative(
                     mIsMobileTypeIconWide ? mWideTypeIconStartPadding : mMobileDataIconStartPadding,
                     0, 0, 0);
-            mMobileActivity.setPaddingRelative(
-                    mIsMobileTypeIconWide ? mWideTypeIconStartPadding : mMobileDataIconStartPadding,
-                    0, 0, 0);
 
             if (DEBUG) Log.d(TAG, String.format("mobile: %s sig=%d typ=%d",
                         (mMobileVisible ? "VISIBLE" : "GONE"), mMobileStrengthId, mMobileTypeId));
@@ -728,8 +724,7 @@ public class SignalClusterView
             mMobileType.setVisibility(mMobileTypeId != 0 ? View.VISIBLE : View.GONE);
             mMobileRoaming.setVisibility(mRoaming ? View.VISIBLE : View.GONE);
 
-
-            if (mDataWifiActivityArrows) {
+            if (IsDataAcitivyArrowsActive()) {
                 mMobileActivity.setVisibility(mMobileActivityId != 0 ? View.VISIBLE : View.GONE);
             } else {
                 mMobileActivity.setVisibility(View.GONE);

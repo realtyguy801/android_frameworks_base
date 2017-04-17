@@ -824,7 +824,6 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 }
                 String activity = args.getString("activity");
                 if (activity != null) {
-                    controller.setActivity(Integer.parseInt(activity));
                     controller.getState().dataConnected = true;
                     switch (activity) {
                         case "inout":
