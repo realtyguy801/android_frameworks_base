@@ -144,7 +144,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     public boolean mEnabled;
 
     //Weather info
-    private ViewGroup mWeatherContainer;
+    private LinearLayout mWeatherContainer;
     private ImageView mWeatherimage;
     private ImageView mNoWeatherimage;
     private TextView mWeatherLine1, mWeatherLine2;
@@ -397,7 +397,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     public void queryAndUpdateWeather() {
         try {   
                 updateImageVisibility();
-                if (mWeatherEnabled) {
+                if (mWeatherEnabled && isWeatherShown()) {
                     mWeatherClient.queryWeather();
                     mWeatherData = mWeatherClient.getWeatherInfo();
                     mWeatherLine2.setText(mWeatherData.city);
@@ -409,7 +409,11 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
                     mWeatherLine2.setText(null);
                     mWeatherLine1.setText(null);
                     mWeatherimage.setVisibility(View.GONE);
-                    mNoWeatherimage.setVisibility(View.VISIBLE);
+                    if(isWeatherShown()) {
+                       mNoWeatherimage.setVisibility(View.VISIBLE);
+                    } else {
+                       mNoWeatherimage.setVisibility(View.GONE);
+                    }
                 }
           } catch(Exception e) {
             // Do nothing
