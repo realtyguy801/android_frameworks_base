@@ -2624,7 +2624,7 @@ public class SettingsProvider extends ContentProvider {
                 }
 
                 if (currentVersion == 131) {
-                    // v132: Add high brightness mode setting.
+                    // Add high brightness mode setting.
                     SettingsState secureSettings = getSecureSettingsLocked(userId);
                     secureSettings.insertSettingLocked(Settings.Secure.HIGH_BRIGHTNESS_MODE,
                             getContext().getResources().getBoolean(
@@ -2632,6 +2632,22 @@ public class SettingsProvider extends ContentProvider {
                             SettingsState.SYSTEM_PACKAGE_NAME);
 
                     currentVersion = 132;
+                }
+
+                if (currentVersion == 132) {
+                    // Initialize new multi-press timeout to default value
+                    final SettingsState systemSecureSettings = getSecureSettingsLocked(userId);
+                    final String oldValue = systemSecureSettings.getSettingLocked(
+                            Settings.Secure.MULTI_PRESS_TIMEOUT).getValue();
+                    if (TextUtils.equals(null, oldValue)) {
+                        systemSecureSettings.insertSettingLocked(
+                                Settings.Secure.MULTI_PRESS_TIMEOUT,
+                                String.valueOf(getContext().getResources().getInteger(
+                                        R.integer.def_multi_press_timeout_millis)),
+                                SettingsState.SYSTEM_PACKAGE_NAME);
+                    }
+
+                    currentVersion = 133;
                 }
 
                 if (currentVersion != newVersion) {

@@ -28,16 +28,21 @@
         sysui:defValue="true" />
 
         <com.android.systemui.tuner.StatusBarSwitch
+            android:key="volte"
+            android:title="@string/status_bar_volte" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
+            android:key="data_saver"
+            android:title="@string/status_bar_datasaver" />
+
+
+        <com.android.systemui.tuner.StatusBarSwitch
             android:key="rotate"
             android:title="@string/status_bar_settings_auto_rotation" />
 
         <com.android.systemui.tuner.StatusBarSwitch
             android:key="headset"
             android:title="@string/headset" />
-
-        <com.android.systemui.tuner.StatusBarSwitch
-            android:key="data_saver"
-            android:title="@string/status_bar_datasaver" />
 
         <com.android.systemui.tuner.StatusBarSwitch
             android:key="managed_profile"
@@ -56,6 +61,10 @@
             android:title="@string/quick_settings_hotspot_label" />
 
         <com.android.systemui.tuner.StatusBarSwitch
+            android:key="vpn"
+            android:title="@string/status_bar_vpn" />
+
+        <com.android.systemui.tuner.StatusBarSwitch
             android:key="bluetooth"
             android:title="@string/quick_settings_bluetooth_label" />
 
@@ -72,14 +81,6 @@
         <com.android.systemui.tuner.StatusBarSwitch
             android:key="volume"
             android:title="@*android:string/volume_unknown" />
-
-        <com.android.systemui.tuner.StatusBarSwitch
-            android:key="vpn"
-            android:title="@string/status_bar_vpn" />
-
-        <com.android.systemui.tuner.StatusBarSwitch
-            android:key="volte"
-            android:title="@string/status_bar_volte" />
 
         <com.android.systemui.tuner.StatusBarSwitch
             android:key="wifi"

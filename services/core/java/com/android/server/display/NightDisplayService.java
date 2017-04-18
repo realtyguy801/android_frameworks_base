@@ -337,7 +337,7 @@ public final class NightDisplayService extends SystemService
             if (activated) {
                 updateBrightnessModeValues();
             }
-            if (customVal == 3) {
+            if (customVal == 0) {
                 return;
             }
             try {
@@ -367,15 +367,15 @@ public final class NightDisplayService extends SystemService
                             @Override
                             public void run() {
                                 if (activated) {
-                                Settings.System.putIntForUser(getContext().getContentResolver(),
+                                    Settings.System.putIntForUser(getContext().getContentResolver(),
                                         Settings.System.SCREEN_BRIGHTNESS, manualVal,
                                         UserHandle.USER_CURRENT);
                                 } else {
-                                int userManualVal = Settings.Secure.getIntForUser(getContext().getContentResolver(),
-                                            Settings.Secure.NIGHT_MANBRIGHTNESS_USERVALUE, 0, UserHandle.USER_CURRENT);
-                                Settings.System.putIntForUser(getContext().getContentResolver(),
-                                        Settings.System.SCREEN_BRIGHTNESS, userManualVal,
-                                        UserHandle.USER_CURRENT);
+                                    int userManualVal = Settings.Secure.getIntForUser(getContext().getContentResolver(),
+                                                Settings.Secure.NIGHT_MANBRIGHTNESS_USERVALUE, 0, UserHandle.USER_CURRENT);
+                                    Settings.System.putIntForUser(getContext().getContentResolver(),
+                                                Settings.System.SCREEN_BRIGHTNESS, userManualVal,
+                                                UserHandle.USER_CURRENT);
                                 }
                             }
                         });
@@ -400,27 +400,27 @@ public final class NightDisplayService extends SystemService
                 Settings.Secure.NIGHT_MANBRIGHTNESS_USERVALUE, getUserManualVal,
                 UserHandle.USER_CURRENT);
         int mode = Settings.System.getIntForUser(getContext().getContentResolver(),
-                                Settings.System.SCREEN_BRIGHTNESS_MODE,
-                                Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL,
-                                UserHandle.USER_CURRENT);
+                                    Settings.System.SCREEN_BRIGHTNESS_MODE,
+                                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL,
+                                    UserHandle.USER_CURRENT);
         mAutomaticBrightness = mode != Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL;
         customVal = Settings.Secure.getIntForUser(getContext().getContentResolver(),
                                     Settings.Secure.QS_NIGHT_BRIGHTNESS_VALUE, 0,
                                     UserHandle.USER_CURRENT);
         switch (customVal) {
             case 1:
-                autoVal = 0f;
-                manualVal = 100;
-                break;
-            case 2:
                 autoVal = -1f;
                 manualVal = 0;
                 break;
-            case 3:
-                break;
-            default:
+            case 2:
                 autoVal = -0.33f;
                 manualVal = 40;
+                break;
+            case 3:
+                autoVal = 0f;
+                manualVal = 100;
+                break;
+            default:
                 break;
         }
     }

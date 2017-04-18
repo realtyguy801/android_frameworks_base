@@ -151,6 +151,10 @@ final class DefaultPermissionGrantPolicy {
 
     private static final int MSG_READ_DEFAULT_PERMISSION_EXCEPTIONS = 1;
 
+    private static final String ACTION_TWINNING =
+            "com.google.android.clockwork.intent.TWINNING_SETTINGS";
+    private static final String ACTION_TRACK = "com.android.fitness.TRACK";
+
     private final PackageManagerService mService;
     private final Handler mHandler;
 
@@ -303,17 +307,6 @@ final class DefaultPermissionGrantPolicy {
                 grantRuntimePermissionsLPw(setupPackage, CAMERA_PERMISSIONS, userId);
             }
 
-            // Browser
-            PackageParser.Package browserpackage = getSystemPackageLPr(
-                    "com.android.browser");
-            if (browserpackage != null && doesPackageSupportRuntimePermissions(browserpackage)) {
-                grantRuntimePermissionsLPw(browserpackage, CAMERA_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(browserpackage, CONTACTS_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(browserpackage, LOCATION_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(browserpackage, MICROPHONE_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(browserpackage, STORAGE_PERMISSIONS, userId);
-            }
-
             // Camera
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             PackageParser.Package cameraPackage = getDefaultSystemHandlerActivityPackageLPr(
@@ -323,24 +316,6 @@ final class DefaultPermissionGrantPolicy {
                 grantRuntimePermissionsLPw(cameraPackage, CAMERA_PERMISSIONS, userId);
                 grantRuntimePermissionsLPw(cameraPackage, MICROPHONE_PERMISSIONS, userId);
                 grantRuntimePermissionsLPw(cameraPackage, STORAGE_PERMISSIONS, userId);
-            }
-
-            // Camera2
-            PackageParser.Package camera2package = getSystemPackageLPr(
-                    "com.android.camera2");
-            if (camera2package != null && doesPackageSupportRuntimePermissions(camera2package)) {
-                grantRuntimePermissionsLPw(camera2package, CAMERA_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(camera2package, LOCATION_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(camera2package, MICROPHONE_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(camera2package, STORAGE_PERMISSIONS, userId);
-            }
-
-            // Clock
-            PackageParser.Package deskclockpackage = getSystemPackageLPr(
-                    "com.android.deskclock");
-            if (deskclockpackage != null && doesPackageSupportRuntimePermissions(deskclockpackage)) {
-                grantRuntimePermissionsLPw(deskclockpackage, PHONE_PERMISSIONS, userId);
-                grantRuntimePermissionsLPw(deskclockpackage, STORAGE_PERMISSIONS, userId);
             }
 
             // Media provider
@@ -633,8 +608,9 @@ final class DefaultPermissionGrantPolicy {
                 grantRuntimePermissionsLPw(musicPackage, STORAGE_PERMISSIONS, userId);
             }
 
-            // Android Wear Home
+            // Watches
             if (mService.hasSystemFeature(PackageManager.FEATURE_WATCH, 0)) {
+                // Home application on watches
                 Intent homeIntent = new Intent(Intent.ACTION_MAIN);
                 homeIntent.addCategory(Intent.CATEGORY_HOME_MAIN);
 
@@ -650,6 +626,27 @@ final class DefaultPermissionGrantPolicy {
                             userId);
                     grantRuntimePermissionsLPw(wearHomePackage, LOCATION_PERMISSIONS, false,
                             userId);
+                }
+
+                // Twinning on watches
+                Intent twinningIntent = new Intent(ACTION_TWINNING);
+                PackageParser.Package twinningPackage = getDefaultSystemHandlerActivityPackageLPr(
+                        twinningIntent, userId);
+
+                if (twinningPackage != null
+                        && doesPackageSupportRuntimePermissions(twinningPackage)) {
+                    grantRuntimePermissionsLPw(twinningPackage, PHONE_PERMISSIONS, false, userId);
+                    grantRuntimePermissionsLPw(twinningPackage, SMS_PERMISSIONS, false, userId);
+                }
+
+                // Fitness tracking on watches
+                Intent trackIntent = new Intent(ACTION_TRACK);
+                PackageParser.Package trackPackage = getDefaultSystemHandlerActivityPackageLPr(
+                        trackIntent, userId);
+                if (trackPackage != null
+                        && doesPackageSupportRuntimePermissions(trackPackage)) {
+                    grantRuntimePermissionsLPw(trackPackage, SENSORS_PERMISSIONS, false, userId);
+                    grantRuntimePermissionsLPw(trackPackage, LOCATION_PERMISSIONS, false, userId);
                 }
             }
 

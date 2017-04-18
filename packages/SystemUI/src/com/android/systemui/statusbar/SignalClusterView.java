@@ -25,6 +25,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -65,6 +66,7 @@ public class SignalClusterView
     private static final String SLOT_WIFI = "wifi";
     private static final String SLOT_ETHERNET = "ethernet";
     private static final String SLOT_VOLTE = "volte";
+    private static final String SLOT_VPN = "vpn";
 
     NetworkControllerImpl mNC;
     SecurityController mSC;
@@ -114,6 +116,7 @@ public class SignalClusterView
     private boolean mBlockWifi;
     private boolean mBlockEthernet;
     private boolean mBlockVolte;
+    private boolean mBlockVpn;
 
     private boolean mDataWifiActivityArrows;
 
@@ -157,6 +160,10 @@ public class SignalClusterView
                  boolean blockWifi = blockList.contains(SLOT_WIFI);
                  boolean blockEthernet = blockList.contains(SLOT_ETHERNET);
                  boolean blockVolte = blockList.contains(SLOT_VOLTE);
+<<<<<<< HEAD
+=======
+                 boolean blockVpn = blockList.contains(SLOT_VPN);
+>>>>>>> rr/nougat
 
                  if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
                          || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi || blockVolte != mBlockVolte) {
@@ -165,16 +172,23 @@ public class SignalClusterView
                      mBlockEthernet = blockEthernet;
                      mBlockWifi = blockWifi;
                      mBlockVolte = blockVolte;
+<<<<<<< HEAD
+=======
+                     mBlockVpn = blockVpn;
+>>>>>>> rr/nougat
                      // Re-register to get new callbacks.
                      mNC.removeSignalCallback(this);
                      mNC.addSignalCallback(this);
                      apply();
                  }
                 break;
+<<<<<<< HEAD
             case DATA_ACTIVITY_ARROWS:
                      mDataWifiActivityArrows =
                         newValue == null || Integer.parseInt(newValue) != 0;
                 break;
+=======
+>>>>>>> rr/nougat
             default:
                 break;
         }
@@ -217,6 +231,12 @@ public class SignalClusterView
         maybeScaleVpnAndNoSimsIcons();
     }
 
+    public boolean IsDataAcitivyArrowsActive() {
+       return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DATA_ACTIVITY_ARROWS, 0,
+                UserHandle.USER_CURRENT) == 1;
+     }
+
     /**
      * Extracts the icon off of the VPN and no sims views and maybe scale them by
      * {@link #mIconScaleFactor}. Note that the other icons are not scaled here because they are
@@ -247,8 +267,12 @@ public class SignalClusterView
         mMobileSignalGroup.setPaddingRelative(0, 0, endPadding, 0);
 
         TunerService.get(mContext).addTunable(this,
+<<<<<<< HEAD
                 StatusBarIconController.ICON_BLACKLIST,
                 DATA_ACTIVITY_ARROWS);
+=======
+                StatusBarIconController.ICON_BLACKLIST);
+>>>>>>> rr/nougat
 
         apply();
         applyIconTint();
@@ -304,7 +328,7 @@ public class SignalClusterView
     @Override
     public void setMobileDataIndicators(IconState statusIcon, IconState qsIcon, int statusType,
             int qsType, boolean activityIn, boolean activityOut, String typeContentDescription,
-            String description, boolean isWide, int subId, boolean isMobileIms) {
+            String description, boolean isWide, int subId, boolean isMobileIms, boolean roaming) {
         PhoneState state = getState(subId);
         if (state == null) {
             return;
@@ -320,6 +344,10 @@ public class SignalClusterView
         state.mMobileTypeDescription = typeContentDescription;
         state.mIsMobileTypeIconWide = statusType != 0 && isWide;
         mMobileIms = isMobileIms;
+<<<<<<< HEAD
+=======
+        state.mRoaming = roaming;
+>>>>>>> rr/nougat
         state.mMobileActivityId = activityIn && activityOut ? R.drawable.stat_sys_signal_inout
                 : activityIn ? R.drawable.stat_sys_signal_in
                 : activityOut ? R.drawable.stat_sys_signal_out
@@ -490,8 +518,8 @@ public class SignalClusterView
     private void apply() {
         if (mWifiGroup == null) return;
 
-        mVpn.setVisibility(mVpnVisible ? View.VISIBLE : View.GONE);
-        if (mVpnVisible) {
+        mVpn.setVisibility(mVpnVisible && !mBlockVpn ? View.VISIBLE : View.GONE);
+        if (mVpnVisible && !mBlockVpn) {
             if (mLastVpnIconId != mVpnIconId) {
                 setIconForView(mVpn, mVpnIconId);
                 mLastVpnIconId = mVpnIconId;
@@ -541,7 +569,11 @@ public class SignalClusterView
                     (mWifiVisible ? "VISIBLE" : "GONE"),
                     mWifiStrengthId));
 
+<<<<<<< HEAD
         if (mDataWifiActivityArrows) {
+=======
+        if (IsDataAcitivyArrowsActive()) {
+>>>>>>> rr/nougat
             mWifiActivity.setVisibility(mWifiActivityId != 0 ? View.VISIBLE : View.GONE);
         } else {
             mWifiActivity.setVisibility(View.GONE);
@@ -662,7 +694,12 @@ public class SignalClusterView
         private String mMobileDescription, mMobileTypeDescription;
 
         private ViewGroup mMobileGroup;
+<<<<<<< HEAD
         private ImageView mMobile, mMobileDark, mMobileType;
+=======
+        private ImageView mMobile, mMobileDark, mMobileType, mMobileRoaming;
+        public boolean mRoaming;
+>>>>>>> rr/nougat
         private ImageView mMobileActivity;
 
         public PhoneState(int subId, Context context) {
@@ -677,6 +714,10 @@ public class SignalClusterView
             mMobile         = (ImageView) root.findViewById(R.id.mobile_signal);
             mMobileDark     = (ImageView) root.findViewById(R.id.mobile_signal_dark);
             mMobileType     = (ImageView) root.findViewById(R.id.mobile_type);
+<<<<<<< HEAD
+=======
+            mMobileRoaming  = (ImageView) root.findViewById(R.id.mobile_roaming);
+>>>>>>> rr/nougat
             mMobileActivity = (ImageView) root.findViewById(R.id.mobile_inout);
         }
 
@@ -721,6 +762,13 @@ public class SignalClusterView
                         (mMobileVisible ? "VISIBLE" : "GONE"), mMobileStrengthId, mMobileTypeId));
 
             mMobileType.setVisibility(mMobileTypeId != 0 ? View.VISIBLE : View.GONE);
+            mMobileRoaming.setVisibility(mRoaming ? View.VISIBLE : View.GONE);
+
+            if (IsDataAcitivyArrowsActive()) {
+                mMobileActivity.setVisibility(mMobileActivityId != 0 ? View.VISIBLE : View.GONE);
+            } else {
+                mMobileActivity.setVisibility(View.GONE);
+            }
 
             if (mDataWifiActivityArrows) {
                 mMobileActivity.setVisibility(mMobileActivityId != 0 ? View.VISIBLE : View.GONE);
@@ -786,6 +834,11 @@ public class SignalClusterView
                     StatusBarIconController.getDarkIntensity(tintArea, mMobile, darkIntensity),
                     mMobile, mMobileDark);
             setTint(mMobileType, StatusBarIconController.getTint(tintArea, mMobileType, tint));
+<<<<<<< HEAD
+=======
+            setTint(mMobileRoaming, StatusBarIconController.getTint(tintArea, mMobileRoaming,
+                    tint));
+>>>>>>> rr/nougat
             setTint(mMobileActivity,
                     StatusBarIconController.getTint(tintArea, mMobileActivity, tint));
         }

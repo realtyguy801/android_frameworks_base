@@ -25,9 +25,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <sys/system_properties.h>
 
 #include <private/android_filesystem_config.h> // for AID_SYSTEM
-#include <private/regionalization/Environment.h>
 
 #include "androidfw/Asset.h"
 #include "androidfw/AssetManager.h"
@@ -42,6 +42,7 @@
 #include "ScopedUtfChars.h"
 #include "utils/Log.h"
 #include "utils/misc.h"
+#include "utils/String8.h"
 
 extern "C" int capget(cap_user_header_t hdrp, cap_user_data_t datap);
 extern "C" int capset(cap_user_header_t hdrp, const cap_user_data_t datap);
@@ -2070,9 +2071,9 @@ static const JNINativeMethod gAssetManagerMethods[] = {
         (void*) android_content_AssetManager_readAsset },
     { "seekAsset",      "(JJI)J",
         (void*) android_content_AssetManager_seekAsset },
-    { "getAssetLength", "(J)J",
+    { "getAssetLength", "!(J)J",
         (void*) android_content_AssetManager_getAssetLength },
-    { "getAssetRemainingLength", "(J)J",
+    { "getAssetRemainingLength", "!(J)J",
         (void*) android_content_AssetManager_getAssetRemainingLength },
     { "addAssetPathNative", "(Ljava/lang/String;Z)I",
         (void*) android_content_AssetManager_addAssetPath },
@@ -2088,25 +2089,25 @@ static const JNINativeMethod gAssetManagerMethods[] = {
         (void*) android_content_AssetManager_getNonSystemLocales },
     { "getSizeConfigurations", "()[Landroid/content/res/Configuration;",
         (void*) android_content_AssetManager_getSizeConfigurations },
-    { "setConfiguration", "(IILjava/lang/String;IIIIIIIIIIIIII)V",
+    { "setConfiguration", "!(IILjava/lang/String;IIIIIIIIIIIIII)V",
         (void*) android_content_AssetManager_setConfiguration },
-    { "getResourceIdentifier","(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I",
+    { "getResourceIdentifier","!(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I",
         (void*) android_content_AssetManager_getResourceIdentifier },
-    { "getResourceName","(I)Ljava/lang/String;",
+    { "getResourceName","!(I)Ljava/lang/String;",
         (void*) android_content_AssetManager_getResourceName },
-    { "getResourcePackageName","(I)Ljava/lang/String;",
+    { "getResourcePackageName","!(I)Ljava/lang/String;",
         (void*) android_content_AssetManager_getResourcePackageName },
-    { "getResourceTypeName","(I)Ljava/lang/String;",
+    { "getResourceTypeName","!(I)Ljava/lang/String;",
         (void*) android_content_AssetManager_getResourceTypeName },
-    { "getResourceEntryName","(I)Ljava/lang/String;",
+    { "getResourceEntryName","!(I)Ljava/lang/String;",
         (void*) android_content_AssetManager_getResourceEntryName },
-    { "loadResourceValue","(ISLandroid/util/TypedValue;Z)I",
+    { "loadResourceValue","!(ISLandroid/util/TypedValue;Z)I",
         (void*) android_content_AssetManager_loadResourceValue },
     { "loadResourceBagValue","!(IILandroid/util/TypedValue;Z)I",
         (void*) android_content_AssetManager_loadResourceBagValue },
-    { "getStringBlockCount","()I",
+    { "getStringBlockCount","!()I",
         (void*) android_content_AssetManager_getStringBlockCount },
-    { "getNativeStringBlock","(I)J",
+    { "getNativeStringBlock","!(I)J",
         (void*) android_content_AssetManager_getNativeStringBlock },
     { "getCookieName","(I)Ljava/lang/String;",
         (void*) android_content_AssetManager_getCookieName },
@@ -2124,9 +2125,9 @@ static const JNINativeMethod gAssetManagerMethods[] = {
         (void*) android_content_AssetManager_copyTheme },
     { "clearTheme", "(J)V",
         (void*) android_content_AssetManager_clearTheme },
-    { "loadThemeAttributeValue", "(JILandroid/util/TypedValue;Z)I",
+    { "loadThemeAttributeValue", "!(JILandroid/util/TypedValue;Z)I",
         (void*) android_content_AssetManager_loadThemeAttributeValue },
-    { "getThemeChangingConfigurations", "(J)I",
+    { "getThemeChangingConfigurations", "!(J)I",
         (void*) android_content_AssetManager_getThemeChangingConfigurations },
     { "dumpTheme", "(JILjava/lang/String;Ljava/lang/String;)V",
         (void*) android_content_AssetManager_dumpTheme },

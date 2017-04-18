@@ -665,7 +665,7 @@ public interface WindowManager extends ViewManager {
          * @hide
          */
         public static final int TYPE_KEYGUARD_PANEL = FIRST_SYSTEM_WINDOW+998;
- 
+
 
         /**
          * End of types of system windows.

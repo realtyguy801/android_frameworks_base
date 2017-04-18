@@ -178,11 +178,7 @@ public class ParcelFileDescriptor implements Parcelable, Closeable {
         mWrapped = null;
         mFd = fd;
         mCommFd = commChannel;
-        try {
-            mGuard.open("close");
-        } catch(Throwable e) {
-            Log.w("ParcelFileDescriptor", "Explicit termination method 'close' not called");
-        }
+        mGuard.open("close");
     }
 
     /**

@@ -108,6 +108,7 @@
     <protected-broadcast android:name="android.app.action.BUGREPORT_SHARING_DECLINED" />
     <protected-broadcast android:name="android.app.action.BUGREPORT_FAILED" />
     <protected-broadcast android:name="android.app.action.BUGREPORT_SHARE" />
+    <protected-broadcast android:name="android.app.action.SHOW_DEVICE_MONITORING_DIALOG" />
 
     <protected-broadcast android:name="android.appwidget.action.APPWIDGET_UPDATE_OPTIONS" />
     <protected-broadcast android:name="android.appwidget.action.APPWIDGET_DELETED" />
@@ -469,6 +470,7 @@
     <protected-broadcast android:name="com.android.server.Wifi.action.TOGGLE_PNO" />
     <protected-broadcast android:name="intent.action.ACTION_RF_BAND_INFO" />
     <protected-broadcast android:name="android.intent.action.MEDIA_RESOURCE_GRANTED" />
+    <protected-broadcast android:name="android.app.action.NETWORK_LOGS_AVAILABLE" />
     <protected-broadcast android:name="android.app.action.SECURITY_LOGS_AVAILABLE" />
 
     <protected-broadcast android:name="android.app.action.INTERRUPTION_FILTER_CHANGED" />
@@ -514,7 +516,6 @@
 
     <protected-broadcast android:name="android.telecom.action.TTY_PREFERRED_MODE_CHANGED" />
     <protected-broadcast android:name="android.telecom.action.CURRENT_TTY_MODE_CHANGED" />
-
     <protected-broadcast android:name="com.android.server.retaildemo.ACTION_RESET_DEMO" />
 
     <protected-broadcast android:name="cyanogenmod.intent.action.LID_STATE_CHANGED" />
@@ -738,6 +739,7 @@
         android:priority="400" />
 
     <!-- Allows an app to access precise location.
+         Alternatively, you might want {@link #ACCESS_COARSE_LOCATION}.
          <p>Protection level: dangerous
     -->
     <permission android:name="android.permission.ACCESS_FINE_LOCATION"
@@ -747,6 +749,7 @@
         android:protectionLevel="dangerous" />
 
     <!-- Allows an app to access approximate location.
+         Alternatively, you might want {@link #ACCESS_FINE_LOCATION}.
          <p>Protection level: dangerous
     -->
     <permission android:name="android.permission.ACCESS_COARSE_LOCATION"
@@ -1842,8 +1845,7 @@
         android:description="@string/permdesc_install_shortcut"
         android:protectionLevel="normal"/>
 
-    <!-- Allows an application to uninstall a shortcut in Launcher.
-         <p>Protection level: normal
+    <!--This permission is no longer supported.
     -->
     <permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"
         android:label="@string/permlab_uninstall_shortcut"
@@ -1945,13 +1947,6 @@
         android:label="@string/permlab_getPackageSize"
         android:description="@string/permdesc_getPackageSize"
         android:protectionLevel="normal" />
-
-    <!-- @hide Allows an application to change the package signature as
-         seen by applications -->
-    <permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE"
-        android:protectionLevel="dangerous"
-        android:label="@string/permlab_fakePackageSignature"
-        android:description="@string/permdesc_fakePackageSignature" />
 
     <!-- @deprecated No longer useful, see
          {@link android.content.pm.PackageManager#addPackageToPreferred}
@@ -2740,6 +2735,8 @@
          This is a normal permission: an app requesting it will always be granted the
          permission, without the user needing to approve or see it. -->
     <permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+        android:label="@string/permlab_requestIgnoreBatteryOptimizations"
+        android:description="@string/permdesc_requestIgnoreBatteryOptimizations"
         android:protectionLevel="normal" />
 
     <!-- @SystemApi Allows an application to collect battery statistics -->
@@ -3181,8 +3178,7 @@
     <permission android:name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"
                 android:protectionLevel="signature|privileged" />
 
-    <!-- Allows an application to make calls to OverlayManagerService.
-         @hide -->
+    <!-- Allows an application to make calls to OverlayManagerService.-->
     <permission android:name="android.permission.MODIFY_OVERLAYS"
         android:label="@string/permlab_modifyOverlays"
         android:description="@string/permdesc_modifyOverlays"
@@ -3468,10 +3464,13 @@
                  android:permission="android.permission.BIND_JOB_SERVICE" >
         </service>
 
-        <service
-            android:name="com.android.server.pm.BackgroundDexOptService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
+        <service android:name="com.android.server.pm.BackgroundDexOptService"
+                 android:exported="true"
+                 android:permission="android.permission.BIND_JOB_SERVICE">
+        </service>
+
+        <service android:name="com.android.server.storage.DiskStatsLoggingService"
+                 android:permission="android.permission.BIND_JOB_SERVICE" >
         </service>
 
     </application>
