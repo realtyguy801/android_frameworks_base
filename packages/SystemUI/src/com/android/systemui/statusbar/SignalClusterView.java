@@ -118,11 +118,6 @@ public class SignalClusterView
     private boolean mBlockVolte;
     private boolean mBlockVpn;
 
-    private boolean mDataWifiActivityArrows;
-
-    private static final String DATA_ACTIVITY_ARROWS =
-            "system:" + Settings.System.DATA_ACTIVITY_ARROWS;
-
     public SignalClusterView(Context context) {
         this(context, null);
     }
@@ -160,10 +155,7 @@ public class SignalClusterView
                  boolean blockWifi = blockList.contains(SLOT_WIFI);
                  boolean blockEthernet = blockList.contains(SLOT_ETHERNET);
                  boolean blockVolte = blockList.contains(SLOT_VOLTE);
-<<<<<<< HEAD
-=======
                  boolean blockVpn = blockList.contains(SLOT_VPN);
->>>>>>> rr/nougat
 
                  if (blockAirplane != mBlockAirplane || blockMobile != mBlockMobile
                          || blockEthernet != mBlockEthernet || blockWifi != mBlockWifi || blockVolte != mBlockVolte) {
@@ -172,23 +164,13 @@ public class SignalClusterView
                      mBlockEthernet = blockEthernet;
                      mBlockWifi = blockWifi;
                      mBlockVolte = blockVolte;
-<<<<<<< HEAD
-=======
                      mBlockVpn = blockVpn;
->>>>>>> rr/nougat
                      // Re-register to get new callbacks.
                      mNC.removeSignalCallback(this);
                      mNC.addSignalCallback(this);
                      apply();
                  }
                 break;
-<<<<<<< HEAD
-            case DATA_ACTIVITY_ARROWS:
-                     mDataWifiActivityArrows =
-                        newValue == null || Integer.parseInt(newValue) != 0;
-                break;
-=======
->>>>>>> rr/nougat
             default:
                 break;
         }
@@ -267,12 +249,7 @@ public class SignalClusterView
         mMobileSignalGroup.setPaddingRelative(0, 0, endPadding, 0);
 
         TunerService.get(mContext).addTunable(this,
-<<<<<<< HEAD
-                StatusBarIconController.ICON_BLACKLIST,
-                DATA_ACTIVITY_ARROWS);
-=======
                 StatusBarIconController.ICON_BLACKLIST);
->>>>>>> rr/nougat
 
         apply();
         applyIconTint();
@@ -344,10 +321,7 @@ public class SignalClusterView
         state.mMobileTypeDescription = typeContentDescription;
         state.mIsMobileTypeIconWide = statusType != 0 && isWide;
         mMobileIms = isMobileIms;
-<<<<<<< HEAD
-=======
         state.mRoaming = roaming;
->>>>>>> rr/nougat
         state.mMobileActivityId = activityIn && activityOut ? R.drawable.stat_sys_signal_inout
                 : activityIn ? R.drawable.stat_sys_signal_in
                 : activityOut ? R.drawable.stat_sys_signal_out
@@ -569,11 +543,7 @@ public class SignalClusterView
                     (mWifiVisible ? "VISIBLE" : "GONE"),
                     mWifiStrengthId));
 
-<<<<<<< HEAD
-        if (mDataWifiActivityArrows) {
-=======
         if (IsDataAcitivyArrowsActive()) {
->>>>>>> rr/nougat
             mWifiActivity.setVisibility(mWifiActivityId != 0 ? View.VISIBLE : View.GONE);
         } else {
             mWifiActivity.setVisibility(View.GONE);
@@ -694,12 +664,8 @@ public class SignalClusterView
         private String mMobileDescription, mMobileTypeDescription;
 
         private ViewGroup mMobileGroup;
-<<<<<<< HEAD
-        private ImageView mMobile, mMobileDark, mMobileType;
-=======
         private ImageView mMobile, mMobileDark, mMobileType, mMobileRoaming;
         public boolean mRoaming;
->>>>>>> rr/nougat
         private ImageView mMobileActivity;
 
         public PhoneState(int subId, Context context) {
@@ -714,10 +680,7 @@ public class SignalClusterView
             mMobile         = (ImageView) root.findViewById(R.id.mobile_signal);
             mMobileDark     = (ImageView) root.findViewById(R.id.mobile_signal_dark);
             mMobileType     = (ImageView) root.findViewById(R.id.mobile_type);
-<<<<<<< HEAD
-=======
             mMobileRoaming  = (ImageView) root.findViewById(R.id.mobile_roaming);
->>>>>>> rr/nougat
             mMobileActivity = (ImageView) root.findViewById(R.id.mobile_inout);
         }
 
@@ -754,9 +717,6 @@ public class SignalClusterView
             mMobileDark.setPaddingRelative(
                     mIsMobileTypeIconWide ? mWideTypeIconStartPadding : mMobileDataIconStartPadding,
                     0, 0, 0);
-            mMobileActivity.setPaddingRelative(
-                    mIsMobileTypeIconWide ? mWideTypeIconStartPadding : mMobileDataIconStartPadding,
-                    0, 0, 0);
 
             if (DEBUG) Log.d(TAG, String.format("mobile: %s sig=%d typ=%d",
                         (mMobileVisible ? "VISIBLE" : "GONE"), mMobileStrengthId, mMobileTypeId));
@@ -765,12 +725,6 @@ public class SignalClusterView
             mMobileRoaming.setVisibility(mRoaming ? View.VISIBLE : View.GONE);
 
             if (IsDataAcitivyArrowsActive()) {
-                mMobileActivity.setVisibility(mMobileActivityId != 0 ? View.VISIBLE : View.GONE);
-            } else {
-                mMobileActivity.setVisibility(View.GONE);
-            }
-
-            if (mDataWifiActivityArrows) {
                 mMobileActivity.setVisibility(mMobileActivityId != 0 ? View.VISIBLE : View.GONE);
             } else {
                 mMobileActivity.setVisibility(View.GONE);
@@ -834,11 +788,8 @@ public class SignalClusterView
                     StatusBarIconController.getDarkIntensity(tintArea, mMobile, darkIntensity),
                     mMobile, mMobileDark);
             setTint(mMobileType, StatusBarIconController.getTint(tintArea, mMobileType, tint));
-<<<<<<< HEAD
-=======
             setTint(mMobileRoaming, StatusBarIconController.getTint(tintArea, mMobileRoaming,
                     tint));
->>>>>>> rr/nougat
             setTint(mMobileActivity,
                     StatusBarIconController.getTint(tintArea, mMobileActivity, tint));
         }

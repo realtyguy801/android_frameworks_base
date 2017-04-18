@@ -772,10 +772,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NO_SIM_CLUSTER_SWITCH),
                     false, this, UserHandle.USER_ALL);
-<<<<<<< HEAD
-=======
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.NAVBAR_BUTON_CUSTOM_ICON_SWITCH),
+                    Settings.System.HEADER_WEATHER_ENABLED),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADER_WEATHER_ENABLED),
@@ -786,7 +784,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.OMNIJAWS_WEATHER_ICON_PACK),
                     false, this, UserHandle.USER_ALL);
->>>>>>> rr/nougat
             update();
         }
         
