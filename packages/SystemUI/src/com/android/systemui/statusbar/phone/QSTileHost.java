@@ -152,15 +152,14 @@ public class QSTileHost implements QSTile.Host, Tunable {
     private int mCurrentUser;
 
     public QSTileHost(Context context, PhoneStatusBar statusBar,
-                      BluetoothController bluetooth, LocationController location,
-                      RotationLockController rotation, NetworkController network,
-                      ZenModeController zen, HotspotController hotspot,
-                      CastController cast, FlashlightController flashlight,
-                      UserSwitcherController userSwitcher, UserInfoController userInfo,
-                      KeyguardMonitor keyguard, SecurityController security,
-                      BatteryController battery, StatusBarIconController iconController,
-                      NextAlarmController nextAlarmController) {
-
+            BluetoothController bluetooth, LocationController location,
+            RotationLockController rotation, NetworkController network,
+            ZenModeController zen, HotspotController hotspot,
+            CastController cast, FlashlightController flashlight,
+            UserSwitcherController userSwitcher, UserInfoController userInfo,
+            KeyguardMonitor keyguard, SecurityController security,
+            BatteryController battery, StatusBarIconController iconController,
+            NextAlarmController nextAlarmController) {
         mContext = context;
         mStatusBar = statusBar;
         mBluetooth = bluetooth;

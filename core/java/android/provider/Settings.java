@@ -3468,15 +3468,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
                 sBooleanValidator;
 
         /**
-         * Call recording format value
-         * 0: AMR_WB
-         * 1: MPEG_4
-         * Default: 0
-         * @hide
-         */
-        public static final String CALL_RECORDING_FORMAT = "call_recording_format";
-
-        /**
          * Whether the phone vibrates when it is ringing due to an incoming call. This will
          * be used by Phone and Setting apps; it shouldn't affect other apps.
          * The value is boolean (1 or 0).
@@ -3679,19 +3670,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          */
         @Deprecated
         public static final String KEY_SMS_BREATH = Global.KEY_SMS_BREATH;
-
-        /**
-         * @hide
-         * Whether national data roaming should be used.
-         * @hide
-         */
-        public static final String MVNO_ROAMING = "mvno_roaming";
-
-         /**
-         * Whether to use the proximity sensor to turn the screen on/off during a call
-         * @hide
-         */
-        public static final String IN_CALL_PROXIMITY_SENSOR = "in_call_proximity_sensor";
 
 
         /** @hide */
@@ -4331,15 +4309,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * @hide
          */
         public static final String ANIM_TILE_INTERPOLATOR = "anim_tile_interpolator";
-
-         /**
-         * MediaScanner behavior on boot.
-         * 0 = enabled
-         * 1 = ask (notification)
-         * 2 = disabled
-         * @hide
-         */
-        public static final String MEDIA_SCANNER_ON_BOOT = "media_scanner_on_boot";
 
         /**
          * Immersive recents options
@@ -7385,15 +7354,6 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
          * <p>0 = do not allow use of the package installer
          */
         public static final String INSTALL_NON_MARKET_APPS = "install_non_market_apps";
-
-        /**
-         * Whether applications can fake a signature.
-         *
-         * <p>1 = permit apps to fake signature
-         * <p>0 = disable this feature
-         * @hide
-         */
-        public static final String ALLOW_SIGNATURE_FAKE = "allow_signature_fake";
 
         /**
          * One Handed mode toggle

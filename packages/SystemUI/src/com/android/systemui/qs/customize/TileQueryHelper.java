@@ -125,7 +125,8 @@ public class TileQueryHelper {
         mSpecs.add(spec);
     }
 
-    private void addTile(String spec, Drawable drawable, CharSequence label, CharSequence appLabel, Context context) {
+    private void addTile(String spec, Drawable drawable, CharSequence label, CharSequence appLabel,
+            Context context) {
         QSTile.State state = new QSTile.State();
         state.label = label;
         state.contentDescription = label;
@@ -170,7 +171,10 @@ public class TileQueryHelper {
                     continue;
                 }
                 Drawable icon = info.serviceInfo.loadIcon(pm);
-                if (!permission.BIND_QUICK_SETTINGS_TILE.equals(info.serviceInfo.permission) && icon == null) {
+                if (!permission.BIND_QUICK_SETTINGS_TILE.equals(info.serviceInfo.permission)) {
+                    continue;
+                }
+                if (icon == null) {
                     continue;
                 }
                 icon.mutate();

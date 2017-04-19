@@ -133,9 +133,11 @@ public class NavigationBarTile extends QSTile<QSTile.State> {
 
     @Override
     protected void handleClick() {
-        MetricsLogger.action(mContext, getMetricsCategory());
-        Settings.Secure.putInt(mContext.getContentResolver(),
-                Settings.Secure.NAVIGATION_BAR_VISIBLE, navbarEnabled() ? 0 : 1);
+        if (mEntries.length > 0) {
+            mShowingDetail = true;
+            mAnimationList.clear();
+            showDetail(true);
+        }
     }
 
     @Override
@@ -147,10 +149,13 @@ public class NavigationBarTile extends QSTile<QSTile.State> {
 
     @Override
     protected void handleLongClick() {
-        if (mEntries.length > 0) {
-            mShowingDetail = true;
-            mAnimationList.clear();
-            showDetail(true);
+        if (navbarEnabled()) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setClassName(SETTINGS_PACKAGE_NAME, getNavigationBar() == 0 ? SMARTBAR_SETTINGS
+                    : FLING_SETTINGS);
+            mHost.startActivityDismissingKeyguard(intent);
+        } else {
+            // Do nothing
         }
     }
 

@@ -266,9 +266,6 @@ public final class AudioFormat implements Parcelable {
     /** Audio data format: DOLBY TRUEHD compressed
      **/
     public static final int ENCODING_DOLBY_TRUEHD = 14;
-    /** Audio data format: AC-4 sync frame transport format
-     **/
-    public static final int ENCODING_AC4 = 15;
 
     /** Audio data format: AMRNB
      * @hide
@@ -511,7 +508,6 @@ public final class AudioFormat implements Parcelable {
         case ENCODING_PCM_16BIT:
         case ENCODING_PCM_FLOAT:
         case ENCODING_AC3:
-        case ENCODING_AC4:
         case ENCODING_E_AC3:
         case ENCODING_DTS:
         case ENCODING_DTS_HD:
@@ -540,7 +536,6 @@ public final class AudioFormat implements Parcelable {
         case ENCODING_PCM_16BIT:
         case ENCODING_PCM_FLOAT:
         case ENCODING_AC3:
-        case ENCODING_AC4:
         case ENCODING_E_AC3:
         case ENCODING_DTS:
         case ENCODING_DTS_HD:
@@ -561,7 +556,6 @@ public final class AudioFormat implements Parcelable {
         case ENCODING_DEFAULT:
             return true;
         case ENCODING_AC3:
-        case ENCODING_AC4:
         case ENCODING_E_AC3:
         case ENCODING_DTS:
         case ENCODING_DTS_HD:
@@ -594,7 +588,6 @@ public final class AudioFormat implements Parcelable {
         case ENCODING_DEFAULT:
             return true;
         case ENCODING_AC3:
-        case ENCODING_AC4:
         case ENCODING_E_AC3:
         case ENCODING_DTS:
         case ENCODING_DTS_HD:
@@ -814,7 +807,6 @@ public final class AudioFormat implements Parcelable {
          *     {@link AudioFormat#ENCODING_PCM_16BIT},
          *     {@link AudioFormat#ENCODING_PCM_FLOAT},
          *     {@link AudioFormat#ENCODING_AC3},
-         *     {@link AudioFormat#ENCODING_AC4},
          *     {@link AudioFormat#ENCODING_E_AC3}.
          *     {@link AudioFormat#ENCODING_DTS},
          *     {@link AudioFormat#ENCODING_DTS_HD}.
@@ -830,7 +822,6 @@ public final class AudioFormat implements Parcelable {
                 case ENCODING_PCM_16BIT:
                 case ENCODING_PCM_FLOAT:
                 case ENCODING_AC3:
-                case ENCODING_AC4:
                 case ENCODING_E_AC3:
                 case ENCODING_DTS:
                 case ENCODING_DTS_HD:
@@ -1045,7 +1036,6 @@ public final class AudioFormat implements Parcelable {
         ENCODING_PCM_16BIT,
         ENCODING_PCM_FLOAT,
         ENCODING_AC3,
-        ENCODING_AC4,
         ENCODING_E_AC3,
         ENCODING_DTS,
         ENCODING_DTS_HD,

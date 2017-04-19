@@ -860,9 +860,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                     || uri.equals(Settings.System.getUriFor(
                     Settings.System.NAVBAR_BUTTON_COLOR))
                     || uri.equals(Settings.System.getUriFor(
-                    Settings.System.NAVBAR_BUTON_CUSTOM_ICON_SWITCH))) {
-                    mNavigationController.updateNavbarOverlay(mContext.getResources());
-           } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.NAVBAR_BUTON_CUSTOM_ICON_SWITCH))
+                    || uri.equals(Settings.System.getUriFor(
                     Settings.System.NAV_BAR_DYNAMIC))) {
                     mNavigationController.updateNavbarOverlay(mContext.getResources());
             } else if (uri.equals(Settings.System.getUriFor(
@@ -2257,7 +2256,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
     @Override
     public void screenPinningStateChanged(boolean enabled) {
-        super.screenPinningStateChanged(enabled);
         mNavigationController.screenPinningStateChanged(enabled);
     }
 
