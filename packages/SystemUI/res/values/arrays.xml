@@ -22,27 +22,11 @@
     <!-- BatteryMeterView parameters -->
     <array name="batterymeter_color_levels">
         <item>15</item>
-        <item>25</item>
-	<item>35</item>
-	<item>45</item>	
-	<item>55</item>
-	<item>65</item>
-	<item>75</item>
-	<item>85</item>
-	<item>95</item>
-	<item>100</item>
+        <item>100</item>
     </array>
     <array name="batterymeter_color_values">
-        <item>@color/battery_meter_15</item>
-        <item>@color/battery_meter_25</item>
-        <item>@color/battery_meter_35</item>
-        <item>@color/battery_meter_45</item>
-        <item>@color/battery_meter_55</item>
-        <item>@color/battery_meter_65</item>
-        <item>@color/battery_meter_75</item>
-        <item>@color/battery_meter_85</item>
-        <item>@color/battery_meter_95</item>
-        <item>@color/battery_meter_100</item>
+        <item>@*android:color/battery_saver_mode_color</item>
+        <item>#FFFFFFFF</item>
     </array>
 
     <!-- BatteryMeterView parameters -->

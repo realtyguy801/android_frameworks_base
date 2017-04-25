@@ -36,18 +36,6 @@
     <color name="keyguard_affordance_circle_background">@android:color/white</color>
 
     <!-- Battery meter colors -->
-    <color name="battery_meter_15">@*android:color/battery_saver_mode_color</color>
-    <color name="battery_meter_25">#FFFFFFFF</color>
-    <color name="battery_meter_35">#FFFFFFFF</color>
-    <color name="battery_meter_45">#FFFFFFFF</color>
-    <color name="battery_meter_55">#FFFFFFFF</color>
-    <color name="battery_meter_65">#FFFFFFFF</color>
-    <color name="battery_meter_75">#FFFFFFFF</color>
-    <color name="battery_meter_85">#FFFFFFFF</color>
-    <color name="battery_meter_95">#FFFFFFFF</color>
-    <color name="battery_meter_100">#FFFFFFFF</color>
-
-    <!-- Battery meter colors -->
     <color name="battery_color_meter_15">@*android:color/battery_saver_mode_color</color>
     <color name="battery_color_meter_25">#FFFF8888</color>
     <color name="battery_color_meter_35">#FFBB9988</color>
