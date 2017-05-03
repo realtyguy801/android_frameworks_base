@@ -72,6 +72,11 @@ public class OmniJawsClient {
             "units"
     };
 
+    private static final String WEATHER_UPDATE = "org.omnirom.omnijaws.WEATHER_UPDATE";
+    private static final String WEATHER_ERROR = "org.omnirom.omnijaws.WEATHER_ERROR";
+    private static final String EXTRA_ERROR = "error";
+    public static final int EXTRA_ERROR_DISABLED = 2;
+
     private static final DecimalFormat sNoDigitsFormat = new DecimalFormat("0");
 
     public static class WeatherInfo {
@@ -111,13 +116,21 @@ public class OmniJawsClient {
 
     public static interface OmniJawsObserver {
         public void weatherUpdated();
+        public void weatherError(int errorReason);
     }
 
     private class WeatherUpdateReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(final Context context, Intent intent) {
+            String action = intent.getAction();
             for (OmniJawsObserver observer : mObserver) {
-                observer.weatherUpdated();
+                if (action.equals(WEATHER_UPDATE)) {
+                    observer.weatherUpdated();
+                }
+                if (action.equals(WEATHER_ERROR)) {
+                    int errorReason = intent.getIntExtra(EXTRA_ERROR, 0);
+                    observer.weatherError(errorReason);
+                }
             }
         }
     }
@@ -401,7 +414,8 @@ public class OmniJawsClient {
             }
             mReceiver = new WeatherUpdateReceiver();
             IntentFilter filter = new IntentFilter();
-            filter.addAction("org.omnirom.omnijaws.WEATHER_UPDATE");
+            filter.addAction(WEATHER_UPDATE);
+            filter.addAction(WEATHER_ERROR);
             mContext.registerReceiver(mReceiver, filter);
         }
         mObserver.add(observer);

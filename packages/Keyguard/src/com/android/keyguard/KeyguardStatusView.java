@@ -366,6 +366,14 @@ public class KeyguardStatusView extends GridLayout implements
        }
     }
 
+    @Override
+    public void weatherError(int errorReason) {
+        if (mWeatherData != null) {
+            if (mWeatherView != null)
+                mWeatherView.setVisibility(View.GONE);
+        }
+    }
+
     private void refreshBatteryInfo() {
         final Resources res = getContext().getResources();
         KeyguardUpdateMonitor.BatteryStatus batteryStatus =

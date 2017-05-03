@@ -389,6 +389,18 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
     }
 
     @Override
+    public void weatherError(int errorReason) {
+        if (mWeatherData != null) {
+            if (mWeatherLine2 != null) 
+                mWeatherLine2.setText(null);
+            if (mWeatherLine1 != null) 
+                mWeatherLine1.setText(null);
+            if (mWeatherimage != null)
+                mWeatherimage.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void queryAndUpdateWeather() {
         try {   
                 updateImageVisibility();
