@@ -200,7 +200,7 @@ public class RecentsView extends FrameLayout {
         mDividerSize = ssp.getDockedDividerSize(context);
         mTouchHandler = new RecentsViewTouchHandler(this);
         mFlingAnimationUtils = new FlingAnimationUtils(context, 0.3f);
-        mScrimAlpha = Recents.getConfiguration().isGridEnabled
+        mScrimAlpha = Recents.getConfiguration().isGridEnabled()
                 ? GRID_LAYOUT_SCRIM_ALPHA : DEFAULT_SCRIM_ALPHA;
         mBackgroundScrim = new ColorDrawable(
                 Color.argb((int) (mScrimAlpha * 255), 0, 0, 0)).mutate();
@@ -1345,6 +1345,8 @@ public class RecentsView extends FrameLayout {
                      Settings.System.FAB_ANIMATION_STYLE), false, this, UserHandle.USER_ALL);
              resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.SHOW_CLEAR_ALL_RECENTS), false, this, UserHandle.USER_ALL);
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.NAVIGATION_BAR_RECENTS), false, this, UserHandle.USER_ALL);
 
              update();
          }
@@ -1386,6 +1388,11 @@ public class RecentsView extends FrameLayout {
              } else if (uri.equals(Settings.System.getUriFor(
                      Settings.System.MEM_TEXT_COLOR))) {
                  checkcolors();
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.NAVIGATION_BAR_RECENTS))) {
+                try {
+                mTaskStackView.reloadOnConfigurationChange();
+                } catch (Exception e) {}
              }
              update();
          }

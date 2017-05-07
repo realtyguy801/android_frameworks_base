@@ -72,7 +72,7 @@ import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.NextAlarmController.NextAlarmChangeCallback;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
-import com.android.systemui.omni.OmniJawsClient;
+import com.android.internal.util.rr.OmniJawsClient;
 import com.android.systemui.tuner.TunerService;
 
 public class QuickStatusBarHeader extends BaseStatusBarHeader implements
@@ -390,14 +390,7 @@ public class QuickStatusBarHeader extends BaseStatusBarHeader implements
 
     @Override
     public void weatherError(int errorReason) {
-        if (mWeatherData != null) {
-            if (mWeatherLine2 != null) 
-                mWeatherLine2.setText(null);
-            if (mWeatherLine1 != null) 
-                mWeatherLine1.setText(null);
-            if (mWeatherimage != null)
-                mWeatherimage.setVisibility(View.GONE);
-        }
+        //do nothing
     }
 
     @Override
