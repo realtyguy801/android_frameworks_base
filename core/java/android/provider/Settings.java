@@ -6138,6 +6138,12 @@ public static final String PHONE_BLACKLIST_REGEX_ENABLED = "phone_blacklist_rege
         public static final String VIBRATE_ON_DISCONNECT = "vibrate_on_disconnect";
 
         /**
+         * Whether to show the weather wind speed in km/h or m/s
+         * @hide
+         */
+        public static final String OMNIJAWS_WINDSPEED_M_S = "omnijaws_windspeed_m_s";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
