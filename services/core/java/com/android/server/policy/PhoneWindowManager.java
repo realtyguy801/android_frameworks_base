@@ -171,6 +171,7 @@ import com.android.internal.util.ScreenShapeHelper;
 import com.android.internal.view.RotationPolicy;
 import com.android.internal.utils.du.ActionHandler;
 import com.android.internal.utils.du.DUSystemReceiver;
+import com.android.internal.util.rr.RRUtils;
 import com.android.internal.widget.PointerLocationView;
 import com.android.server.GestureLauncherService;
 import com.android.server.LocalServices;
@@ -4728,6 +4729,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void preloadRecentApps() {
+        if (keyguardOn()) {
+            return;
+        }
+        if (mOmniSwitchRecents == 1) {
+            RRUtils.preloadOmniSwitchRecents(mContext, UserHandle.CURRENT);
+            return;
+        }
         mPreloadedRecentApps = true;
         StatusBarManagerInternal statusbar = getStatusBarManagerInternal();
         if (statusbar != null) {
@@ -4736,6 +4744,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     private void cancelPreloadRecentApps() {
+        if (keyguardOn()) {
+            return;
+        }
+        if (mOmniSwitchRecents == 1) {
+            return;
+        }
         if (mPreloadedRecentApps) {
             mPreloadedRecentApps = false;
             StatusBarManagerInternal statusbar = getStatusBarManagerInternal();
@@ -5384,8 +5398,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private int navigationBarPosition(int displayWidth, int displayHeight, int displayRotation) {
         if (mNavigationBarCanMove && displayWidth > displayHeight) {
+            if (mNavigationBarLeftInLandscape) {
+                return NAV_BAR_LEFT;
+            } else {
                 return NAV_BAR_RIGHT;
             }
+        }
         return NAV_BAR_BOTTOM;
     }
 

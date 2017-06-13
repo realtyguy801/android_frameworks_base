@@ -16,6 +16,7 @@
 
 package com.android.internal.util.rr;
 
+import android.os.UserHandle;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -83,6 +84,34 @@ public class RRUtils {
         return isPackageInstalled(context, pkg, true);
     }
 
+
+    /**
+     * @hide
+     */
+    public static void toggleOmniSwitchRecents(Context context, UserHandle user) {
+        final Intent intent = new Intent(RRUtils.ACTION_TOGGLE_OVERLAY2);
+        intent.setPackage(APP_PACKAGE_NAME);
+        context.sendBroadcastAsUser(intent, user);
+    }
+
+    /**
+     * @hide
+     */
+     public static void restoreHomeStack(Context context, UserHandle user) {
+        final Intent intent = new Intent(RRUtils.ACTION_RESTORE_HOME_STACK);
+        intent.setPackage(APP_PACKAGE_NAME);
+        context.sendBroadcastAsUser(intent, user);
+    }
+
+    /**
+     * @hide
+     */
+     public static void preloadOmniSwitchRecents(Context context, UserHandle user) {
+        final Intent intent = new Intent(RRUtils.ACTION_PRELOAD_TASKS);
+        intent.setPackage(APP_PACKAGE_NAME);
+        context.sendBroadcastAsUser(intent, user);
+    }
+
     // Omni Switch Constants
 
     /**
@@ -96,6 +125,16 @@ public class RRUtils {
     public static final String ACTION_SHOW_OVERLAY = APP_PACKAGE_NAME + ".ACTION_SHOW_OVERLAY";
 
     /**
+     * Intent broadcast action for showing the omniswitch overlay
+     */
+    public static final String ACTION_TOGGLE_OVERLAY2 = APP_PACKAGE_NAME + ".ACTION_TOGGLE_OVERLAY2";
+
+    /**
+     * Intent broadcast action for telling omniswitch to preload tasks
+     */
+    private static final String ACTION_PRELOAD_TASKS = APP_PACKAGE_NAME + ".ACTION_PRELOAD_TASKS";
+
+    /**
      * Intent broadcast action for hiding the omniswitch overlay
      */
     public static final String ACTION_HIDE_OVERLAY = APP_PACKAGE_NAME + ".ACTION_HIDE_OVERLAY";
@@ -104,6 +143,12 @@ public class RRUtils {
      * Intent broadcast action for toogle the omniswitch overlay
      */
     public static final String ACTION_TOGGLE_OVERLAY = APP_PACKAGE_NAME + ".ACTION_TOGGLE_OVERLAY";
+
+
+    /**
+     * Intent broadcast action for restoring the home stack
+     */
+    public static final String ACTION_RESTORE_HOME_STACK = APP_PACKAGE_NAME + ".ACTION_RESTORE_HOME_STACK";
 
     /**
      * Intent for launching the omniswitch settings actvity
