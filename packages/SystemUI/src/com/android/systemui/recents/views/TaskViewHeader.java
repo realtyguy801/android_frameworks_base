@@ -200,6 +200,7 @@ public class TaskViewHeader extends FrameLayout
 
     private Context mContext;
     private boolean mShowLockIcon;
+    private int mRecentsType;
     private Handler mHandler;
     private SettingsObserver mSettingsObserver;
 
@@ -284,7 +285,8 @@ public class TaskViewHeader extends FrameLayout
      * we can't get resources based on the current configuration, but instead need to get them
      * based on the device configuration.
      */
-    private void updateLayoutParams(View icon, View title, View secondaryButton, View button) {
+    private void updateLayoutParams(View icon, View title, View secondaryButton,
+            View tertiaryButton, View button) {
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, mHeaderBarHeight, Gravity.TOP);
         setLayoutParams(lp);
@@ -302,6 +304,13 @@ public class TaskViewHeader extends FrameLayout
             lp.setMarginEnd(mHeaderBarHeight);
             secondaryButton.setLayoutParams(lp);
             secondaryButton.setPadding(mHeaderButtonPadding, mHeaderButtonPadding,
+                    mHeaderButtonPadding, mHeaderButtonPadding);
+        }
+        if (tertiaryButton != null) {
+            lp = new FrameLayout.LayoutParams(mHeaderBarHeight, mHeaderBarHeight, Gravity.END);
+            lp.setMarginEnd(2 * mHeaderBarHeight);
+            tertiaryButton.setLayoutParams(lp);
+            tertiaryButton.setPadding(mHeaderButtonPadding, mHeaderButtonPadding,
                     mHeaderButtonPadding, mHeaderButtonPadding);
         }
         lp = new FrameLayout.LayoutParams(mHeaderBarHeight, mHeaderBarHeight, Gravity.END);
@@ -336,9 +345,10 @@ public class TaskViewHeader extends FrameLayout
         if (headerBarHeight != mHeaderBarHeight || headerButtonPadding != mHeaderButtonPadding) {
             mHeaderBarHeight = headerBarHeight;
             mHeaderButtonPadding = headerButtonPadding;
-            updateLayoutParams(mIconView, mTitleView, mMoveTaskButton, mDismissButton);
+            updateLayoutParams(mIconView, mTitleView, mLockTaskButton, mMoveTaskButton,
+                    mDismissButton);
             if (mAppOverlayView != null) {
-                updateLayoutParams(mAppIconView, mAppTitleView, null, mAppInfoView);
+                updateLayoutParams(mAppIconView, mAppTitleView, null, null, mAppInfoView);
             }
         }
     }
@@ -385,8 +395,9 @@ public class TaskViewHeader extends FrameLayout
         }
         mDismissButton.setVisibility(showDismissIcon ? View.VISIBLE : View.INVISIBLE);
         mDismissButton.setTranslationX(rightInset);
+        boolean show = mRecentsType != 2 && mShowLockIcon;
         if (mLockTaskButton != null) {
-            mLockTaskButton.setVisibility(mShowLockIcon ? View.VISIBLE : View.INVISIBLE);
+            mLockTaskButton.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
             mLockTaskButton.setTranslationX(rightInset);
         }
 
@@ -738,7 +749,7 @@ public class TaskViewHeader extends FrameLayout
             mAppInfoView = (ImageView) mAppOverlayView.findViewById(R.id.app_info);
             mAppInfoView.setOnClickListener(this);
             mAppTitleView = (TextView) mAppOverlayView.findViewById(R.id.app_title);
-            updateLayoutParams(mAppIconView, mAppTitleView, null, mAppInfoView);
+            updateLayoutParams(mAppIconView, mAppTitleView, null, null, mAppInfoView);
         }
 
         // Update the overlay contents for the current app
@@ -798,6 +809,9 @@ public class TaskViewHeader extends FrameLayout
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
                     Settings.System.RECENTS_LOCK_ICON),
                     false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAVIGATION_BAR_RECENTS),
+                    false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -809,6 +823,8 @@ public class TaskViewHeader extends FrameLayout
         public void update() {
             mShowLockIcon = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.RECENTS_LOCK_ICON, 0, UserHandle.USER_CURRENT) == 1;
+            mRecentsType = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.NAVIGATION_BAR_RECENTS, 0, UserHandle.USER_CURRENT);
         }
     }
 }
