@@ -799,6 +799,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_FOOTER_WARNINGS),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                  Settings.Secure.SYSTEM_NAVIGATION_KEYS_ENABLED),
+                  false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.FP_SWIPE_CALL_ACTIONS),
                   false, this, UserHandle.USER_ALL);
@@ -1027,6 +1030,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             rebuildRecentsScreen();
             mFpSwipeCallActions = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.FP_SWIPE_CALL_ACTIONS, 0, UserHandle.USER_CURRENT);
+
+            mSystemNavigationKeysEnabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.SYSTEM_NAVIGATION_KEYS_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
 
                     
             RecentsActivity.updateBlurColors(mBlurDarkColorFilter,mBlurMixedColorFilter,mBlurLightColorFilter);
