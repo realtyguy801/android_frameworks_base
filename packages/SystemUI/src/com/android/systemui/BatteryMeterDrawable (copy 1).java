@@ -64,8 +64,6 @@ public class BatteryMeterDrawable extends Drawable implements
     public static final String SHOW_PERCENT_SETTING = "status_bar_show_battery_percent";
     private static final String STATUS_BAR_CHARGE_COLOR =
             Settings.Secure.STATUS_BAR_CHARGE_COLOR;
-    private static final String BATTERY_LARGE_TEXT =
-            Settings.System.BATTERY_LARGE_TEXT;
 
     private static final boolean SINGLE_DIGIT_PERCENT = false;
 
@@ -77,12 +75,9 @@ public class BatteryMeterDrawable extends Drawable implements
     public static final int BATTERY_STYLE_PORTRAIT  = 0;
     public static final int BATTERY_STYLE_SOLID     = 1;
     public static final int BATTERY_STYLE_CIRCLE    = 2;
-    public static final int BATTERY_STYLE_BIGCIRCLE = 3;
-    public static final int BATTERY_STYLE_AOSCP     = 4;
-    public static final int BATTERY_STYLE_AICP      = 5;
-    public static final int BATTERY_STYLE_HIDDEN    = 6;
-    public static final int BATTERY_STYLE_LANDSCAPE = 7;
-    public static final int BATTERY_STYLE_TEXT      = 8;
+    public static final int BATTERY_STYLE_HIDDEN    = 3;
+    public static final int BATTERY_STYLE_LANDSCAPE = 4;
+    public static final int BATTERY_STYLE_TEXT      = 5;
 
     private final int[] mColors;
     private final int mIntrinsicWidth;
@@ -101,8 +96,6 @@ public class BatteryMeterDrawable extends Drawable implements
     private String mWarningString;
     private final int mCriticalLevel;
     private int mChargeColor;
-    private boolean mBatteryColor;
-    private boolean mLargeText;
     private boolean mBoltOverlay;
     private final Path mBoltPath = new Path();
     private final Path mPlusPath = new Path();
@@ -175,19 +168,6 @@ public class BatteryMeterDrawable extends Drawable implements
         mStyle = style;
         mBoltOverlay = boltOverlay;
         final Resources res = context.getResources();
-        if ((Settings.System.getInt(mContext.getContentResolver(), Settings.System.COLORFUL_BATTERY, 0) == 1)) {
-        TypedArray levels = res.obtainTypedArray(R.array.batterymeter_colorful_levels);
-        TypedArray colors = res.obtainTypedArray(R.array.batterymeter_colorful_values);
-
-        final int N = levels.length();
-        mColors = new int[2*N];
-        for (int i=0; i<N; i++) {
-            mColors[2*i] = levels.getInt(i, 0);
-            mColors[2*i+1] = colors.getColor(i, 0);
-        }
-        levels.recycle();
-        colors.recycle();
-        } else {
         TypedArray levels = res.obtainTypedArray(R.array.batterymeter_color_levels);
         TypedArray colors = res.obtainTypedArray(R.array.batterymeter_color_values);
 
@@ -199,8 +179,6 @@ public class BatteryMeterDrawable extends Drawable implements
         }
         levels.recycle();
         colors.recycle();
-        }
-        updateBatteryColor();
         updateShowPercent();
         updateForceChargeBatteryText();
         updateCustomChargingSymbol();
@@ -288,12 +266,6 @@ public class BatteryMeterDrawable extends Drawable implements
                 CMSettings.System.getUriFor(CMSettings.System.STATUS_BAR_BATTERY_STYLE),
                 false, mSettingObserver);
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.BATTERY_LARGE_TEXT),
-                false, mSettingObserver);
-        mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.COLORFUL_BATTERY),
-                false, mSettingObserver);
-        mContext.getContentResolver().registerContentObserver(
                 Settings.Secure.getUriFor(Settings.Secure.FORCE_CHARGE_BATTERY_TEXT),
                 false, mSettingObserver);
         mContext.getContentResolver().registerContentObserver(
@@ -303,8 +275,6 @@ public class BatteryMeterDrawable extends Drawable implements
         updateChargeColor();
         updateForceChargeBatteryText();
         updateCustomChargingSymbol();
-		updateLargeText();
-        updateBatteryColor();
         mBatteryController.addStateChangedCallback(this);
     }
 
@@ -398,16 +368,6 @@ public class BatteryMeterDrawable extends Drawable implements
         mChargeColor = Settings.Secure.getInt(mContext.getContentResolver(),
                 Settings.Secure.STATUS_BAR_CHARGE_COLOR,
                         mContext.getResources().getColor(R.color.batterymeter_charge_color));
-    }
-
-    private void updateLargeText() {
-        mLargeText = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.BATTERY_LARGE_TEXT, 0) == 1;
-    }
-
-    private void updateBatteryColor() {
-        mBatteryColor = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.COLORFUL_BATTERY, 0) == 1;
     }
 
     private void updateForceChargeBatteryText() {
@@ -580,8 +540,6 @@ public class BatteryMeterDrawable extends Drawable implements
             super.onChange(selfChange, uri);
             updateShowPercent();
             updateChargeColor();
-            updateBatteryColor();
-            updateLargeText();
             updateForceChargeBatteryText();
             updateCustomChargingSymbol();
             postInvalidate();
@@ -673,12 +631,6 @@ public class BatteryMeterDrawable extends Drawable implements
                 return R.drawable.ic_battery_circle;
             case BATTERY_STYLE_SOLID:
                 return R.drawable.ic_battery_solid;
-            case BATTERY_STYLE_BIGCIRCLE:
-                return R.drawable.ic_battery_bigcircle;
-	    case BATTERY_STYLE_AOSCP:
-                return R.drawable.ic_battery_aoscp;
-            case BATTERY_STYLE_AICP:
-                return R.drawable.ic_battery_aicp;
             case BATTERY_STYLE_PORTRAIT:
                 return R.drawable.ic_battery_portrait;
             default:
@@ -692,14 +644,8 @@ public class BatteryMeterDrawable extends Drawable implements
                 return R.style.BatteryMeterViewDrawable_Landscape;
             case BATTERY_STYLE_CIRCLE:
                 return R.style.BatteryMeterViewDrawable_Circle;
-            case BATTERY_STYLE_BIGCIRCLE:
-                return R.style.BatteryMeterViewDrawable_Circle;
-            case BATTERY_STYLE_AOSCP:
-                return R.style.BatteryMeterViewDrawable_Aoscp;
-            case BATTERY_STYLE_SOLID:
+			case BATTERY_STYLE_SOLID:
                 return R.style.BatteryMeterViewDrawable_Solid;
-            case BATTERY_STYLE_AICP:
-                return R.style.BatteryMeterViewDrawable_Aicp;
             case BATTERY_STYLE_PORTRAIT:
                 return R.style.BatteryMeterViewDrawable_Portrait;
             default:
@@ -712,7 +658,7 @@ public class BatteryMeterDrawable extends Drawable implements
         if (mBoltOverlay) {
             updateChargeColor();
             return mContext.getResources().getColor((mStyle == BATTERY_STYLE_SOLID ||
-                mStyle == BATTERY_STYLE_CIRCLE || mStyle == BATTERY_STYLE_BIGCIRCLE) ? R.color.batterymeter_bolt_color : R.color.system_primary_color);
+                mStyle == BATTERY_STYLE_CIRCLE) ? R.color.batterymeter_bolt_color : R.color.system_primary_color);
         }
         return mContext.getResources().getColor(R.color.batterymeter_bolt_color);
     }
@@ -727,29 +673,17 @@ public class BatteryMeterDrawable extends Drawable implements
         final float widthDiv2 = mWidth / 2f;
         // text size is width / 2 - 2dp for wiggle room
 
-        if (mLargeText) {
+        if ((Settings.System.getInt(mContext.getContentResolver(), Settings.System.BATTERY_LARGE_TEXT, 0) == 1)) {
         final float textSize;
         switch(mStyle) {
             case BATTERY_STYLE_CIRCLE:
-                textSize = widthDiv2 * 1.0f;
+                textSize = widthDiv2 - mContext.getResources().getDisplayMetrics().density / 1.3f;
                 break;
             case BATTERY_STYLE_LANDSCAPE:
                 textSize = widthDiv2 * 1.3f;
                 break;
-            case BATTERY_STYLE_BIGCIRCLE:
-                textSize = widthDiv2 * 1.3f;
-                break;
-            case BATTERY_STYLE_AOSCP:
-                textSize = widthDiv2 * 1.0f;
-                break;
-            case BATTERY_STYLE_AICP:
-                textSize = widthDiv2 * 1.0f;
-                break;
-            case BATTERY_STYLE_SOLID:
-                textSize = widthDiv2 * 1.0f;
-                break;
             default:
-                textSize = widthDiv2 * 0.9f;
+                textSize = widthDiv2;
                 break;
                 }
         mTextAndBoltPaint.setTextSize(textSize);
