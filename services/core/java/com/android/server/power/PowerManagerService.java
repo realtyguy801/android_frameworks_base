@@ -236,6 +236,10 @@ public final class PowerManagerService extends SystemService
     private int mKeyboardBrightness;
     private int mKeyboardBrightnessSettingDefault;
 
+    private boolean mButtonPressed = false;
+    private boolean mButtonLightOnKeypressOnly;
+    private boolean mButtonLightOnKeypressOnlyold;
+
     private final Object mLock = new Object();
 
     // A bitfield that indicates what parts of the power state have
@@ -285,6 +289,7 @@ public final class PowerManagerService extends SystemService
     private long mLastSleepTime;
 
     // Timestamp of the last call to user activity.
+    private long mLastButtonActivityTime;
     private long mLastUserActivityTime;
     private long mLastUserActivityTimeNoChangeLights;
 
@@ -779,6 +784,10 @@ public final class PowerManagerService extends SystemService
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.WAKELOCK_BLOCKING_LIST),
                     false, mSettingsObserver, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BUTTON_LIGHT_SCREEN),
+                    false, mSettingsObserver, UserHandle.USER_ALL);
+
 
             // Go.
             readConfigurationLocked();
@@ -858,6 +867,9 @@ public final class PowerManagerService extends SystemService
         }
         mSupportsHighBrightnessModeConfig = resources.getBoolean(
                 com.android.internal.R.bool.config_supportHighBrightness);
+
+        mButtonLightOnKeypressOnlyold = resources.getBoolean(
+                com.android.internal.R.bool.config_buttonLightOnKeypressOnly);
     }
 
     private void updateSettingsLocked() {
@@ -889,6 +901,9 @@ public final class PowerManagerService extends SystemService
         mWakeUpWhenPluggedOrUnpluggedSetting = CMSettings.Global.getInt(resolver,
                 CMSettings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
                 (mWakeUpWhenPluggedOrUnpluggedConfig ? 1 : 0));
+        mButtonLightOnKeypressOnly = Settings.System.getIntForUser(resolver,
+                    Settings.System.BUTTON_LIGHT_SCREEN, 0,
+                    UserHandle.USER_CURRENT) == 1;
 
         mWakeLockBlockingEnabled = Settings.System.getIntForUser(resolver,
                 Settings.System.WAKELOCK_BLOCKING_ENABLED, 0, UserHandle.USER_CURRENT);
@@ -1375,6 +1390,10 @@ public final class PowerManagerService extends SystemService
                 }
             } else {
                 if (eventTime > mLastUserActivityTime) {
+                    mButtonPressed = event == PowerManager.USER_ACTIVITY_EVENT_BUTTON;
+                    if (mButtonLightOnKeypressOnly && mButtonPressed) {
+                        mLastButtonActivityTime = eventTime;
+                    }
                     mLastUserActivityTime = eventTime;
                     mDirty |= DIRTY_USER_ACTIVITY;
                     return true;
@@ -1944,12 +1963,16 @@ public final class PowerManagerService extends SystemService
 
                             mKeyboardLight.setBrightness(mKeyboardVisible ?
                                     keyboardBrightness : 0);
+                            mLastButtonActivityTime = mButtonLightOnKeypressOnly ?
+                                    mLastButtonActivityTime : mLastUserActivityTime;
                             if (mButtonTimeout != 0
-                                    && now > mLastUserActivityTime + mButtonTimeout) {
+                                    && now > mLastButtonActivityTime + mButtonTimeout) {
                                 mButtonsLight.setBrightness(0);
                             } else {
-                                if (!mProximityPositive) {
+                                if ((!mButtonLightOnKeypressOnly || mButtonPressed) &&
+                                        !mProximityPositive) {
                                     mButtonsLight.setBrightness(buttonBrightness);
+                                    mButtonPressed = false;
                                     if (buttonBrightness != 0 && mButtonTimeout != 0) {
                                         nextTimeout = now + mButtonTimeout;
                                     }
