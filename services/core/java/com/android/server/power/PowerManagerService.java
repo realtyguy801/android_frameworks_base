@@ -238,7 +238,8 @@ public final class PowerManagerService extends SystemService
 
     private boolean mButtonPressed = false;
     private boolean mButtonLightOnKeypressOnly;
-    private boolean mButtonLightOnKeypressOnlyold;
+    private boolean mButtonLightOnKeypressOnlyDefault;
+    private int mDefaultVal;
 
     private final Object mLock = new Object();
 
@@ -868,7 +869,7 @@ public final class PowerManagerService extends SystemService
         mSupportsHighBrightnessModeConfig = resources.getBoolean(
                 com.android.internal.R.bool.config_supportHighBrightness);
 
-        mButtonLightOnKeypressOnlyold = resources.getBoolean(
+        mButtonLightOnKeypressOnlyDefault = resources.getBoolean(
                 com.android.internal.R.bool.config_buttonLightOnKeypressOnly);
     }
 
@@ -901,8 +902,13 @@ public final class PowerManagerService extends SystemService
         mWakeUpWhenPluggedOrUnpluggedSetting = CMSettings.Global.getInt(resolver,
                 CMSettings.Global.WAKE_WHEN_PLUGGED_OR_UNPLUGGED,
                 (mWakeUpWhenPluggedOrUnpluggedConfig ? 1 : 0));
+        if (mButtonLightOnKeypressOnlyDefault) {
+            mDefaultVal = 1;
+        } else {
+            mDefaultVal = 0;
+        }
         mButtonLightOnKeypressOnly = Settings.System.getIntForUser(resolver,
-                    Settings.System.BUTTON_LIGHT_SCREEN, 0,
+                    Settings.System.BUTTON_LIGHT_SCREEN, mDefaultVal,
                     UserHandle.USER_CURRENT) == 1;
 
         mWakeLockBlockingEnabled = Settings.System.getIntForUser(resolver,
