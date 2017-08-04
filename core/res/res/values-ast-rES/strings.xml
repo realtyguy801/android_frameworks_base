@@ -534,6 +534,7 @@
   <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
   <!-- Message shown during fingerprint acquisision when the fingerprint cannot be recognized -->
   <!-- Message shown during fingerprint acquisision when the fingerprint cannot be recognized -->
+  <string name="fingerprint_acquired_insufficient">Nun pudo procesase la buelga. Volvi tentalo.</string>
   <!-- Message shown during fingerprint acquisision when the fingerprint sensor needs cleaning -->
   <!-- Message shown during fingerprint acquisision when the user removes their finger from the sensor too quickly -->
   <!-- Message shown during fingerprint acquisision when the user moves their finger too slowly -->
@@ -1215,6 +1216,10 @@
     <item quantity="other">Hai <xliff:g example="1" id="count">%d</xliff:g> años</item>
   </plurals>
   <!-- Phrase describing a relative time using minutes that is not shown on the screen but used for accessibility. This version should be a future point in time. [CHAR LIMIT=NONE] -->
+  <plurals name="duration_minutes_relative_future">
+    <item quantity="one">en <xliff:g example="1" id="count">%d</xliff:g> minutu</item>
+    <item quantity="other">en <xliff:g example="1" id="count">%d</xliff:g> minutos</item>
+  </plurals>
   <!-- Phrase describing a relative time using hours that is not shown on the screen but used for accessibility. This version should be a future point in time. [CHAR LIMIT=NONE] -->
   <!-- Phrase describing a relative time using days that is not shown on the screen but used for accessibility. This version should be a future point in time. [CHAR LIMIT=NONE] -->
   <!-- Phrase describing a relative time using years that is not shown on the screen but used for accessibility. This version should be a future point in time. [CHAR LIMIT=NONE] -->
@@ -1625,6 +1630,7 @@
   <!-- This string array should be overridden by the manufacture to present a list of carrier-id,locale. The wifi regulatory domain is extracted from the locale information. This is used at startup to set system defaults by checking the system property ro.carrier for the carrier-id and searching through this array -->
   <!-- An Array of [[Carrier-ID]                     -->
   <!--              [default-locale]]                -->
+  <string name="grant_credentials_permission_message_header">Una o más aplicaciones de darréu soliciten permisu p\'acceder a la to cuenta, agora y nel futuru.</string>
   <string name="grant_credentials_permission_message_footer">¿Quies permitir esta solicitú?</string>
   <string name="grant_permissions_header_text">Solicitú d\'accesu</string>
   <string name="allow">Permitir</string>

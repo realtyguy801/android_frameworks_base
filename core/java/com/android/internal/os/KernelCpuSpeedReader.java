@@ -37,7 +37,7 @@ import java.util.Arrays;
 public class KernelCpuSpeedReader {
     private static final String TAG = "KernelCpuSpeedReader";
 
-    private final String mProcFile;
+    private final String mProcFileStats, mProcFileOnline;
     private final long[] mLastSpeedTimes;
     private final long[] mDeltaSpeedTimes;
 
@@ -53,12 +53,32 @@ public class KernelCpuSpeedReader {
      * @param cpuNumber The cpu (cpu0, cpu1, etc) whose state to read.
      */
     public KernelCpuSpeedReader(int cpuNumber, int numSpeedSteps) {
-        mProcFile = String.format("/sys/devices/system/cpu/cpu%d/cpufreq/stats/time_in_state",
+        mProcFileStats = String.format("/sys/devices/system/cpu/cpu%d/cpufreq/stats/time_in_state",
+                cpuNumber);
+        mProcFileOnline = String.format("/sys/devices/system/cpu/cpu%d/online",
                 cpuNumber);
         mLastSpeedTimes = new long[numSpeedSteps];
         mDeltaSpeedTimes = new long[numSpeedSteps];
         long jiffyHz = Libcore.os.sysconf(OsConstants._SC_CLK_TCK);
         mJiffyMillis = 1000/jiffyHz;
+    }
+
+    /**
+     * This checks whether the system is possibly affected
+     * by the bug where the stats interface disappears from sysfs.
+     * @return the result of this check
+     */
+    private boolean checkForSysFsBug() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(mProcFileOnline))) {
+            String line;
+            if ((line = reader.readLine()) != null) {
+                final int cpuonline = Integer.parseInt(line);
+                return cpuonline > 0;
+            }
+        } catch (IOException | NumberFormatException e) {
+            Slog.e(TAG, "Failed to read cpu online status: " + e.getMessage());
+        }
+        return false;
     }
 
     /**
@@ -73,7 +93,7 @@ public class KernelCpuSpeedReader {
             return mDeltaSpeedTimes;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(mProcFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(mProcFileStats))) {
             TextUtils.SimpleStringSplitter splitter = new TextUtils.SimpleStringSplitter(' ');
             String line;
             int speedIndex = 0;
@@ -95,7 +115,10 @@ public class KernelCpuSpeedReader {
         } catch (IOException e) {
             Slog.e(TAG, "Failed to read cpu-freq: " + e.getMessage());
             Arrays.fill(mDeltaSpeedTimes, 0);
-            mFailureCount++;
+            if (checkForSysFsBug()) {
+                // Increment the failure counter based on the detection result
+                mFailureCount++;
+            }
         }
         return mDeltaSpeedTimes;
     }
