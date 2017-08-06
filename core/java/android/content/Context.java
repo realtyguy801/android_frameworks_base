@@ -3672,6 +3672,8 @@ public abstract class Context {
      */
     public static final String POCKET_SERVICE = "pocket";
 
+    /**
+     * Use with {@link #getSystemService} to retrieve a
      * {@link android.app.ThemeManager} for accessing and setting theme state.
      *
      * @hide
