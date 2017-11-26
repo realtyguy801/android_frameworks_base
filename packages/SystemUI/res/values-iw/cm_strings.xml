@@ -22,6 +22,18 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Content description of the light brightness slider (not shown on the screen). [CHAR LIMIT=NONE] -->
   <string name="accessibility_notification_brightness">בהירות נורית</string>
+  <!-- Content description of the profiles tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_profiles_off">פרופילים כבויים.</string>
+  <!-- Content description of the profiles tile in quick settings (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_profiles">פרופיל: <xliff:g id="profile" example="Default">%s</xliff:g>.</string>
+  <!-- Announcement made when the profiles tile changes to off (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_profiles_changed_off">פרופילים כובו.</string>
+  <!-- Announcement made when the profiles tile changes (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="accessibility_quick_settings_profiles_changed">פרופיל שונה ל-<xliff:g id="profile" example="Default">%s</xliff:g>.</string>
+  <!-- Content description of the profiles tile in quick settings when off (not shown on the screen). [CHAR LIMIT=NONE] -->
+  <string name="quick_settings_profiles_off">פרופילים כבויים.</string>
+  <!-- Content description of the system profiles  -->
+  <string name="quick_settings_profiles">פרופילי מערכת</string>
   <!-- Lights settings, LED notification -->
   <string name="led_notification_title">הגדרות תאורה</string>
   <string name="led_notification_text">נורית LED מופעלת על ידי ההגדרות</string>
@@ -132,6 +144,7 @@
   <string name="quick_settings_location_battery_saving_label_twoline">חיסכון\nבסוללה</string>
   <!-- QuickSettings: Location (On, gps-only) [CHAR LIMIT=NONE] -->
   <string name="quick_settings_location_gps_only_label">מכשיר בלבד</string>
+  <string name="quick_settings_location_gps_only_label_twoline">מכשיר\nבלבד</string>
   <!-- QuickSettings: Location (On, high-accuracy) [CHAR LIMIT=NONE] -->
   <string name="quick_settings_location_high_accuracy_label">דיוק מרבי</string>
   <string name="quick_settings_location_high_accuracy_label_twoline">דיוק\nמרבי</string>
@@ -180,4 +193,6 @@
   <!-- Volume panel QS tile -->
   <string name="quick_settings_sync_label">סנכרון</string>
   <string name="quick_settings_volume_panel_label">לוח עוצמת קול</string>
+  <!-- Content description for Accessibility on unlocked tasks in recents -->
+  <!-- Content description for Accessibility on locked tasks in recents -->
 </resources>
