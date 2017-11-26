@@ -77,7 +77,6 @@ import com.android.systemui.qs.tiles.AppSideBarTile;
 import com.android.systemui.qs.tiles.GestureAnyWhereTile;
 import com.android.systemui.qs.tiles.PulseTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
-import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.RRTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WeatherTile;
