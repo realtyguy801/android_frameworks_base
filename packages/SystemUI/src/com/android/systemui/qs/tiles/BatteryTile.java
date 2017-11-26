@@ -15,12 +15,10 @@
  */
 package com.android.systemui.qs.tiles;
 
-import android.app.ThemeManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
@@ -287,20 +285,9 @@ public class BatteryTile extends QSTile<QSTile.State> implements BatteryControll
                 }
                 builder.append(info.remainingLabel);
             }
-            final TextView mEstimatedCharge = (TextView) mCurrentView.findViewById(
-                    R.id.charge_and_estimation);
-            final UsageView mBatteryUsage = (UsageView) mCurrentView.findViewById(
-                    R.id.battery_usage);
-            if (!ThemeManager.isOverlayEnabled()) {
-                final TypedArray ta = mContext.obtainStyledAttributes(new int[]{
-                        android.R.attr.colorAccent});
-                mEstimatedCharge.setTextColor(ta.getColor(0, 0));
-                mBatteryUsage.setAccentColor(ta.getColor(0, 0));
-                ta.recycle();
-            }
-            mEstimatedCharge.setText(builder);
+            ((TextView) mCurrentView.findViewById(R.id.charge_and_estimation)).setText(builder);
 
-            info.bindHistory(mBatteryUsage);
+            info.bindHistory((UsageView) mCurrentView.findViewById(R.id.battery_usage));
         }
 
         @Override

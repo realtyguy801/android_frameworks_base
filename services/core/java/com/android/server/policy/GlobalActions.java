@@ -31,8 +31,6 @@ import com.android.internal.widget.LockPatternUtils;
 import android.app.ActivityManager;
 import android.app.ActivityManagerNative;
 import android.app.Dialog;
-import android.app.IThemeCallback;
-import android.app.ThemeManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -119,7 +117,7 @@ import static android.view.WindowManager.TAKE_SCREENSHOT_SELECTED_REGION;
  * may show depending on whether the keyguard is showing, and whether the device
  * is provisioned.
  */
-public class GlobalActions implements DialogInterface.OnDismissListener, DialogInterface.OnClickListener  {
+class GlobalActions implements DialogInterface.OnDismissListener, DialogInterface.OnClickListener  {
 
     private static final String TAG = "GlobalActions";
 
@@ -160,22 +158,6 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
     private final List<PhoneStateListener> mPhoneStateListeners = new ArrayList<>();
 
     private int mScreenshotDelay;
-
-    private ThemeManager mThemeManager;
-    private static int sTheme;
-
-    private final IThemeCallback mThemeCallback = new IThemeCallback.Stub() {
-
-        @Override
-        public void onThemeChanged(int themeMode, int color) {
-            onCallbackAdded(themeMode, color);
-        }
-
-        @Override
-        public void onCallbackAdded(int themeMode, int color) {
-            sTheme = color;
-        }
-    };
 
     /**
      * @param context everything needs a context :(
@@ -219,11 +201,6 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
                 com.android.internal.R.bool.config_useFixedVolume);
 
         mEmergencyAffordanceManager = new EmergencyAffordanceManager(context);
-
-        mThemeManager = (ThemeManager) mContext.getSystemService(Context.THEME_SERVICE);
-        if (mThemeManager != null) {
-            mThemeManager.addCallback(mThemeCallback);
-        }
 
         updatePowerMenuActions();
     }
@@ -396,21 +373,6 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
         return dim;
     }
 
-    public static Context getContext(Context context) {
-        int themeMode = Settings.Secure.getInt(context.getContentResolver(),
-                Settings.Secure.THEME_PRIMARY_COLOR, 2);
-        int accentColor = Settings.Secure.getInt(context.getContentResolver(),
-                Settings.Secure.THEME_ACCENT_COLOR, 1);
-
-        if (themeMode == 0 && accentColor == 0) {
-            context.setTheme(R.style.Theme_DeviceDefault_Light_Dialog_Alert);
-        } else {
-            context.getTheme().applyStyle(sTheme, true);
-        }
-
-        return context;
-    }
-
     /**
      * Create the global actions dialog.
      * @return A new dialog.
@@ -560,12 +522,12 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
 
         mAdapter = new MyAdapter();
 
-        AlertParams params = new AlertParams(getContext(mContext));
+        AlertParams params = new AlertParams(mContext);
         params.mAdapter = mAdapter;
         params.mOnClickListener = this;
         params.mForceInverseBackground = true;
 
-        GlobalActionsDialog dialog = new GlobalActionsDialog(getContext(mContext), params);
+        GlobalActionsDialog dialog = new GlobalActionsDialog(mContext, params);
         dialog.setCanceledOnTouchOutside(false); // Handled by the custom class.
 
         dialog.getListView().setItemsCanFocus(true);
@@ -1260,7 +1222,7 @@ public class GlobalActions implements DialogInterface.OnDismissListener, DialogI
 
         public View getView(int position, View convertView, ViewGroup parent) {
             Action action = getItem(position);
-            return action.create(getContext(mContext), convertView, parent, LayoutInflater.from(mContext));
+            return action.create(mContext, convertView, parent, LayoutInflater.from(mContext));
         }
     }
 

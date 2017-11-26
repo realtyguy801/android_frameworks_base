@@ -46,9 +46,6 @@
     <color name="battery_color_meter_85">#FF33EEAA</color>
     <color name="battery_color_meter_95">#FF44EEBB</color>
     <color name="battery_color_meter_100">#FF55EEBB</color>
-
-    <!-- Pixel theme -->
-    <color name="pixel_primary_color">#242424</color>
     
 
 </resources>

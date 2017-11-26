@@ -33,7 +33,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.internal.logging.MetricsLogger;
-import com.android.settingslib.Utils;
 import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSTile.DetailAdapter;
@@ -97,7 +96,6 @@ public class QSDetail extends LinearLayout {
         mQsDetailHeaderTitle = (TextView) mQsDetailHeader.findViewById(android.R.id.title);
         mQsDetailHeaderSwitch = (Switch) mQsDetailHeader.findViewById(android.R.id.toggle);
         mQsDetailHeaderProgress = (ImageView) findViewById(R.id.qs_detail_header_progress);
-        mQsDetailHeaderProgress.setBackgroundColor(Utils.getColorAccent(mContext));
 
         updateDetailText();
 
